@@ -42,27 +42,8 @@ def manage_addRhaptosSite(self, id, title='Portal', description='',
                           email_from_address='postmaster@localhost',
                           email_from_name='Portal Administrator',
                           validate_email=0,
-                          dbauser='rhaptos_dba',
-                          dbapass=None,
-                          dbuser='rhaptos',
-                          dbpass=None,
-                          dbname='repository',
-                          dbserver=None,
-                          dbport=None,
                           RESPONSE=None):
     """ Rhaptos Site factory """
-    temp_id = 'DB_OPTS_TEMP'
-    if not hasattr(self.aq_parent.aq_parent,temp_id):
-        self.aq_parent.aq_parent.manage_addFolder(temp_id)
-    root = self.aq_parent.aq_parent[temp_id]
-    root._dbopts={}
-    root._dbopts['admin']=dbauser
-    root._dbopts['adminpass']=dbapass
-    root._dbopts['user']=dbuser
-    root._dbopts['userpass']=dbpass
-    root._dbopts['dbname']=dbname
-    root._dbopts['server']=dbserver
-    root._dbopts['port']=dbport
 
     #manage_addSite(self, id, title, description, create_userfolder, email_from_address, email_from_name, validate_email, custom_policy='Rhaptos Site', RESPONSE=RESPONSE)
     addPloneSite(self, id, title, description, create_userfolder, email_from_address, email_from_name, validate_email, RESPONSE=RESPONSE, extension_ids=('RhaptosSite:rhaptos-default',))

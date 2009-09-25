@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<dbconfig>
+  <admin>rhaptos_dba</admin>
+  <adminpass></adminpass>
+  <user>rhaptos</user>
+  <userpass></userpass>
+  <dbname>repository</dbname>
+  <server></server>
+  <port></port>
+</dbconfig>

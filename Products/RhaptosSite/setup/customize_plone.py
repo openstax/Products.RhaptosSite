@@ -5,6 +5,10 @@ def setActions(context):
     """
     site = context.getSite()
     logger = context.getLogger('actions')
+    if context.readDataFile('rhaptossite.txt') is None:
+        logger.info('Nothing to import')
+        return
+
     acttool = getToolByName(site, 'portal_actions')
 
     #  ...turn off new site actions, and change_state (which was added, different from older change_status)

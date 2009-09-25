@@ -93,6 +93,7 @@ def customizeMemberdata(self, portal):
         ('account_type', 'string', 'person'),
         ('fullname', 'string', ''),
         ('shortname', 'string', ''),
+        ('visible_ids', 'boolean', 0)
         )
 
     mdtool = getToolByName(portal,'portal_memberdata')
