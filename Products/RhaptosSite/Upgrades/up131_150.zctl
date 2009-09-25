@@ -1,0 +1,13 @@
+from Products.ExternalMethod.ExternalMethod import ExternalMethod
+from AccessControl.SecurityManagement import newSecurityManager
+from Products.CMFCore.tests.base.security import AnonymousUser, OmnipotentUser
+user = OmnipotentUser().__of__(app)
+newSecurityManager(None, user)
+
+ExternalMethod('temp','temp','RhaptosSite.Upgrade','renameSkins')(app.plone)
+ExternalMethod('temp','temp','RhaptosSite.Upgrade','renameMetaTypes')(app.plone)
+ExternalMethod('temp','temp','RhaptosSite.Upgrade','updateNavTreeProperties')(app.plone)
+ExternalMethod('temp','temp','RhaptosSite.Upgrade','updatePortalTypes')(app.plone)
+ExternalMethod('temp','temp','RhaptosSite.Upgrade','renameInQuickInstaller')(app.plone)
+
+get_transaction().commit()

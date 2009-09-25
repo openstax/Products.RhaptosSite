@@ -1,0 +1,3 @@
+[default]
+title=Proxied getMemberById so Members can see other members' name and email
+proxy=Manager

@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      metal:use-macro="here/main_template/macros/master"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+
+<tal:comment tal:replace="nothing">
+Rhaptos note: create fieldset box, remove small tag
+add image type field
+move image after metadata fields
+provide link to download image
+description left outside box like original, which would look likely funny if we used description
+make link and type depend on non-zero size
+This is based off of the Plone2.0.5 template which has been dropped
+   from Plone for ATCT templates.
+</tal:comment>
+
+<body>
+
+<div metal:fill-slot="main">
+    <tal:main-macro metal:define-macro="main"
+                    tal:define="size here/size">
+
+        <h1 tal:content="here/title_or_id" class="documentFirstHeading">
+            Title or id
+        </h1>
+
+	<a href=""
+	  class="link-parent"
+	  tal:define="parent_url python:here.navigationParent(here, template.getId())"
+	  tal:condition="parent_url"
+	  tal:attributes="href parent_url"
+	  i18n:translate="go_to_parent_url">
+	  Up to <span i18n:name="portal_type"
+	  tal:replace="python:here.getParentNode().getPortalTypeName().lower()">Module</span>
+	  file listing
+	</a>
+    
+        <div metal:use-macro="here/document_actions/macros/document_actions">
+            Document actions (print, sendto etc)
+        </div>
+    
+        <div class="documentDescription"
+             tal:content="here/Description">
+        description
+        </div>
+
+        <fieldset>
+
+             <legend i18n:translate="legend_image_details">Image Details</legend>
+  
+             <div class="field">
+                <label i18n:translate="label_size">Size</label>
+        
+                <div tal:define="size python:here.getObjSize(here)"
+                      tal:content="size">
+                    File size
+                </div>
+        
+                <span tal:condition="python:test(size, 0, 1)"
+                      i18n:translate="no_image_uploaded">
+                    (No image has been uploaded yet)
+                </span>
+             </div>
+        
+             <div class="field" tal:condition="size">
+                <label i18n:translate="label_image_type">Image Type</label>
+
+                <div tal:content="here/content_type" i18n:translate="">
+                   Content type
+                </div>
+             </div>
+
+             <div class="field" tal:condition="size">
+                <p>
+                  <a href=""
+                     i18n:translate="label_click_to_get_image"
+                     tal:attributes="href here/absolute_url">
+                     Click here to get the image
+                  </a>
+                </p>
+             </div>
+
+             <a href=""
+                tal:attributes="href string:${here/absolute_url}/image_view_fullscreen">
+                <tal:block condition="size" replace="structure here/tag" />
+             </a>
+
+        </fieldset>
+        
+        <div metal:use-macro="here/document_byline/macros/byline">
+            Get the byline - contains details about author and modification date.
+        </div>
+    </tal:main-macro>
+</div>
+
+</body>
+
+</html>
+

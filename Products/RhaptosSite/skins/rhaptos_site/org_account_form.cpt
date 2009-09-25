@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      metal:use-macro="here/main_template/macros/master"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="rhaptos">
+
+<tal:comment tal:replace="nothing">
+Rhaptos note: no plone counterpart.
+conversion is field style changes, incl. error changes
+</tal:comment>
+<tal:comment tal:replace="nothing">
+Rhaptos note: Register becomes Continue
+Fields are  *Shortname, *Fullname, *Email, Homepage
+Translation mainly use of new form style
+</tal:comment>
+
+  <head>
+      <metal:block metal:fill-slot="css_slot">
+        <link rel="stylesheet" type="text/css" href="/extjs/resources/css/ext-all.css"
+              tal:attributes="href string:$portal_url/extjs/resources/css/ext-all.css"/>
+      </metal:block>
+      <metal:block metal:fill-slot="javascript_head_slot">
+          <script type="text/javascript" src="/extjs/ext.js"
+                  tal:attributes="href string:$portal_url/extjs/ext.js"></script>
+          <script type="text/javascript" src="/sitelicense_popup.js"
+                  tal:attributes="href string:$portal_url/sitelicense_popup.js"></script>
+      </metal:block>
+  </head>
+
+  <body>
+
+  <metal:block fill-slot="top_slot" tal:define="dummy python:request.set('disable_border',1)" />
+
+ 
+    <div metal:fill-slot="main"
+         tal:define="errors options/state/getErrors;
+                     orig context/join_form/macros">
+
+    <h1 i18n:translate="heading_account_request_select_name">Account Request: Organization Account</h1>
+
+
+      <p i18n:translate="text_join_form_reg">
+	By registering for an organizational account, you can contribute new
+	modules or collections to <span i18n:name="portal_name"
+		tal:replace="portal_title">[portal]</span>, and you can create
+	lenses, which are selections of content recommended by or affiliated
+	with your organization. You can freely read and use the content in the
+	system without creating an account. Please make sure your email address
+	is accurate; your account will not be created without email
+	confirmation. We do not distribute email addresses to third parties,
+	and your address will only appear in conjunction with content you
+	publish.
+      </p>
+
+      <form action=""
+            method="post"
+            tal:attributes="action template/getId" >
+      
+        <fieldset>
+          <legend i18n:translate="legend_select_username">Account name</legend>
+          <div metal:use-macro="orig/username" />
+        </fieldset>
+        <fieldset>
+
+          <legend i18n:translate="legend_org_details">Organization Details</legend>
+
+          <input type="hidden" name="came_from" value=""
+                 tal:condition="request/came_from|nothing"
+                 tal:attributes="value request/came_from" />
+          <input type="hidden" name="last_visit:date" value="ZopeTime"
+                 tal:attributes="value here/ZopeTime" />
+          <input type="hidden" name="prev_visit:date" value="ZopeTime"
+                 tal:attributes="value here/ZopeTime" />
+          <input type="hidden" name="came_from_prefs" value=""
+                 tal:attributes="value request/came_from_prefs|nothing" />
+
+          <div class="field"
+               tal:define="error errors/fullname | nothing;
+                           fullname request/fullname | nothing;"
+               tal:attributes="class python:test(error, 'field error', 'field')">
+
+            <label i18n:translate="label_member_org_full">Full Organization Name</label>
+
+            <span class="fieldRequired" title="Required"
+                  i18n:attributes="title"
+                  i18n:translate="label_required">(Required)</span>
+
+                  <div i18n:translate="help_member_name_last"
+                       class="formHelp">
+                Enter your full organizational name, e.g. Exemplar Good Works
+                  </div>
+
+                  <div tal:content="error" i18n:translate="">Validation error output</div>
+
+                  <input type="text"
+                         name="fullname"
+                         size="30"
+                         value="fullname"
+                         tabindex=""
+                         tal:attributes="value fullname;
+                                         tabindex tabindex/next;"
+                         />
+          </div>
+
+
+          <div class="field"
+               tal:define="error errors/shortname | nothing;
+                           shortname request/shortname | nothing;"
+               tal:attributes="class python:test(error, 'field error', 'field')">
+
+            <label i18n:translate="label_member_org_short_name">Short Organization Name</label>
+
+            <span class="fieldRequired" title="Required"
+                  i18n:attributes="title"
+                  i18n:translate="label_required">(Required)</span>
+
+                  <div i18n:translate="help_member_name_first"
+                       class="formHelp">
+                    This short organizational name will be used in space-constrained locations (e.g. GoodWorks)
+                  </div>
+
+                  <div tal:content="error" i18n:translate="">Validation error output</div>
+
+                  <input type="text"
+                         name="shortname"
+                         size="30"
+                         value="shortname"
+                         tabindex=""
+                         tal:attributes="value shortname;
+                                         tabindex tabindex/next;"
+                         />
+          </div>
+
+          <div metal:use-macro="orig/email" />
+          <div metal:use-macro="orig/homepage" />
+          <div metal:use-macro="orig/licenseagree" />
+
+
+          <div class="formControls">
+            <input class="context"
+                   type="submit"
+                   tabindex=""
+                   name="form.button.Register"
+                   value="Request Organizational Account"
+                   i18n:attributes="value value_register_account"
+                   tal:attributes="tabindex tabindex/next;" />
+          </div>
+        </fieldset>
+
+        <input type="hidden" name="account_type" value="org" />
+        <input type="hidden" name="form.submitted" value="1" />
+
+      </form>
+    </div>
+
+  </body>
+</html>

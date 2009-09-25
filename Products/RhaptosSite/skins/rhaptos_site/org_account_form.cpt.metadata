@@ -1,0 +1,12 @@
+[default]
+title=Account Request: Organizational Account
+
+[validators]
+validators = validate_emailaddr,join_form_validate,validate_homepage,validate_password
+
+[actions]
+action.success = traverse_to:string:confirm_org_account_form
+action.failure = traverse_to:string:org_account_form
+
+[security]
+View=0:Authenticated

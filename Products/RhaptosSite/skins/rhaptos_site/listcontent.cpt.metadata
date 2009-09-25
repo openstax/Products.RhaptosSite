@@ -1,0 +1,7 @@
+[default]
+title=Modules and/or Collections
+
+[actions]
+action.success=traverse_to:string:listcontent
+action.success..rename=traverse_to:string:folder_rename_form
+action.success..delete=traverse_to:string:folder_delete_confirm_dispatch

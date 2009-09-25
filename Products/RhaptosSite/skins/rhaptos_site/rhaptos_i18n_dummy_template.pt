@@ -1,0 +1,894 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="rhaptos"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+<tal:comment tal:replace="nothing">
+Rhaptos note: This file exists as a way to store all the extra i18n
+    msgids that are needed for literal string translation.  By placing
+    the msgids here, they shouldn't have to be manually added to the
+    .pot file every time it is generated.
+</tal:comment>
+
+  <div metal:fill-slot="main">
+    <h1 i18n:translate="heading_rhaptos_i18n_ids">Rhaptos i18n
+      message IDs</h1>
+    
+    <ul>
+      <!-- Datetime formats -->
+      <li i18n:translate="date_format_long">${Y}-${m}-${d} ${I}:${M}${P}</li>
+
+      <li i18n:translate="date_format_short">${Y}-${m}-${d}</li>
+
+      <li i18n:translate="">Jan</li>
+
+      <li i18n:translate="">Feb</li>
+      
+      <li i18n:translate="">Mar</li>
+
+      <li i18n:translate="">Apr</li>
+      
+      <li i18n:translate="">May</li>
+
+      <li i18n:translate="">Jun</li>
+
+      <li i18n:translate="">Jul</li>
+      
+      <li i18n:translate="">Aug</li>
+
+      <li i18n:translate="">Sep</li>
+
+      <li i18n:translate="">Oct</li>
+      
+      <li i18n:translate="">Nov</li>
+      
+      <li i18n:translate="">Dec</li>
+
+      <!--Front page stuff -->
+      <li i18n:translate="">Home</li>
+
+      <li i18n:translate="">About</li>
+      
+      <li i18n:translate="">Content</li>
+
+      <li i18n:translate="">Help</li>
+      
+      <li i18n:translate="">Software</li>
+
+      <li i18n:translate="">What's New</li>
+
+      <li i18n:translate="">Quick Start</li>
+      
+      <li i18n:translate="">Courses</li>
+
+      <li i18n:translate="">You are not logged in</li>
+
+      <li i18n:translate="">Report a Bug</li>
+      
+      <li i18n:translate="">Log in</li>
+
+      <li i18n:translate="">Join</li>
+      
+      <li i18n:translate="">My Workspace</li>
+
+      <li i18n:translate="">My Account</li>
+
+      <li i18n:translate="">Log out</li>
+      
+      <li i18n:translate="">Plone Setup</li>
+
+      <!-- -->
+      <li i18n:translate="">About Module</li>
+      
+      <li i18n:translate="">About Course</li>
+
+      <li i18n:translate="">Module</li>
+      
+      <li i18n:translate="">Course</li>
+
+      <li i18n:translate="">module</li>
+      
+      <li i18n:translate="">course</li>
+      
+      <!--Document types (module_files)-->
+      <li i18n:translate="">Image</li>
+      
+      <li i18n:translate="">File</li>
+      
+      <li i18n:translate="">CNXML Document</li>
+      
+      <!--Add new {type} (module_files)-->
+      <li i18n:translate="">Add new image</li>
+      
+      <li i18n:translate="">Add new file</li>
+      
+      <li i18n:translate="">Add new CNXML Document</li>
+      
+      <!--link types (Supp, prereq, etc..)-->
+      <li i18n:translate="">Supplemental</li>
+      
+      <li i18n:translate="">Prerequisite</li>
+      
+      <li i18n:translate="">Example</li>
+
+      <li i18n:translate="">supplemental</li>
+      
+      <li i18n:translate="">prerequisite</li>
+      
+      <li i18n:translate="">example</li>
+      
+      <!--Possible Collaboration Statuses-->
+      <li i18n:translate="">Accepted</li>
+      
+      <li i18n:translate="">Pending</li>
+      
+      <li i18n:translate="">Rejected</li>
+      
+      <!--Possible Content states-->
+      <li i18n:translate="">Checked Out</li>
+
+      <li i18n:translate="">Checked&nbsp;Out</li>
+      
+      <li i18n:translate="">Modified</li>
+      
+      <li i18n:translate="">Published</li>
+      
+      <li i18n:translate="">Created</li>
+      
+      <!-- Content Views -->
+      <li i18n:translate="">Edit</li>
+      
+      <li i18n:translate="">Files</li>
+      
+      <li i18n:translate="">Metadata</li>
+      
+      <li i18n:translate="">Roles</li>
+
+      <li i18n:translate="">Links</li>
+      
+      <li i18n:translate="">Preview</li>
+      
+      <li i18n:translate="">Parameters</li>
+      
+      <!--Possible Content Actions-->
+      <li i18n:translate="">Publish</li>
+      
+      <li i18n:translate="">Suggest Edits</li>
+      
+      <li i18n:translate="">Derive Copy</li>
+      
+      <li i18n:translate="">Discard</li>
+      
+      <li i18n:translate="">Online</li>
+      
+      <li i18n:translate="">Print</li>
+      
+      <li i18n:translate="">Source</li>
+      
+      <li i18n:translate="">Changes</li>
+      
+      <!--Possible Workspace contents buttons-->
+      <li i18n:translate="">Rename</li>
+      
+      <li i18n:translate="">Cut</li>
+      
+      <li i18n:translate="">Copy</li>
+      
+      <li i18n:translate="">Remove</li>
+      
+      <li i18n:translate="">Paste</li>
+
+      <!-- Workspace actions -->
+      <li i18n:translate="">Contents</li>
+      
+      <li i18n:translate="">Properties</li>
+      
+      <li i18n:translate="">Members</li>
+      
+      
+      <!--Possible License types (Attribution)-->
+      <li i18n:translate="">Attribution</li>
+      
+      <!--Select all these people as ' + module_role_names[role]-->
+      <li i18n:translate="">Select all these people as Authors</li>
+      
+      <li i18n:translate="">Select all these people as Maintainers</li>
+      
+      <li i18n:translate="">Select all these people as Copyright Holders</li>
+      
+      <!--Deselect all these people as ' + module_role_names[role]-->
+      <li i18n:translate="">Deselect all these people as Authors</li>
+      
+      <li i18n:translate="">Deselect all these people as Maintainers</li>
+      
+      <li i18n:translate="">Deselect all these people as Copyright Holders</li>
+      
+      <!--Role Display Names-->
+      <li i18n:translate="">Authors</li>
+      
+      <li i18n:translate="">Maintainers</li>
+      
+      <li i18n:translate="">Copyright Holders</li>
+      
+      <li i18n:translate="">Author</li>
+      
+      <li i18n:translate="">Maintainer</li>
+      
+      <li i18n:translate="">Copyright Holder</li>
+      
+      <!-- Confirm Publishing -->
+      <li i18n:translate="">Confirm publishing</li>
+
+      <!-- Confirm Discard -->
+      <li i18n:translate="">Confirm discard</li>
+
+      <!--(No Institution Specified)-->
+      <li i18n:translate="heading_courses_no_institution">(No
+      Institution Specified)</li>
+
+      <!-- Input is required -->
+      <li i18n:translate="message_input_required">Input is required but no input given.</li>
+      
+      <!-- All ... -->
+      <li i18n:translate="label_all_with_elipsis">All ...</li>
+
+      <!-- RhaptosModuleEditor page template names -->
+      <li i18n:translate="">Edit Text</li>
+
+      <li i18n:translate="">Manage Files</li>
+
+      <li i18n:translate="">Edit Metadata</li>
+
+      <li i18n:translate="">Edit Roles</li>
+
+      <li i18n:translate="">Edit Links</li>
+
+      <!-- Module Metadata -->
+      <li i18n:translate="">(not published)</li>
+
+      <!-- Feature Article -->
+      <li i18n:translate="">Other Featured Articles</li>
+
+      <!-- browse_macro.pt -->
+      <li i18n:translate="">author</li>
+
+      <li i18n:translate="">keyword</li>
+
+      <li i18n:translate="">language</li>
+
+      <li i18n:translate="">popularity</li>
+
+      <li i18n:translate="">date</li>
+
+      <li i18n:translate="">institution</li>
+      
+      <!-- by_language.pt -->
+      <li i18n:translate="">All languages ...</li>
+
+      <li i18n:translate="">unspecified</li>
+
+      <li i18n:translate="text_unspecified_language_region">unspecified</li>
+
+      <!-- browse by date expansion page headers -->
+      <li i18n:translate="">All Activity</li>
+
+      <li i18n:translate="">New Content</li>
+
+      <li i18n:translate="">Content Revisions</li>
+
+      <!-- browse by popularity expansion page headers -->
+      <li i18n:translate="">Last Week</li>
+
+      <li i18n:translate="">Complete History</li>
+
+      <!-- pages on plone_memberprefs_panel -->
+      <li i18n:translate="">Role Requests</li>
+
+      <li i18n:translate="">Suggested Edits</li>
+
+      <li i18n:translate="">My Content</li>
+
+      <li i18n:translate="">Change Password</li>
+
+      <li i18n:translate="">Personal Preferences</li>
+
+      <li i18n:translate="">Collaboration Requests</li>
+
+      <li i18n:translate="">Account Maintenance</li>
+
+      <!-- possible patch statuses -->
+      <li i18n:translate="">Submitted</li>
+
+      <li i18n:translate="">Created</li>
+
+      <li i18n:translate="">Rejected</li>
+
+      <li i18n:translate="">Applied</li>
+
+      <!-- Course Fields -->
+      <li i18n:translate="">Title</li>
+
+      <li i18n:translate="">Enter a descriptive title for the course. There is no need to include course codes or institutions in the course title.</li>
+
+      <li i18n:translate="">Language</li>
+
+      <li i18n:translate="">The primary language for this course (with optional locale.)</li>
+
+      <li i18n:translate="">Regional Variant (optional)</li>
+
+      <li i18n:translate="">The language subtype for this content, if applicable.</li>
+
+      <li i18n:translate="">Institution</li>
+
+      <li i18n:translate="">Code</li>
+
+      <li i18n:translate="">If the course has a formal designation at an educational institution, enter it here. Example: ELEC 241, Calculus AB</li>
+
+      <li i18n:translate="">Instructor</li>
+
+      <li i18n:translate="">The name or names of people who will be teaching the course.</li>
+
+      <li i18n:translate="">Homepage</li>
+
+      <li i18n:translate="">A URL for a course web page, if applicable, where the syllabus and other course-related items are provided.</li>
+
+      <li i18n:translate="">Keywords (one per line)</li>
+
+      <li i18n:translate="">Enter each keyword on its own line.</li>
+
+      <li i18n:translate="">Summary</li>
+
+      <li i18n:translate="">Enter a summary of the course and/or its objectives.</li>
+
+      <li i18n:translate="">Module ID</li>
+
+      <li i18n:translate="">Published Location</li>
+
+      <li i18n:translate="">Module Title</li>
+
+      <li i18n:translate="">Alternate Title</li>
+
+      <li i18n:translate="">Enter an alternate name for this module, by which it will be displayed when viewed as part of your course.</li>
+      
+      <!-- Optional Roles -->
+      <li i18n:translate="">Editor</li>
+
+      <li i18n:translate="">Editors</li>
+      
+      <li i18n:translate="">Editors:</li>
+      
+      <li i18n:translate="">Edited By:</li>
+
+      <li i18n:translate="">Translator</li>
+
+      <li i18n:translate="">Tranlators</li>
+
+      <li i18n:translate="">Tranlators:</li>
+      
+      <li i18n:translate="">Translated By:</li>
+
+      
+
+      <!-- ########################## -->
+      <!-- # Portal Status Messages # -->
+      <!-- ########################## -->
+
+      <!-- validate_** -->
+      <li i18n:translate="message_please_correct_errors">Please correct the indicated errors.</li>
+
+      <!-- validate_cnxml.py -->
+      <li i18n:translate="message_file_uploaded">File uploaded.</li>
+
+      <li i18n:translate="message_file_saved">File saved.</li>
+
+      <!-- cnxml_view.py -->
+      <li i18n:translate="message_errors_prevent_view">Errors in the file prevent it from being viewed</li>
+
+      <!--cnxml_import.cpy -->
+      <li i18n:translate="message_error_select_file_to_import">Error: you must select a file to import</li>
+      
+      <li i18n:translate="message_error_select_correct_format">Error parsing file. Be sure to select the correct import format.</li>
+
+      <li i18n:translate="message_file_imported">File Imported.</li>
+
+      <!-- logged_in.py -->
+      <li i18n:translate="message_logged_in_welcome">Welcome to 
+        <span i18n:name="portal_title" tal:replace="portal_title"></span>! You are now logged in.</li>
+
+      <!-- validate_homepage.py -->
+      <li i18n:translate="message_not_valid_url">This is not a valid URL</li>
+
+      <!-- validate_email.py -->
+      <li i18n:translate="message_enter_email_address">You did not
+      enter an email address.</li> 
+
+      <!-- validate_patch_selection.py -->
+      <li i18n:translate="message_please_select_workspace">Please
+      select a workspace.</li>
+
+      <!-- validate_affil_url.vpy -->
+      <li i18n:translate="message_personal_settings_saved">Personal
+      settings have been saved.</li>
+      
+      <!-- validate_portrait.vpy -->
+      <li i18n:translate="message_file_doesnt_exist">File
+        <span i18n:name="filename"
+          tal:replace="string:filename">"%s"</span> 
+        apparently does not exist
+      </li>
+
+      <li i18n:translate="message_file_doesnt_exist">Portrait file
+        <span i18n:name="filename"
+          tal:replace="string:filename">"%s"</span> 
+        apparently not an image
+      </li>
+
+      <!-- validate_license.vpy -->
+      <li i18n:translate="message_choose_valid_license">Please choose
+      a valid license.</li>
+      
+      <li i18n:translate="message_check_box_to_agree">Check this box if you agree to the license terms.</li>
+
+      <li i18n:translate="message_agree_to_license_to_proceed">You must agree to the license to proceed.</li>
+
+      <!-- removeCollaborations.py -->
+      <li i18n:translate="message_nothing_selected">Nothing
+      selected</li>
+
+      <li i18n:translate="message_requests_removed">Requests
+      Removed</li>
+
+      <!-- validate_password.vpy -->
+      <li i18n:translate="mesage_member_id_invalid">This member id is
+      invalid or already in use. Please choose another.</li>
+
+      <li i18n:translate="mesage_userid_too_short">Usernames must be at least 3 characters.</li>
+
+      <!-- validate_patch_message -->
+      <li i18n:translate="message_this_field_required">This field is
+      required.</li>
+
+      <!-- cc_license_accept.cpy -->
+      <li i18n:translate="message_has_been_created">
+        <span i18n:name="type_name"
+          tal:replace="string:type_name">type_name</span>
+        has been created.</li>
+
+      <!-- updateCollaborations.py-->
+      <li i18n:translate="message_warning_request_changed">Warning:
+      That request was canceled or changed.</li>
+
+      <li i18n:translate="message_accepted_roles">Accepted roles</li>
+
+      <li i18n:translate="message_rejected_roles">Rejected roles</li>
+
+      <li i18n:translate="message_unknown_action">Unknown action</li>
+
+      <!-- workgroup_exit.cpy -->
+      <li i18n:translate="message_workgroup_exited">Workgroup
+      Exited</li>
+
+      <!-- validate_workgroup.vpy -->
+      <li i18n:translate="message_workgroup_created">Workgroup
+      created.</li>
+
+      <!-- workgroup_edit.cpy -->
+      <li i18n:translate="message_workgroup_properties_changed">Properties
+      changed.</li>
+      
+      <!-- validate_workgroup_members.vpy -->
+      <li i18n:translate="message_no_one_selected">No one
+      selected.</li>
+
+      <!-- prefs_group_members_edit.cpy-->
+      <li i18n:translate="message_workgroup_membership_updated">Membership
+      updated.</li>
+
+      <!-- workgroup_deleted.cpy -->
+      <li i18n:translate="message_workgroup_deleted">Workgroup Deleted</li>
+      
+      <!-- folder_position.py -->
+      <li i18n:translate="message_item_position_changed">Item's position has changed.</li>
+      
+      <!-- updateParameters.py -->
+      <li i18n:translate="message_collection_parameters_updated">Parameters
+      updated.</li>
+
+      <!-- addCollectionLink.cpy -->
+      <li i18n:translate="message_invalid_id_or_version">Invalid ID or
+      version</li>
+      
+      <li i18n:translate="message_link_added">Link added.</li>
+
+      <!-- addModulesToCourse.py -->
+      <li i18n:translate="message_two_modules_in_one_course">Modules
+      cannot appear twice in a course.</li>
+
+      <!-- validate_collection_publish.vpy -->
+      <li i18n:translate="message_already_published">Already
+      published.</li>
+      
+      <li i18n:translate="message_publish_version_conflict">
+        Someone else has edited and published this object 
+        (<span i18n:name="context_title"
+          tal:replace="string:context_title">context_title</span>) 
+        while you had it checked out. Please make a note of the
+        changes you have made, discard the object check out a new
+        copy, and make your changes again.
+      </li>
+      
+      <li i18n:translate="message_publish_pending_roles">You cannot
+      publish with pending role requests.</li>
+      
+      <li i18n:translate="message_must_specify_roles">You must specify
+      at least one Author, Maintainer and Copyright Holder.</li>
+
+      <!-- forkCourse.cpy -->
+      <li i18n:translate="message_item_created">Item created.</li>
+
+      <!-- validate_community_act.vpy -->
+      <li i18n:translate="message_html_not_safe">This HTML is not
+      safe. Please remove offending tags.</li>
+
+      <!-- community_act_script.cpy-->
+      <li i18n:translate="message_title_updated">
+        <span i18n:name="title"
+          tal:replace="string:title">title</span>
+        has been updated.
+      </li>
+
+      <!-- new_community_edit.cpy -->
+      <li i18n:translate="">
+        <span i18n:name="type_name"
+          tal:replace="string:type_name">type_name</span>
+        has been created.
+      </li>
+
+      <!-- community_member_add.cpy -->
+      <li i18n:translate="message_member_joined_community">You have joined 
+        <span i18n:name="context_title"
+          tal:replace="string:context_title">context_title</span>.
+      </li>
+      
+      <!-- community_content_add.cpy -->
+      <li i18n:translate="list_seperator">,</li>
+
+      <li i18n:translate="message_content_already_in_community">
+        <span i18n:name="omitted_titles"
+          tal:replace="string:omitted_titles">omitted_titles</span>
+        are already in the Community.</li>
+
+      <li i18n:translate="message_content_added_community">
+        <span i18n:name="added_titles"
+          tal:replace="string:added_titles">added_titles</span>
+         have been added.</li>
+
+      <!-- community_content_remove.cpy -->
+      <li i18n:translate="message_content_removed_community">
+        <span i18n:name="remids"
+          tal:replace="string:remids">remids</span>
+         have been removed.</li>
+
+      <!-- validate_community.vpy -->
+      <li i18n:translate="message_community_settings_saved">Community
+      settings have been saved.</li>
+
+      <!-- validate_link_add.vpy -->
+      <li i18n:translate="message_one_link_required">At least one link
+      required.</li>
+
+      <li i18n:translate="message_specify_link_title">You must specify
+      a link title.</li>
+
+      <li i18n:translate="message_specify_url_or_object">You must
+      specify either a URL or an object as the link target.</li>
+
+      <!-- confirm_publish.pt -->
+      <li i18n:translate="value_canceled">Canceled.</li>
+
+      <!-- updated_text.cpy -->
+      <li i18n:translate="message_saved">Saved.</li>
+
+      <!-- addPeople.cpy -->
+      <li i18n:translate="message_users_already_have_roles">
+        Users omitted because they already have roles:
+        <span i18n:name="omitted_ids"
+          tal:replace="string:omitted_ids">omitted_ids</span>
+      </li>
+
+      <li i18n:translate="message_users_added">
+        Users added: 
+        <span i18n:name="added_ids"
+          tal:replace="string:added_ids">added_ids</span>
+      </li>
+
+      <!-- sendPatch.cpy -->
+      <li i18n:translate="message_patch_submitted">Suggested edits
+      submitted.</li>
+      
+      <!-- update_links.cpy -->
+      <li i18n:translate="message_links_updated">Links updated.</li>
+
+      <!-- update_metadata.cpy -->
+      <li i18n:translate="message_metadata_updated">Metadata
+      updated.</li>
+
+      <!-- validate_module_import.py -->
+      <li i18n:translate="message_must_upload_file">You must upload a
+      file</li>
+
+      <li i18n:translate="message_must_select_file_to_upload">You must
+      select a file to upload.</li>
+
+      <!-- update_roles.cpy -->
+      <li i18n:translate="message_role_change_matches_error"> Role
+        change request matches a previous request that is still pending.
+        This should not happen.  Please file a bug report.</li>
+
+      <li i18n:translate="message_roles_updated">Roles updated.</li>
+
+      <!-- deleteContent.cpy -->
+      <li i18n:translate="message_item_deleted">Item deleted.</li>
+
+      <!-- publishContent.cpy -->
+      <li i18n:translate="message_item_published">Item Published.</li>
+
+      <!-- discardContent.cpy -->
+      <li i18n:translate="message_changes_discarded">Changes
+      discarded.</li>
+      
+      <!-- validate_module_publish.vpy -->
+      <li i18n:translate="message_module_didnt_validate">The module
+      did not validate.  Please fix before publishing.</li>
+
+      <!-- validate_module_metadata.vpy -->
+      <li i18n:translate="message_must_enter_valid_title">You must
+      enter a valid title</li>
+
+      <!-- module_import.cpy-->
+      <li i18n:translate="message_import_completed">Import
+      completed.</li>
+
+      <li i18n:translate="message_could_not_import">Could not import
+      file.
+        <span i18n:name="errormsg"
+          tal:replace="string:errormsg">errormsg</span>
+      </li>
+      
+      <li i18n:translate="message_zip_subfolders_not_imported">
+        <span i18n:name="psm"
+          tal:replace="string:psm">psm</span>
+        Subfolders in zip files cannot be imported; these folders and
+        their contents ignored:
+        <span i18n:name="ignored_subdirs"
+          tal:replace="string:ignored_subdirs">ignored_subdirs</span>
+      </li>  
+    
+      <li i18n:translate="message_zip_files_not_imported">
+        <span i18n:name="psm"
+          tal:replace="string:psm">psm</span>
+        These files not imported:
+        <span i18n:name="ignored_files"
+          tal:replace="string:ignored_files">ignored_files</span>
+      </li>
+
+      <li i18n:translate="message_import_type_not_supported">Sorry,
+      but we don't support this type of import.</li>
+      
+      <!-- patch_update.cpy -->
+      <li i18n:translate="message_edits_rejected">Edits rejected.</li>
+
+      <li i18n:translate="message_file_contents_not_match">
+        <span i18n:name="msg"
+          tal:replace="string:msg">msg</span>: 
+        File contents did not match</li>
+
+      <li i18n:translate="message_expected_for_got_instead">
+        <span i18n:name="msg"
+          tal:replace="string:msg">msg</span>: 
+        Expected 
+        <span i18n:name="val2"
+          tal:replace="string:val2">val2</span> 
+        for 
+        <span i18n:name="field"
+          tal:replace="string:field">field</span>, 
+        got 
+        <span i18n:name="val1"
+          tal:replace="string:val1">val1</span>
+        instead
+      </li>
+
+      <li i18n:translate="message_conflict_error">Conflict error.</li>
+      
+      <li i18n:translate="message_edits_applied">Edits applied.</li>
+
+      <!-- folder_delete.cpy-->
+      <li i18n:translate="message_please_select_items_remove">Please
+      select one or more items to remove.</li>
+      
+      <li i18n:translate="message_file_contents_not_match">
+        <span i18n:name="titles"
+          tal:replace="string:titles">titles</span>
+        has been removed.</li>
+
+      <!-- validate_pesonalize.vpy -->
+      <li i18n:translate="message_personal_settings_saved">Personal
+      settings have been saved.</li>
+      
+      <!-- folder_copy.cpy -->
+      <li i18n:translate="message_unable_to_copy">Unable to copy one
+      or more of the selected items.</li>
+
+      <li i18n:translate="message_please_select_items_copy">Please
+      select one or more items to copy.</li>
+
+      <li i18n:translate="message_items_copied">Item(s) copied.</li>
+
+      <!-- folder_paste.cpy -->
+      <li i18n:translate="message_copy_items_to_paste">Copy or cut one
+      or more items to paste.</li>
+
+      <li i18n:translate="message_items_pasted">Item(s) pasted.</li>
+
+      <li i18n:translate="message_duplicate_modules_omitted">
+        Duplicate modules
+        <span i18n:name="duplicates"
+          tal:replace="string:duplicates">duplicates</span>
+        omitted
+      </li>
+
+      <li i18n:translate="message_couldnt_find_clipboard">Paste could
+      not find clipboard content</li>
+
+      <!-- ########################### -->
+      <!-- # XSL Translation Strings # -->
+      <!-- ########################### -->
+      <!-- Note: These will not take effect from simply being in the
+      .po files.  They need to be copied to cnxmll10n.xsl before they
+      will actually be used in the xsl pipline for translations.  They
+      mush also be changed from the i18n format to the docbook xsl
+      format for internationalization.  They are simply included here
+      so that they are included with all the other i18n strings and
+      only one file needs to be handed off to translators.
+      -->
+
+      <!-- for cnxml_render.xsl -->
+      <li i18n:translate="xsl_subfigure">subfigure</li>
+      <li i18n:translate="xsl_Subfigure">Subfigure</li>
+      <li i18n:translate="xsl_Strength">Strength</li>
+      <li i18n:translate="xsl_Definition">Definition</li>
+      <li i18n:translate="xsl_Proof">Proof</li>
+      <li i18n:translate="xsl_MediaFile">Media File</li>
+      <li i18n:translate="xsl_EPSImage">EPS Image</li>
+      <li i18n:translate="xsl_LabVIEWExample">LabVIEWExample</li>
+      <li i18n:translate="xsl_Download">Download</li>
+      <li i18n:translate="xsl_LabVIEWSource">LabVIEW Source</li>
+      <li i18n:translate="xsl_AudioFile">Audio File</li>
+      <li i18n:translate="xsl_MusicalExample">Musical Example</li>
+      <li i18n:translate="xsl_Problem">Problem</li>
+      <li i18n:translate="xsl_ClickForSolution">Click for Solution</li>
+      <li i18n:translate="xsl_HideSolution">Hide Solution</li>
+
+      <!-- for content_render.xsl -->
+      <li i18n:translate="xsl_Translators:">Translators:</li>
+      <li i18n:translate="xsl_Translators">Translators</li>
+      <li i18n:translate="xsl_Translated By">Translated By:</li>
+      <li i18n:translate="xsl_Editors:">Editors:</li>
+      <li i18n:translate="xsl_Editors">Editors</li>
+      <li i18n:translate="xsl_Edited By">Edited By:</li>
+      <li i18n:translate="xsl_By">By: </li>
+      <li i18n:translate="xsl_BasedOn">Based on:</li>
+      <li i18n:translate="xsl_Summary">Summary:</li>
+      <li i18n:translate="xsl_viewingoldversion">You are viewing an old version of this document.</li>
+      <li i18n:translate="xsl_latestversionhere">The latest version is available here.</li>
+      <li i18n:translate="xsl_previewofwhenpublished"> This is a preview of how your module will appear when published</li>
+      <li i18n:translate="xsl_assumingthatall">assuming that all </li>
+      <li i18n:translate="xsl_pendingrolerequests">currently pending role requests</li>
+      <li i18n:translate="xsl_areaccepted"> are accepted</li>
+      <li i18n:translate="xsl_returntoediting">You must return to the editing interface to </li>
+      <li i18n:translate="xsl_edit">edit</li>
+      <li i18n:translate="xsl_or"> or </li>
+      <li i18n:translate="xsl_publish">publish</li>
+      <li i18n:translate="xsl_yourchanges"> your changes. </li>
+      <li i18n:translate="xsl_youmayview">You may view the </li>
+      <li i18n:translate="xsl_latestpublishedversion">latest published version</li>
+      <li i18n:translate="xsl_hereanda"> here and a </li>
+      <li i18n:translate="xsl_listofchanges">list of changes</li>
+      <li i18n:translate="xsl_here"> here.</li>
+      <li i18n:translate="xsl_Commentsquestionsfeedback">Comments, questions, feedback, criticisms?</li>
+      <li i18n:translate="xsl_Discussionforum">Discussion forum</li>
+      <li i18n:translate="xsl_Jointhediscussion">Join the discussion &#187;</li>
+      <li i18n:translate="xsl_Sendfeedback">Send feedback</li>
+      <li i18n:translate="xsl_Emailtheauthors">E-mail the authors</li>
+      <li i18n:translate="xsl_Emailtheauthor">E-mail the author</li>
+      <li i18n:translate="xsl_Email">E-mail </li>
+      <li i18n:translate="xsl_Relatedmaterial">Related material</li>
+      <li i18n:translate="xsl_Example links">Example links</li>
+      <li i18n:translate="xsl_Prerequisite links">Prerequisite links</li>
+      <li i18n:translate="xsl_Supplemental links">Supplemental links</li>
+      <li i18n:translate="xsl_Verystronglink">Very strongly related link</li>
+      <li i18n:translate="xsl_Stronglink">Strongly related link</li>
+      <li i18n:translate="xsl_Relatedlink">Related link</li>
+      <li i18n:translate="xsl_Distantlink">Distantly related link</li>
+      <li i18n:translate="xsl_Verydistantlink">Very distantly related link</li>
+      <li i18n:translate="xsl_LinktoPDFformat">Link to printer-friendly PDF format</li>
+      <li i18n:translate="xsl_Print">Print</li>
+      <li i18n:translate="xsl_PDF"> (PDF)</li>
+      <li i18n:translate="xsl_Similarcontent">Similar content</li>
+      <li i18n:translate="xsl_Moresimilarcontent">More links to similar content</li>
+      <li i18n:translate="xsl_More">More</li>
+      <li i18n:translate="xsl_Coursesusingcontent">Courses using this content</li>
+      <li i18n:translate="xsl_Othercoursesusingcontent">Other courses using this content</li>
+      <li i18n:translate="xsl_Morecoursesusingcontent">More courses using this content</li>
+      <li i18n:translate="xsl_Personalize">Personalize</li>
+      <li i18n:translate="xsl_Chooseastyle">Choose a style</li>
+      <li i18n:translate="xsl_EditInPlace">Edit-In-Place</li>
+      <li i18n:translate="xsl_Editthiscontent">Edit this content</li>
+      <li i18n:translate="xsl_authoronly"> (author only)</li>
+      <li i18n:translate="xsl_MoreAboutThisContent">More About This Content</li>
+      <li i18n:translate="xsl_Metadata">Metadata</li>
+      <li i18n:translate="xsl_CiteThisContent">Cite This Content</li>
+      <li i18n:translate="xsl_VersionHistory">Version History</li>
+      <li i18n:translate="xsl_Worklicensedby">This work is licensed by</li>
+      <li i18n:translate="xsl_and"> and </li>
+      <li i18n:translate="xsl_comma">, </li>
+      <li i18n:translate="xsl_Seethe">See the</li>
+      <li i18n:translate="xsl_CreativeCommonsLicense">Creative Commons License</li>
+      <li i18n:translate="xsl_aboutpermission">about permission to reuse this material.</li>
+      <li i18n:translate="xsl_period">. </li>
+      <li i18n:translate="xsl_Lasteditedby">Last edited by</li>
+      <li i18n:translate="xsl_on">on</li>
+      <li i18n:translate="xsl_Search">Search</li>
+      <li i18n:translate="xsl_Approve">Approve</li>
+      <li i18n:translate="xsl_Home">Home</li>
+      <li i18n:translate="xsl_AboutUs">About Us</li>
+      <li i18n:translate="xsl_Browseallcontent">Browse all content</li>
+      <li i18n:translate="xsl_Help">Help</li>
+      <li i18n:translate="xsl_ContentActions">Content Actions</li>
+      <li i18n:translate="xsl_ApproveModule">Approve Module</li>
+      <li i18n:translate="xsl_SaveToDelicious">Save to del.icio.us</li>
+      <li i18n:translate="xsl_whatsthis">(what's this?)</li>
+      <li i18n:translate="xsl_Endorsements">Endorsements</li>
+      <li i18n:translate="xsl_ReportaBug">Report a Bug</li>
+      <li i18n:translate="xsl_Contact">Contact</li>
+      <li i18n:translate="xsl_Youarehere">You are here: </li>
+      <li i18n:translate="xsl_rightanglequote"> &#187; </li>
+      <li i18n:translate="xsl_Content">Content</li>
+      <li i18n:translate="xsl_Previous">&#171; Previous</li>
+      <li i18n:translate="xsl_Next">Next &#187;</li>
+      <li i18n:translate="xsl_pipe">|</li>
+      <li i18n:translate="xsl_Incourse">In course:</li>
+      <li i18n:translate="xsl_coursehome">course home</li>
+      <li i18n:translate="xsl_leftparen">(</li>
+      <li i18n:translate="xsl_rightparen">)</li>
+      <li i18n:translate="xsl_Courseby">Course by:</li>
+      <li i18n:translate="xsl_MusicalExamples">Musical Examples</li>
+      <li i18n:translate="xsl_Moduleby">Module by:</li>
+      <li i18n:translate="xsl_CourseContents">Course Contents</li>
+      <li i18n:translate="xsl_show">show</li>
+      <li i18n:translate="xsl_hide">hide</li>
+      <li i18n:translate="xsl_Links">Links</li>
+      
+      <!-- for content_render.xsl -->
+      <li i18n:translate="xsl_Instructions">Instructions: </li>
+      <li i18n:translate="xsl_Instructionstext">To edit text, click on an area with a white background. Warning: Reloading or leaving the page will discard any unpublished changes.</li>
+      <li i18n:translate="xsl_Brieflydescribeyourchanges">Briefly describe your changes:</li>
+      <li i18n:translate="xsl_Publish">Publish</li>
+      <li i18n:translate="xsl_Discard">Discard</li>
+
+    </ul>
+
+    <!-- Still needed:
+    review states
+    - Possible Patch Errors
+    - Possible Field names in changeset_view
+    'Select '+ u_id +' for no roles'"
+    'Select '+ u_id +' for all roles'"
+    All Possible Error Messages
+    -->
+  </div>
+</html>

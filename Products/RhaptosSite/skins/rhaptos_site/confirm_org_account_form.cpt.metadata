@@ -1,0 +1,11 @@
+[default]
+title=Confirm Account Request
+
+[validators]
+validators =
+
+[actions]
+action.success = traverse_to:string:register
+action.success..submit = traverse_to:string:register
+action.success..change = traverse_to:string:org_account_form
+action.failure = traverse_to:string:confirm_org_account_form

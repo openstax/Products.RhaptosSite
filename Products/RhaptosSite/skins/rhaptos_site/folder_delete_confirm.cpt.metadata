@@ -1,0 +1,15 @@
+[default]
+title=Delete Confirm
+
+[actions]
+action.success=traverse_to:string:folder_delete
+action.success..delete=traverse_to:string:folder_delete
+action.success..cancel=redirect_to:request/orig_template|string:folder_contents
+
+action.success.ContentSelectionLens=traverse_to:string:lens_content_del
+action.success.ContentSelectionLens.delete=traverse_to:string:lens_content_del
+action.success.ContentSelectionLens.cancel=redirect_to:request/orig_template|string:lens_content_view
+
+action.success.FavoritesLens=traverse_to:string:lens_content_del
+action.success.FavoritesLens.delete=traverse_to:string:lens_content_del
+action.success.FavoritesLens.cancel=redirect_to:request/orig_template|string:lens_content_view

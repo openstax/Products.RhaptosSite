@@ -1,0 +1,305 @@
+<tal:block tal:define="container_object nocall:here;
+                       container_type   container_object/portal_type;
+                       inModule         python:container_type == 'Module';
+                       default_tab      python:inModule and 'contents' or 'view';
+                       orig_template    request/orig_template | nothing;
+                       mode             python:orig_template and orig_template.split('?')[0] or None;
+                       inListConent     python:mode == 'listcontent';">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<tal:comment tal:replace="nothing">
+This template based on version from Plone 2.5.2-1
+
+Rhaptos notes:
+ inserted html, tal, metal, i18n namespaces
+ added Module/Collection check to canRenameItem (like previous 'renameable')
+   this would be nice to factor out somewhere more general...
+ added hidden input to preserve id of non-id-change content (to avoid script problems with title change)
+   @see also r5161
+ added hidden input to preserve title of non-modifiable content (like above). see #4013
+ don't remove 'paths:list' hidden under any circumstances, since the three lists (paths, news_ids, new_titles)
+   must stay in lockstep for the script to work right. see #4013
+ don't lose new names on error
+   @see also r13821
+   This would be a good addition to Plone!
+ remove 'error' class attribute for non-changable fields
+ add help div to title, for balance
+ space between the two fields
+ reformatted the inputs into tables
+
+ Go to workspace_contents when cancelled (in metadata file)
+   - probably needs to be done to folder_rename too
+
+Old customizations no longer included:
+ added (s) to title
+ Previously added "All" to "Rename" button. Done by Plone 2.
+</tal:comment>
+
+  <body>
+
+    <div metal:fill-slot="content_title_header">
+        <tal:block tal:condition="python: not (inModule or inListConent)">
+          <div tal:define="container_title container_object/Title">
+            <h1>
+              <tal:block replace="structure python:getattr(here, container_object.getIcon(1))"/>
+              <span tal:replace="container_title" >Workgroup Title</span>
+            </h1>
+            <tal:block tal:condition="here/Description | nothing">
+              <div class="workarea_description">
+                <strong>Description:</strong>
+                <span tal:replace="here/Description">Description</span>
+              </div>
+            </tal:block>
+          </div>
+        </tal:block>
+        <tal:block tal:condition="inModule">
+          <div tal:define="module            nocall:container_object;
+                           parent_url        python:module.navigationParent(module, template.getId());
+                           parent_title      python:module.getParentNode().Title();
+                           moduleInWorkspace python:module.getParentNode().portal_type == 'Workspace'">
+            <h1><tal:block replace="structure python:getattr(here, container_object.getIcon(1))"/> <span>Module</span>: <span tal:replace="module/Title">Module Title</span></h1>
+            <div class="workarea_locator"
+                 tal:condition="parent_url">In:
+              <a href=""
+                tal:attributes="href parent_url"><span tal:condition="not:moduleInWorkspace" tal:replace="parent_title">Work Group Name</span><span tal:condition="moduleInWorkspace">Personal Workspace</span></a>
+            </div>
+          </div>
+        </tal:block>
+        <tal:block tal:condition="inListConent">
+          <div>
+            <h1 i18n:translate="header_all_content_editing_areas">All content in my editing areas</h1>
+          </div>
+        </tal:block>
+    </div>
+
+    <div metal:fill-slot="main">
+
+      <tal:block tal:condition="not: request/paths | nothing"
+                 tal:replace="python:here.redirectToReferrer('Please select one or more items to rename.')"/>
+
+      <tal:block
+          tal:define="container_object nocall:here;
+                      container_type   container_object/portal_type;
+                      inWorkGroup      python:container_type == 'Workgroup';
+                      inWorkSpace      python:container_type == 'Workspace';
+                      inModule         python:container_type == 'Module';">
+        <div class="return-link">
+        <a tal:condition="inModule|inWorkSpace|inWorkGroup"
+           href=""
+           tal:define="viewpart python:inModule and 'module_files' or 'view'"
+           tal:attributes="href viewpart">
+           <span tal:condition="inModule">&#171; Return to file listing for <span tal:replace="python:container_object.portal_type.lower()">Module</span></span>
+           <span tal:condition="inWorkSpace">&#171; Return to complete contents listing for Personal Workspace</span>
+           <span tal:condition="inWorkGroup">&#171; Return to complete contents listing for <span tal:content="container_object/Title">Workgroup Name</span></span>
+           in my editing areas
+        </a>
+        <a tal:condition="inListConent"
+           href=""
+           tal:attributes="href orig_template">
+           <span tal:condition="inListConent"
+                 tal:define="whichtype       python:orig_template and orig_template.split('?')[1];
+                             inclmodules     python:'Module' in whichtype;
+                             inclcollections python:'Collection' in whichtype;
+                             modonly         python:inclmodules and not inclcollections;
+                             colonly         python:inclcollections and not inclmodules;
+                             allcont         python:inclmodules and inclcollections;"
+                 >&#171; Return to full list of
+              <tal:mods tal:condition="modonly">modules</tal:mods>
+              <tal:cols tal:condition="colonly">collections</tal:cols>
+              <tal:both tal:condition="allcont">modules &amp; collections</tal:both>
+           </span>
+           in my editing areas
+        </a>
+        </div>
+      </tal:block>
+
+      <h2 i18n:translate="heading_rename_files">Rename item(s)</h2>
+
+      <p i18n:translate="description_rename_item">Enter the new titles or file names below.</p>
+
+      <tal:defines tal:define="paths      request/paths|python:[];
+                               items      python:here.getObjectsFromPathList(paths);
+                               new_ids    request/new_ids | nothing;
+                               new_titles request/new_titles | nothing;
+                               errors     options/state/getErrors;
+                               multiforce request/multicontainers | nothing;
+                               multicont python:multiforce or [path[:path.rfind('/')] for path in paths];
+                               multicont python:multiforce or len(context.uniquelist(multicont)) > 1">
+
+      <tal:block tal:condition="python:paths and not items"
+                 tal:replace="python:here.redirectToReferrer('The item(s) you selected are no longer available.')"/>
+
+      <form name="folder_rename"
+            action="folder_rename"
+            method="post"
+            tal:attributes="action template_id"
+            tal:condition="items">
+
+        <input type="hidden" name="form.submitted" value="1" />
+        <input type="hidden" name="orig_template"
+               tal:condition="request/orig_template|nothing"
+               tal:attributes="value request/orig_template"/>
+
+        <fieldset tal:repeat="obj items">
+
+          <tal:block define="item                  obj/getId; 
+                             item_path             python:'/'.join(obj.getPhysicalPath());
+                             item_idx              python:items.index(obj);
+                             error                 python:errors and errors.get(item, None);
+                             isModuleOrCollection  python:obj.portal_type in ('Module', 'Collection');
+                             canRenameItem         python:checkPermission('Delete objects', obj);
+                             canRenameItem         python:canRenameItem and checkPermission('Copy or Move', obj);
+                             canRenameItem         python:canRenameItem and not isModuleOrCollection;
+                             canModifyTitle         python:checkPermission('Modify portal content', obj);
+                             canModifyTitle         python:canModifyTitle and isModuleOrCollection;">
+
+            <legend>
+              <span tal:content="item" /><span tal:condition="multicont">, In: 
+                <tal:name content="obj/aq_parent/Title" />
+              </span>
+            </legend>
+
+            <div class="field"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+
+              <div tal:condition="error"
+                   tal:content="error">Validation error output</div>
+
+              <!-- populate paths[] -->
+              <input type="hidden"
+                      name="paths:list"
+                      value="fav_999816073"
+                      tal:attributes="value item_path" />
+
+              <table>
+                <tbody>
+                  <!-- populate new_ids[] which are the new object ids -->
+                  <tal:block tal:condition="canRenameItem">
+                    <tr>
+                      <td>
+                        <label tal:attributes="for string:${item}_id;"
+                               i18n:translate="current_item_name">
+                          Current File Name:
+                        </label>
+                      </td>
+                      <td>
+                        <span tal:content="item">[short name]</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label tal:attributes="for string:${item}_id;"
+                               i18n:translate="label_new_iteem_name">
+                          New File Name:
+                        </label>
+                      </td>
+                      <td>
+                        <input type="text"
+                               name="new_ids:list"
+                               id=""
+                               value=""
+                               size="40"
+                               tabindex=""
+                               tal:define="new_id python:new_ids and new_ids[item_idx] or item"
+                               tal:attributes="value    new_id;
+                                               id       string:${item}_id;
+                                               tabindex tabindex/next;" />
+                      </td>
+                    </tr>
+                  </tal:block>
+                  <tal:block tal:condition="not:canRenameItem">
+                    <tr type="hidden">
+                      <input type="hidden"
+                             name="new_ids:list"
+                             tal:attributes="value item;
+                                             id    string:${item}_id" />
+                    </tr>
+                  </tal:block>
+
+                  <!-- populate new_titles[] which are the new object titles -->
+                  <tal:block tal:condition="canModifyTitle">
+                    <tr>
+                      <td>
+                        <label tal:attributes="for string:${item}_title;"
+                               i18n:translate="label_new_title">
+                          Current Title:
+                        </label>
+                      </td>
+                      <td>
+                        <span tal:content="obj/Title">[current title]</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label tal:attributes="for string:${item}_title;"
+                               i18n:translate="label_new_title">
+                          New Title:
+                        </label>
+                      </td>
+                      <td>
+                        <input type="text"
+                               name="new_titles:list"
+                               value="title"
+                               size="40"
+                               tabindex=""
+                               tal:define="defaultTitle obj/Title;
+                                           new_title    python:new_titles and new_titles[item_idx] or defaultTitle"
+                               tal:attributes="value    new_title;
+                                               id       string:${item}_title;
+                                               tabindex tabindex/next;" />
+                      </td>
+                    </tr>
+                  </tal:block>
+                  <tal:block tal:condition="not:canModifyTitle">
+                    <tr type="hidden">
+                      <input type="hidden"
+                             name="new_titles:list"
+                             tal:attributes="value obj/Title;
+                                             id    string:${item}_title;" />
+                    </tr>
+                  </tal:block>
+                </tbody>
+              </table>
+
+            </div>
+
+          </tal:block>
+
+        </fieldset>
+
+        <div class="formControls">
+
+          <input class="context"
+                 type="submit"
+                 value="Rename"
+                 name="form.button.RenameAll"
+                 tabindex=""
+                 i18n:attributes="value label_rename_all;"
+                 tal:attributes="tabindex tabindex/next;"
+                 />
+          <input class="standalone"
+                 type="submit"
+                 value="Cancel"
+                 name="form.button.Cancel"
+                 tabindex=""
+                 i18n:attributes="value label_cancel;"
+                 tal:attributes="tabindex tabindex/next;"
+                 />
+        </div>
+
+      </form>
+      </tal:defines>
+
+
+    </div>
+
+  </body>
+</html>
+
+</tal:block>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<object name="Workspace"
+   meta_type="Factory-based Type Information with dynamic views">
+   <!-- FIXME FUTURE: i18n properties skipped; apparently not supported in Plone 2.5 -->
+  
+  <property name="title">Workspace</property>
+  <property name="description">Rhaptos private workspace, derived from regular Plone folder.</property>
+  <property name="content_meta_type">Plone Folder</property>
+  <property name="content_icon">folder_icon.gif</property>
+  
+  <property name="product">CMFPlone</property>
+  <property name="factory">addPloneFolder</property>
+  
+  <property name="immediate_view">folder_contents</property>
+  <property name="global_allow">True</property>
+  <property name="filter_content_types">True</property>
+  <property name="allowed_content_types">
+   <element value="UnifiedFile"/>
+   <element value="Collection"/>
+   <element value="Module"/>
+  </property>
+  <property name="allow_discussion">False</property>
+
+  <alias from="(Default)" to="workspace_contents" />
+  <alias from="view" to="workspace_contents" />
+  <alias from="contents" to="workspace_contents" />
+
+  <action title="Contents"
+          action_id="view"
+          url_expr="string:${object_url}/workspace_contents"
+          condition_expr=""
+          category="object"
+          visible="True">
+    <permission value="View" />
+  </action>
+  <action title="Properties"
+          action_id="edit"
+          url_expr="string:${object_url}/workspace_properties"
+          condition_expr=""
+          category="object"
+          visible="True">
+    <permission value="Manage properties" />
+  </action>
+
+</object>

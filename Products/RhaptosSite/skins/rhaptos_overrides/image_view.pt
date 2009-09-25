@@ -1,0 +1,139 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<tal:comment tal:replace="nothing">
+This template based on version from Plone 2.5.2-1
+
+Rhaptos notes:
+   - inserted html, tal, metal, i18n namespaces
+   - added an "up" link
+   - added mimetype to end of info line
+   - remove 'scale' param from tag call to display image
+
+Previous customizations:
+create fieldset box, remove small tag
+add image type field
+move image after metadata fields
+provide link to download image
+description left outside box like original, which would look likely funny if we used description
+make link and type depend on non-zero size
+</tal:comment>
+
+<body>
+
+    <div metal:fill-slot="content_title_header">
+      <tal:block tal:define="container_object python:here.getParentNode();
+                             container_type   container_object/portal_type;
+                             inWorkGroup      python:container_type == 'Workgroup';
+                             inWorkSpace      python:container_type == 'Workspace';
+                             inModule         python:container_type == 'Module'">
+        <tal:block tal:condition="inWorkGroup">
+          <div tal:define="container_title container_object/Title">
+            <h1>
+              <tal:block replace="structure python:getattr(here, container_object.getIcon(1))"/>
+              <span tal:replace="container_title" >Workgroup Title</span>
+            </h1>
+          </div>
+        </tal:block>
+        <tal:block tal:condition="inWorkSpace">
+          <div>
+            <h1><span>Personal Workspace</span></h1>
+            <div><strong>Description:</strong> <span tal:replace="container_object/Description">Description</span></div>
+          </div>
+        </tal:block>
+        <tal:block tal:condition="inModule">
+          <div tal:define="module            nocall:container_object;
+                           grandparent_url   python:module.navigationParent(module, template.getId());
+                           grandparent_title python:module.getParentNode().Title();
+                           moduleInWorkspace python:module.getParentNode().portal_type == 'Workspace'">
+            <h1><tal:block replace="structure python:getattr(here, container_object.getIcon(1))"/> <span>Module</span>: <span tal:replace="module/Title">Module Title</span></h1>
+            <div class="workarea_locator"
+                 tal:condition="grandparent_url">In:
+              <a href=""
+                tal:attributes="href grandparent_url"><span tal:condition="not:moduleInWorkspace" tal:replace="grandparent_title">Work Group Name</span><span tal:condition="moduleInWorkspace">Personal Workspace</span></a>
+            </div>
+          </div>
+        </tal:block>
+      </tal:block>
+    </div>
+
+<div metal:fill-slot="main">
+    <tal:main-macro metal:define-macro="main"
+                    tal:define="size here/size">
+
+        <div metal:use-macro="here/document_actions/macros/document_actions">
+            Document actions (print, sendto etc)
+        </div>
+
+        <metal:x use-macro="context/file_view/macros/up" />
+
+        <h1 tal:content="object_title" class="documentFirstHeading">
+            Title or id
+        </h1>
+
+        <div metal:use-macro="here/document_byline/macros/byline">
+            Get the byline - contains details about author and modification date.
+        </div>
+
+        <p class="documentDescription"
+           tal:content="here/Description"
+           tal:condition="here/Description">
+            Description
+        </p>
+
+        <fieldset tal:define="size python:here.getObjSize(here)">
+          <legend>Image details</legend>
+
+          <div class="field visualNoPrint">
+            <label i18n:translate="label_size">Size</label>
+
+            <div>
+            <span tal:content="size">
+                File size
+            </span>
+
+            <span tal:condition="python:test(size, 0, 1)"
+                  i18n:translate="no_image_uploaded">
+                (No image has been uploaded yet)
+            </span>
+            </div>
+
+          </div>
+
+          <div tal:condition="size" class="field visualNoPrint">
+            <label i18n:translate="label_type">Type</label>
+            <div>
+              <span tal:content="context/content_type">image/png</span>
+            </div>
+          </div>
+
+          <div tal:condition="size" class="field visualNoPrint">
+            <a href=""
+               tal:attributes="href string:$here_url">
+              <span i18n:translate="label_click_here_to_get_the_image">
+                Click here to get the image
+              </span>
+            </a>
+          </div>
+
+          <a href=""
+             tal:attributes="href string:$here_url/image_view_fullscreen"
+             tal:condition="size">
+            <tal:block condition="size" replace="structure python: here.tag()" />
+         </a>
+
+        </fieldset>
+
+        <div metal:use-macro="here/document_relateditems/macros/relatedItems">
+            show related items if they exist
+        </div>
+        
+    </tal:main-macro>
+</div>
+
+</body>
+
+</html>
+

@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="rhaptos">
+
+<tal:comment tal:replace="nothing">
+Rhaptos note: no plone counterpart.
+minor field style changes in conversion.
+</tal:comment>
+
+  <body>
+    
+    <div metal:fill-slot="main" tal:define="errors options/state/getErrors;">
+
+      <h1 i18n:translate="heading_confirm_account">Account Request: Confirmation</h1>
+
+	<form action="" 
+              method="post"
+              tal:attributes="action template/getId" >
+
+        <p class="legend" i18n:translate="text_account_confirm_correct">
+	  Please verify that the following information is correct.
+	</p>
+	<table class="leftheadings">
+	  <tr>
+	    <th i18n:translate="text_username_header">Account Name:</th>
+	    <td><span tal:replace="request/username | nothing" /></td>
+	  </tr>
+	  <tr>
+	    <th i18n:translate="text_name_header">Full Name:</th>
+	    <td><span tal:replace="string:${request/fullname}"/></td>
+	  </tr>
+	  <tr>
+	    <th i18n:translate="text_name_header">Short Organization Name:</th>
+	    <td><span tal:replace="string:${request/shortname}"/></td>
+	  </tr>
+	  <tr>
+	    <th i18n:translate="text_email_header">Email:</th>
+	    <td><span tal:replace="request/email | nothing" /></td>
+	  </tr>
+	  <tr>
+	    <th i18n:translate="text_hompage_header">Web page:</th>
+	    <td><span tal:replace="request/homepage" /></td>
+	  </tr>
+	</table>
+
+        
+          <div class="formControls">
+            <input class="context"
+                   type="submit"
+                   tabindex=""
+                   name="form.button.submit"
+                   value="Request Account"
+                   i18n:attributes="value value_request_account"
+                   tal:attributes="tabindex tabindex/next;" />
+            <input class="context"
+                   type="submit"
+                   tabindex=""
+                   name="form.button.change"
+                   value="Change Values"
+                   i18n:attributes="value value_change_request"
+                   tal:attributes="tabindex tabindex/next;" />
+          </div>
+
+        <span tal:replace="nothing">
+        ##### HIDDEN VARIABLES FOR THE FORM_TOOL -- CUT AND PASTE THESE INTO YOUR FORM ####
+        </span>
+        <input type="hidden" name="form.submitted" value="1" />
+
+	<input type="hidden" name="shortname" tal:attributes="value request/shortname" />
+	<input type="hidden" name="fullname" tal:attributes="value request/fullname" />
+	<input type="hidden" name="email" tal:attributes="value request/email" />
+	<input type="hidden" name="homepage" tal:attributes="value request/homepage" />
+	<input type="hidden" name="username" tal:attributes="value request/username" />
+	<input type="hidden" name="licenseagree" tal:attributes="value request/licenseagree" />
+	<input type="hidden" name="approved_time:date" tal:attributes="value python:DateTime()" />
+	<input type="hidden" name="status" value="Pending" />
+	<input type="hidden" name="account_type" value="org" />
+
+	</form>
+      </div>
+    </body>
+  </html>  

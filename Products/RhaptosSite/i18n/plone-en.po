@@ -1,0 +1,33 @@
+# Gettext Message File for Plone
+msgid ""
+msgstr ""
+"Project-Id-Version: Plone\n"
+"POT-Creation-Date: 2006-11-05 23:20+0000\n"
+"PO-Revision-Date: 2007-05-01 23:00+0000\n"
+"Last-Translator: Kyle Clarkson <kclarks@rice.edu>\n"
+"Language-Team: Connexions <cnx@cnx.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: plone\n"
+"X-Is-Fallback-For: en-ag en-ai en-as en-au en-bb en-bm en-bn en-bs en-bw en-bz en-ca en-ck en-cm en-dm en-er en-et en-fj en-fk en-fm en-gb en-gd en-gh en-gi en-gm en-gu en-gy en-ie en-il en-io en-jm en-ke en-ki en-kn en-ky en-lc en-lr en-ls en-mp en-ms en-mt en-mu en-mw en-na en-nf en-ng en-nr en-nu en-nz en-pg en-ph en-pk en-pn en-pr en-pw en-rw en-sb en-sc en-sg en-sh en-sl en-so en-sz en-tc en-tk en-to en-tt en-ug en-us en-vc en-vg en-vi en-vu en-ws en-za en-zm en-zw\n"
+
+# This is simply an override for default Plone translations that we
+# don't want to use.
+# To use: copy to INSTANCE_HOME/i18n so that it will take precedence
+# over other translations
+
+#. Default: "${member}"
+#: MembershipTool.py
+msgid "title_member_folder"
+msgstr "Personal Workspace"
+
+#. Default: "Home page area that contains the items created and collected by ${member}"
+#: MembershipTool.py
+msgid "description_member_folder"
+msgstr "Home page area that contains the items created and collected by ${member}"
+

@@ -1,0 +1,14 @@
+## upgrade control panel "configlets", really actions, for MyCNX phase 2
+## this script should be idempotent
+
+portal = app.plone
+cp_tool = portal.portal_controlpanel
+
+actions = cp_tool._cloneActions()
+for a in actions:
+    if a.id == 'MemberPrefs':
+        a.title = "Edit Profile"
+cp_tool._actions = tuple(actions)
+
+
+get_transaction().commit()

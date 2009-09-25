@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<rdf:RDF tal:define="d python:request.REQUEST.RESPONSE.setHeader('Cache-Control', 'no-cache')"
+  xmlns:cnx="http://cnx.rice.edu/contexts#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:tal="http://xml.zope.org/namespaces/tal">
+
+  <rdf:Seq about="urn:context:history">
+    <tal:block tal:repeat="course python:context.content.catalog(portal_type='Collection',sort_on='sortTitle')">
+    <rdf:li>
+      <rdf:Description>
+	<cnx:name tal:content="course/Title">Course Name</cnx:name>
+	<cnx:uri tal:content="string:${course/url}?format=rdf">Course URL</cnx:uri>
+	<cnx:institution tal:content="course/institution">Course Institution</cnx:institution>
+	<cnx:instructor tal:content="course/instructor">Course Instructor</cnx:instructor>
+	<cnx:code tal:content="course/code">Course code</cnx:code>
+	<cnx:description tal:content="course/abstract">Course description</cnx:description>
+      </rdf:Description>
+    </rdf:li>
+    </tal:block>
+  </rdf:Seq>
+  
+</rdf:RDF>
+
+

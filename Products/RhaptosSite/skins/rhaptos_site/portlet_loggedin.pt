@@ -1,0 +1,111 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+
+<tal:comment tal:replace="nothing">
+Rhaptos Notes:
+  new! companion to login portlet
+</tal:comment>
+
+<body>
+<div metal:define-macro="portlet" tal:condition="not: isAnon">
+      <dl class="portlet" id="portlet-loggedin">
+        <dt class="portletHeader">
+          <span class="portletTopLeft"></span>
+          <span i18n:translate="box_sign_out">My Account</span>
+          <span class="portletTopRight"></span>
+        </dt>
+        <dd class="portletItem odd">
+          <span i18n:translate="text_you_are_colon_username">You are:
+            <span i18n:name="username"
+              id="user-name"
+              tal:omit-tag="not: mtool/getHomeFolder"
+              class="visualCaseSensitive"
+              tal:content="user/getUserName">
+              John
+            </span>
+          </span>
+        </dd>
+        <dd class="portletItem even">
+          <ul>
+            <li>
+              <a tal:attributes="href string:$portal_url/mycnx"
+                 i18n:translate="label_mycnx">
+                MyCNX Home
+              </a>
+            </li>
+            <li>
+              <a href="/plone_memberprefs_panel"
+                 i18n:translate="label_my_account">
+                Profile &amp; Account Settings
+              </a>
+            </li>
+            <li>
+              <a href="/go_favorites/view" tal:attributes="href string:$portal_url/go_favorites/view"
+                 i18n:translate="label_my_favorites">My Favorites</a>
+              (<a href="/go_favorites/contents" tal:attributes="href string:$portal_url/go_favorites/contents"
+                 i18n:translate="link_edit">edit</a>)
+            </li>
+
+            <tal:siyavula condition="context/@@siyavula|nothing">
+              <tal:something_to_review define="modules python:context.restrictedTraverse('@@lensmaker.reviewlist.modules')()"
+                                       condition="modules">
+                <li tal:define="inReviewList python:request.URL.endswith('@@lensmaker.reviewlist');
+                                home context/portal_membership/getHomeFolder;
+                                homeurl home/absolute_url"
+                    tal:attributes="class python:inReviewList and 'currentNavItem' or None">
+                   <a tal:attributes="href string:${homeurl}/@@lensmaker.reviewlist"
+                      style="color: #ee7700">
+                     <span i18n:translate="box_text_review_and_approve" tal:omit-tag="">Review and Approve (<span tal:replace="python:len(modules)"/>)</span>
+                   </a>
+                </li>
+              </tal:something_to_review>
+            </tal:siyavula>
+
+            <li tal:define="ct here/portal_collaboration;
+                            pt here/portal_patch;
+                            mt here/portal_moduledb;
+                            mc nocall:here/member_catalog;
+                            u user/getUserName;
+                            collabs python:ct.searchCollaborations(user=u, status='pending');
+                            my_content python:[m.objectId for m in mt.sqlGetModulesByRole(user=u,role='maintainer')];
+                            patches python:my_content and pt.searchPatches(orig_id=my_content, review_state='submitted');"
+                tal:condition="python:collabs or patches"
+                id="portlet-pending">
+
+              <tal:comment tal:Replace="nothing"> define for future org account approval:
+                org_accounts python:user.has_role('Manager') and mc({'account_type':'org','status':'Pending'})</tal:comment>
+
+              <span i18n:translate="label_pending">Pending Messages:</span>
+                <div tal:condition="collabs" class="portletContent even linkdata">
+                <span tal:replace="python:len(collabs)">1</span>
+                <a href="/collaborations" i18n:translate="box_pending_role_requests">Role Request(s)</a>
+                </div>
+                <div tal:condition="patches" class="portletContent odd linkdata">
+                  <span tal:replace="python:len(patches)">1</span>
+                  <a href="/patches" i18n:translate="box_pending_suggested_edits">Suggested Edit(s)</a>
+                </div>
+                <div tal:condition="nothing" class="portletContent even linkdata">
+                  <span tal:replace="python:len(org_accounts)">1</span>
+                  <a href="/management/pending_accounts" i18n:translate="box_pending_org_accounts">Approve Org Accounts</a>
+                </div>
+            </li>
+          </ul>
+        </dd>
+
+        <dd class="portletMore">
+	  <form action="/logout">
+	    <input class="context" name="submit" value="Log out" alt="Log out" type="submit" />
+	  </form>
+          
+          <span class="portletBottomLeft"></span>
+          <span class="portletBottomRight"></span>
+
+	</dd>
+      </dl>
+    </div>
+  </body>
+</html>
+

@@ -1,0 +1,19 @@
+Created -- 
+  The module is newly created and has never been published. It exists
+  only in the workgroup. The module is visible to members of the
+  workgroup, but not to the world at large.
+ 
+Published -- The module has been published to the repository, and is
+  visible to the world. It must be checked out to be edited further.
+
+Checked Out -- 
+  A copy of the module has been made in the workgroup for editing.
+  Note that the module in the repository may have changed since then
+  if another workgroup has published revisions.
+
+Modified -- 
+  The module is checked out to the workgroup, and has been
+  modified. It is different from the repository version.  Only members
+  of the workgroup can see the changes.  The rest of the world sees
+  the most recent published version.
+ 

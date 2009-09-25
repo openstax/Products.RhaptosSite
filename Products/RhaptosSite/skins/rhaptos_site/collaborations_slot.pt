@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="rhaptos"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+<tal:comment tal:replace="nothing">
+Rhaptos note: changes only to make old-style slot into portlet.
+mostly different names for macros and styles.
+</tal:comment>
+
+  <body>
+
+    <!-- The Collaborations box -->
+    <div metal:define-macro="portlet"
+         tal:define="ct here/portal_collaboration; 
+                        u user/getUserName;
+                        my_pending python:ct.searchCollaborations(user=u, status='pending');
+                        others python:ct.searchCollaborations(requester=u);
+                        pending python:[r for r in others if getattr(r,'status','') =='pending'];
+                        accepted python:[r for r in others if getattr(r,'status','')=='accepted'];
+                        rejected python:[r for r in others if getattr(r,'status','')=='rejected']"
+         tal:condition="python:not(here.portal_membership.isAnonymousUser()) and (my_pending or pending or accepted or rejected)">
+      
+      <dl class="portlet" id="portlet-collaborations">
+       
+        <dt class="portletHeader">
+          <span class="portletTopLeft"></span>
+          <span i18n:translate="box_heading_collaboration_requests">Collaboration Requests</span>
+          <span class="portletTopRight"></span>
+        </dt>
+
+        <dd class="portletItem even">
+          <span tal:omit-tag="not:my_pending" style="color:red">
+            <span tal:replace="python:len(my_pending)">1</span>
+          </span> <span i18n:translate="text_collaborations_your_attention">request(s) waiting for your attention</span>
+        </dd>
+        <dd class="portletItem odd">
+          <span tal:replace="python:len(pending)">1</span>
+          <span i18n:translate="text_collaborations_for_others">request(s) waiting on others</span>
+        </dd>
+        <dd class="portletItem odd">
+          <span tal:replace="python:len(accepted) + len(rejected)">1</span>
+          <span i18n:translate="text_collaborations_completed_by_others">request(s) completed by others</span>
+        </dd>
+        <dd class="portletItem even">
+          <a href="/collaborations" i18n:translate="label_process_collaborations">Process Requests...</a>
+        </dd>
+      </dl>
+    </div>
+  </body>
+</html>
+

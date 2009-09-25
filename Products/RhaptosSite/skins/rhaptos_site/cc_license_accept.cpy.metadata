@@ -1,0 +1,9 @@
+[default]
+title=Make factory object when license is accepted
+
+[validators]
+validators=validate_license
+
+[actions]
+action.success=traverse_to:string:content_title
+action.failure=traverse_to:string:cc_license

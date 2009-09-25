@@ -1,0 +1,249 @@
+/*
+ *  This is the file where you put your CSS changes. 
+ *  You should preferrably use this and override the 
+ *  relevant properties you want to change here instead 
+ *  of customizing plone.css to survive upgrades. Writing
+ *  your own plone.css only makes sense for very heavy 
+ *  customizations. Useful variables from Plone are 
+ *  documented at the bottom of this file.
+ */
+ 
+/* <dtml-with base_properties> (do not remove this :) */
+/* <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either :) */
+
+#portal-breadcrumbs{
+  border-top: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
+  background-color: &dtml-globalBackgroundColor;;
+}
+
+#portal-colophon .colophonIconRhaptos{
+  background-image: url(&dtml-portal_url;/images/rhaptos_powered.png);
+}
+
+#portal-column-content #content{
+  padding-top: 2em !important;
+}
+
+.documentContent{
+  padding: 0 !important;
+}
+
+.documentEditable .documentContent{
+  padding: 1em !important;
+}
+
+h1{
+  margin-bottom: .5em;
+  font-size: 1.7em;
+}
+
+.documentContent h1{
+  font-size: 1.6em;
+}
+
+#portlet-navigation-tree{
+  margin-left: 0;
+}
+
+#portlet-navigation-tree .subheader{
+  list-style-image: none;
+  list-style-type: none;
+  color: #666;
+}
+
+#portlet-navigation-tree .extracted{
+  font-weight: bold;
+  list-style-image: none;
+  list-style-type: none;
+}
+
+#portlet-navigation-tree li, #portlet-recentedit li{
+  /* clip and try to ellipsize absurdly long words. */
+  overflow:hidden;
+  text-overflow: ellipsis;     /* IE 6,7; eventually CSS3? */
+  -o-text-overflow:ellipsis;   /* webkit (Safari; apparently inactive in Chrome) */
+  -ms-text-overflow:ellipsis;  /* IE 8 */
+  /* not in FF, currently. see https://developer.mozilla.org/en/CSS/text-overflow */
+  width: 15em;   /* IE and Chrome require explicit width for overflow ellipsis */
+}
+
+#portlet-navigation-tree ul li{
+  /* IE and Chrome require explicit width for overflow ellipsis,
+     and in a ul we're a bit indented, and thus shorter */
+  width: 13.5em;
+}
+
+#portlet-recentedit li{
+  width: 10em;
+}
+
+.list_listing, .latest, .lenses{
+  margin-left: 0;
+}
+
+.list_listing li, .latest li, .lenses li{
+  list-style-image: none;
+  list-style-type: none;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding-bottom: .5em;
+  padding-left: 20px;
+}
+
+.workgroup{ background-image: url(&dtml-portal_url;/group.gif); }
+.module{ background-image: url(&dtml-portal_url;/module_icon.gif); }
+.collection{ background-image: url(&dtml-portal_url;/repository_icon.gif); }
+.lens{ background-image: url(&dtml-portal_url;/lenses.gif); }
+.favorites{ background-image: url(&dtml-portal_url;/star.png); }
+.user{ background-image: url(&dtml-portal_url;/user.gif); }
+
+.latest{
+  font-size: .9em;
+}
+.portlet .latest{
+  font-size: 1em;
+}
+
+.list_listing li{
+  margin-bottom: 1.5em;
+}
+
+.removal li{
+  margin-bottom: .5em;
+}
+
+.list_listing h2{
+  font-size: 1.2em;
+  margin: 0 0 .2em;
+  padding: 0;
+}
+
+.list_listing h2 a{
+  text-decoration: none;
+}
+
+.edit_links{
+  font-size: .9em;
+  margin-bottom: .2em;
+}
+
+.list_listing table{
+  border-collapse: collapse;
+}
+
+.list_listing th, .list-listing td{
+  padding: 0;
+  vertical-align: top;
+}
+
+.list_listing th{
+  text-align: left;
+  padding-right: .5em;
+}
+
+.more{
+  font-weight: bold;
+}
+
+.none_set{
+  font-style: italic;
+}
+
+.return-link{
+  margin: .5em 0 1.25em;
+}
+
+h1 img, .normal-text-in-header{
+  margin-top: -3px;
+}
+
+.normal-text-in-header{
+  font-size: 0.6em;
+  color: black;
+  font-weight: normal;
+}
+
+.normal-text-in-header a{
+  color: &dtml-linkColor; !important;
+  text-decoration: underline !important;
+}
+
+.createlink{
+  margin: 0;
+}
+
+.listcontent_createlinks{
+  float: right;
+  margin-left: 1.5em;
+}
+
+.listcontent_createlinks .createlink{
+  text-align: right;
+}
+
+#lastmodified{
+  margin-top: .75em;
+}
+
+.workarea_locator, .workarea_description{
+  margin: -.5em 0 1em;
+}
+
+.text_preview{
+  border-width: 0;
+}
+
+#container-full_screen{ 
+  float: right;
+  margin-left: 1.5em;
+}
+
+/* The following three undo Plone's assumptions about our fullscreen use */
+
+body.fullscreen #portal-logo, body.fullscreen #portal-siteactions{
+  display: block;
+}
+
+body.fullscreen #portal-globalnav{
+  margin-top: 0;
+}
+
+body.fullscreen #portal-searchbox{
+  margin: 1.5em 0 0;
+  padding: 0 2em 0 0;
+}
+
+.folder_buttons_top{ 
+  margin-top: 1em;  
+}
+
+#add_new_file{
+  margin: 1em 0;
+}
+
+#portal-column-one.lens-left-column{
+  padding: 2em 0 1em 2em;
+  width: 19em;
+}
+
+#portal-column-one.lens-left-column .visualPadding{
+  padding: 0;
+}
+
+#archetypes-fieldname-description textarea{
+  font-weight: normal;
+}
+
+/* clipping for tag/criteria portlets */
+#portlet-lens-criteria .portletItem, #portlet-lens-tags .portletItem {
+  width: 17em;
+  overflow:hidden;
+
+  text-overflow: ellipsis;     /* IE 6,7; eventually CSS3? */
+  -o-text-overflow:ellipsis;   /* webkit (Safari; apparently inactive in Chrome) */
+  -ms-text-overflow:ellipsis;  /* IE 8 */
+  /* not in FF, currently. see https://developer.mozilla.org/en/CSS/text-overflow */
+}
+
+/* </dtml-with> */

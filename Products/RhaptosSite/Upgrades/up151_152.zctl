@@ -1,0 +1,5 @@
+from Products.ExternalMethod.ExternalMethod import ExternalMethod
+
+ExternalMethod('temp','temp','RhaptosSite.Upgrade','addMemberProfileFields')(app.plone)
+
+get_transaction().commit()

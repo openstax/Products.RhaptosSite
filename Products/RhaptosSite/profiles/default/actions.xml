@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<object name="portal_actions" meta_type="Plone Actions Tool">
+ <action-provider name="portal_actions">
+  <!-- FIXME: Currently mostly handles actions dealing with MyCNX; eventually, we should have here any changes
+       between Rhaptos and default Plone sets of actions, replacing whatever is in setup/customize_plone.py
+       and the install script. (We may still need to delete programmatically, since remove="True" doesn't
+       work on actions in this version.) Then we can use this instead.
+  -->
+  
+  <!-- show MyCNX tab generally for auth users; highlights when in 'mycnx' object .
+       goes away on objects that have their own actions, or else we duplicate tabs -->
+  <action title="MyCNX" action_id="mycnx" category="portal_tabs"
+     condition_expr="python:member and not portal.listInList(['Members', 'GroupWorkspaces', 'lenses'], folder.getPhysicalPath())"
+     url_expr="string:$portal_url/mycnx" visible="True">
+   <permission>View</permission>
+  </action>
+  <!-- show MyCNX tab only on Members folders, where it's highlighted -->
+  <action title="MyCNX" action_id="Members" category="portal_tabs"
+     condition_expr="python:'Members' in folder.getPhysicalPath()"
+     url_expr="string:$portal_url/mycnx" visible="True">
+   <permission>View</permission>
+  </action>
+  <!-- show MyCNX tab only on Group folders, where it's highlighted -->
+  <action title="MyCNX" action_id="GroupWorkspaces" category="portal_tabs"
+     condition_expr="python:'GroupWorkspaces' in folder.getPhysicalPath()"
+     url_expr="string:$portal_url/mycnx" visible="True">
+   <permission>View</permission>
+  </action>
+  <!-- show MyCNX tab generally for unauth users; highlights on login_form -->
+  <action title="MyCNX" action_id="login_form" category="portal_tabs"
+     condition_expr="python:not member and not portal.listInList(['Members', 'GroupWorkspaces', 'lenses'], folder.getPhysicalPath())"
+     url_expr="string:$portal_url/mycnx" visible="True">
+   <permission>View</permission>
+  </action>
+  
+  
+  <!-- delete button named "remove" and uses confirmation -->
+  <action title="Remove" action_id="delete" category="folder_buttons"
+     condition_expr=""
+     url_expr="string:folder_delete_confirm_dispatch:method" visible="True">
+   <permission>View</permission>
+  </action>
+ </action-provider>
+</object>

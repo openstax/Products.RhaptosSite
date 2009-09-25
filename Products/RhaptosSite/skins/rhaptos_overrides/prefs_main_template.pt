@@ -1,0 +1,63 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+<metal:page define-macro="master">
+
+<tal:comment tal:replace="nothing">
+Rhaptos note: removed overrides of left and right columns since we
+      want normal portlets
+      Also, use the head tag from CMFPlone/plone_templates/main_template 
+      because this doesn't break the left slots.
+</tal:comment>
+
+  <tal:block metal:use-macro="here/main_template/macros/master">
+
+  <head metal:use-macro="here/header/macros/html_header">
+
+    <metal:fillbase fill-slot="base">
+      <metal:baseslot define-slot="base">
+        <base href="" tal:attributes="href here/renderBase" />
+      </metal:baseslot>
+    </metal:fillbase>
+
+    <metal:headslot fill-slot="head_slot">
+      <metal:headslot define-slot="head_slot" />
+      <tal:comment replace="nothing"> A slot where you can insert elements in the header from a template </tal:comment>
+    </metal:headslot>
+
+    <metal:styleslot fill-slot="style_slot">
+      <tal:comment replace="nothing"> A slot where you can insert CSS in the header from a template </tal:comment>
+      <metal:styleslot define-slot="style_slot" />
+    </metal:styleslot>
+
+    <metal:cssslot fill-slot="css_slot">
+      <tal:comment replace="nothing"> This is deprecated, please use style_slot instead. </tal:comment>
+      <metal:cssslot define-slot="css_slot" />
+    </metal:cssslot>
+
+    <metal:javascriptslot fill-slot="javascript_head_slot">
+      <tal:comment replace="nothing"> A slot where you can insert javascript in the header from a template </tal:comment>
+      <metal:javascriptslot define-slot="javascript_head_slot" />
+    </metal:javascriptslot>
+
+  </head>
+
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+
+    <metal:override fill-slot="content">
+      <metal:slot define-slot="prefs_configlet_content">
+        <metal:block metal:use-macro="here/main_template/macros/content">
+          <metal:override metal:fill-slot="main">
+            <metal:slot metal:define-slot="prefs_configlet_main" tal:content="nothing">
+              Page body text
+            </metal:slot>
+          </metal:override>
+        </metal:block>
+      </metal:slot>
+    </metal:override>
+
+  </tal:block>
+</metal:page>
+  </div>

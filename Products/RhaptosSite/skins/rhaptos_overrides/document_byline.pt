@@ -1,0 +1,88 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+     xmlns:metal="http://xml.zope.org/namespaces/metal" 
+     xmlns:tal="http://xml.zope.org/namespaces/tal" 
+     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+     metal:define-macro="byline"
+     i18n:domain="plone"
+     tal:condition="python: site_properties.allowAnonymousViewAbout or not isAnon"
+     tal:define="creator here/Creator;">
+
+<tal:comment tal:replace="nothing">
+This template based on version from Plone 2.5.2-1
+
+Rhaptos notes: Customized so that username is not a link
+   inserted html, tal, metal, i18n namespaces
+
+   Now customized so that the bylines don't appear at all!
+</tal:comment>
+
+    <div class="documentByLine" tal:replace="nothing">
+        <img src="" alt=""
+           tal:define="locked portal/lock_icon.gif;"
+           tal:condition="isLocked"
+           tal:replace="structure python:locked.tag(title='Locked')"
+           />
+
+        <tal:name tal:condition="creator"
+            tal:define="author python:mtool.getMemberInfo(creator)">
+          <span class="documentAuthor"
+                i18n:translate="label_by_author">
+            by
+          <a href="#"
+             tal:attributes="href string:${portal_url}/author/${creator}"
+             tal:content="python:author and author['fullname'] or creator"
+             tal:omit-tag=""
+             i18n:name="author">
+            Bob Dobalina
+          </a>
+
+          &mdash;
+          
+          </span>
+        </tal:name>
+
+        <span class="documentModified">
+            <span i18n:translate="box_last_modified">
+            last modified
+            </span>
+            <span tal:replace="python:toLocalizedTime(here.ModificationDate(),long_format=1)">
+            August 16, 2001 at 23:35:59
+            </span>
+        </span>
+
+        <span class="state-expired"
+            tal:condition="python:portal.isExpired(here)"
+            i18n:translate="time_expired">
+        &mdash; expired
+        </span>
+
+        <span class="documentLocked"
+              tal:define="locked portal/lock_icon.gif"
+              tal:condition="isLocked">
+            <img src=""
+                 tal:replace="structure python:locked.tag(title='This item is locked')"
+                 alt="Object locked" />
+        </span>
+
+        <div class="documentContributors"
+             tal:condition="here/Contributors"
+             i18n:translate="text_contributors">
+            Contributors:
+            <span i18n:name="name"
+                  tal:omit-tag=""
+                  tal:content="python: ', '.join(here.Contributors())">
+              Mary
+            </span>
+        </div>
+
+        <tal:rights condition="here/Rights">
+        <div tal:replace="here/Rights">
+          Copyleft NiceCorp Inc.
+        </div>
+        </tal:rights>
+
+        <span metal:use-macro="here/review_history/macros/review_history" />
+
+    </div>
+
+</div>

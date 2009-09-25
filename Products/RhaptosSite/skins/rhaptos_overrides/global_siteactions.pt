@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en"
+      i18n:domain="plone">
+
+  <tal:comment tal:replace="nothing">
+    Rhaptos note: add 'first' class to first item for styling purposes (since IE sucks at CSS)
+    Plone 2.5 note: no longer in rhaptos domain
+  </tal:comment>
+
+<body>
+<ul metal:define-macro="site_actions"
+    id="portal-siteactions"
+    tal:define="site_actions actions/site_actions|nothing;
+                getIconFor nocall:putils/getIconFor;
+                accesskeys python: {'sitemap' : '3', 'accessibility' : '0', 'contact' : '9'};"
+    tal:condition="site_actions">
+
+    <li tal:repeat="saction site_actions"
+        tal:attributes="id string:siteaction-${saction/id};
+                        class python:test(repeat['saction'].start, 'first', None)"><a
+           href=""
+           tal:define="title saction/title;
+                       id saction/id;
+                       accesskey python: accesskeys.get(id, '');"
+           i18n:attributes="title"
+           i18n:translate=""
+           tal:content="title"
+           tal:attributes="href saction/url;
+                           title title;
+                           accesskey accesskey;"
+           >Site action</a></li>
+
+</ul>
+</body>
+</html>
