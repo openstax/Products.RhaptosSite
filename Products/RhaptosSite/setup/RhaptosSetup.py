@@ -24,37 +24,89 @@ from Products.RhaptosSite import product_globals
 def installProducts(self, portal):
     """Add any necessary portal tools"""
     qi = getToolByName(portal, 'portal_quickinstaller')
+    portal_setup = getToolByName(portal, 'portal_setup')
+    import_context = portal_setup.getImportContextID()
     qi.installProduct('Archetypes')
-    qi.installProduct('CatalogMemberDataTool')
-    qi.installProduct('CMFDiffTool')
-    qi.installProduct('FSImportTool')
-    qi.installProduct('LinkMapTool')
+    portal_setup.setImportContext(
+            'profile-Products.CatalogMemberDataTool:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.CMFDiffTool:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.FSImportTool:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.LinkMapTool:default')
+    portal_setup.runAllImportSteps()
+
     qi.installProduct('PasswordResetTool')
     qi.installProduct('PloneLanguageTool')
     qi.installProduct('MasterSelectWidget')
-    qi.installProduct('UniFile')
-    qi.installProduct('CNXMLDocument')
-    qi.installProduct('CNXMLTransforms')
-    qi.installProduct('RhaptosPatchTool')
-    qi.installProduct('RhaptosWorkgroup')
-    qi.installProduct('RhaptosCollection')
-    qi.installProduct('RhaptosRepository')
-    qi.installProduct('RhaptosHitCountTool')
-    qi.installProduct('RhaptosModuleEditor')
-    qi.installProduct('RhaptosModuleStorage')
-    qi.installProduct('RhaptosPDFLatexTool')
-    qi.installProduct('RhaptosSimilarityTool')
-    qi.installProduct('RhaptosContent')
-    qi.installProduct('RhaptosSite')
-    qi.installProduct('Lensmaker')
-    qi.installProduct('RhaptosPrint')
-    qi.installProduct('RhaptosBugTrackingTool')
+    portal_setup.setImportContext(
+            'profile-Products.UniFile:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.CNXMLDocument:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.CNXMLTransforms:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosPatchTool:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosWorkgroup:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosCollection:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosRepository:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosHitCountTool:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosModuleEditor:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosModuleStorage:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosPDFLatexTool:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosSimilarityTool:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosContent:default')
+    portal_setup.runAllImportSteps()
+
+    #qi.installProduct('RhaptosSite')
+    portal_setup.setImportContext(
+            'profile-Products.Lensmaker:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosPrint:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.RhaptosBugTrackingTool:default')
+    portal_setup.runAllImportSteps()
+
     # siyavula products...
-    #qi.installProduct('XMLTemplateMaker')
-    #qi.installProduct('LensOrganizer')
-    #qi.installProduct('SimpleAttachment')
-    #qi.installProduct('Ploneboard')
-    #qi.installProduct('RhaptosForums')
+    #portal_setup.setImportContext(
+    #        'profile-Products.XMLTemplateMaker:default')
+    #portal_setup.runAllImportSteps()
+    #portal_setup.setImportContext(
+    #        'profile-Products.LensOrganizer:default')
+    #portal_setup.runAllImportSteps()
+    #portal_setup.setImportContext(
+    #        'profile-Products.RhaptosForums:default')
+    #portal_setup.runAllImportSteps()
+
+    portal_setup.setImportContext(import_context)
+
 
 def customizeTools(self, portal):
 

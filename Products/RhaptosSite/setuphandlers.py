@@ -4,14 +4,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import Expression
 from zExceptions import BadRequest
 
-from cStringIO import StringIO
-
-import logging
-logger = logging.getLogger('RhaptosSite.Install')
-def log(msg, out=None):
-    logger.info(msg)
-    if out: print >> out, msg
-    print msg
 
 def memberfoldertitle(folder):
     """Get the current system default title for a member folder (workspace).
@@ -26,49 +18,34 @@ def memberfoldertitle(folder):
                                           mapping={'member': umember_id},  context=folder, target_language='en')
 
 
-def install(self):
+def install(context):
     """Set up RhaptosSite: register with the necessary tools, etc.
     """
-    out = StringIO()
-    log("Starting RhaptosSite install", out)
-    portal = self.portal_url.getPortalObject()
+    logger = context.getLogger('rhaptossite')
+    if context.readDataFile('rhaptossite.txt') is None:
+        logger.info('Nothing to import')
+        return
+    portal = context.getSite()
+    logger.info("Starting RhaptosSite install")
     groups_tool = getToolByName(portal, 'portal_groups')
     
-    setup_tool = getToolByName(portal, 'portal_setup')
-    prevcontext = setup_tool.getImportContextID()
-    setup_tool.setImportContext('profile-CMFPlone:plone')  # get Plone steps registered
-    setup_tool.setImportContext('profile-RhaptosSite:rhaptos-default') # Rhaptos steps registered
-    # FIXME: in the future, we would like to just run all steps. the existing steps, however,
-    # are probably not re-install safe
     
-    # run all import steps
-    steps = ('actions','typeinfo','jsregistry','rhaptos_cmfformcontroller')
-    log("...running profile steps", out)
-    for step in steps:
-        log(" - applying step: %s" % step, out)
-        status = setup_tool.runImportStep(step)
-        log(status['messages'][step], out)
-    # see Upgrades/up112_113.zctl where a lot of actions got set up
-    log("...profile steps done", out)
-    
-    ## "tear down" generic setup
-    setup_tool.setImportContext(prevcontext)
     
     # Make workflow go away
-    log("...making workflow empty", out)
-    wf_tool = getToolByName(self,'portal_workflow')
+    logger.info("...making workflow empty")
+    wf_tool = getToolByName(portal,'portal_workflow')
     wf_tool.setChainForPortalTypes(['UnifiedFile'],'')
     
     ## create 'mycnx' folder, mostly just to get it in the path
     # its default vew is 'author_home'
     mycnx = getattr(portal, 'mycnx', None)
     if not mycnx:
-        log("...creating 'mycnx' folder", out)
+        logger.info("...creating 'mycnx' folder")
         portal.invokeFactory('Folder', id="mycnx", title="MyCNX")
         mycnx = getattr(portal, 'mycnx', None)
     mycnx.layout = "author_home"
     
-    cachetool = getToolByName(self,'portal_cache_settings', None)
+    cachetool = getToolByName(portal,'portal_cache_settings', None)
     # GenericSetup has a cache policy, but we've backported and it doesn't quite work with our versions
     # when we upgrade, this should probably be replaced with a 'cachesettings.xml' (though it'll be)
     # a little less flexible (no getActivePolicy), and we'll still need to do ordering probably
@@ -103,7 +80,7 @@ def install(self):
         mycnx.manage_changeProperties(right_slots=right_slots)
 
     ## set slot properties
-    log("...setting slot properties", out)
+    logger.info("...setting slot properties")
     # set the right slots for member workspace and the workgroups
     # log_action_slot portlet is only seen in the module/collection context
     # portlet_recentview is only seen in the workspace/workgroup context
@@ -135,11 +112,11 @@ def install(self):
         if act.id == 'author_home':
             actfound = True
     if actfound:
-        log("Removing action 'author_home'", out)
+        logger.info("Removing action 'author_home'")
         pa_tool.deleteActions([actindex])
 
     ## upgrades
-    log("...upgrades (if necessary)", out)
+    logger.info("...upgrades (if necessary)")
     
     # check for members folder rename
     m_tool = getToolByName(portal, 'portal_membership')
@@ -153,17 +130,16 @@ def install(self):
     if sample:  # else we have no members: new site
         newtitle = memberfoldertitle(sample)
         if sample.Title() != newtitle:
-            log("- upgrading personal workspace titles", out)
+            logger.info("- upgrading personal workspace titles")
             oldpatterntitle = "%s's Workspace"  # can't actually get this, so hard-code it
             members = members or membersfolder.objectValues()
             for f in members:
                 oldtitle = f.Title()
                 newtitle = memberfoldertitle(f)
                 f.setTitle(newtitle)
-                #log(f.getId(), out)
+                #logger.info(f.getId())
                 if oldtitle != oldpatterntitle % f.getId():  # prepend old custom title to description
                     desc = f.Description()
                     f.setDescription(oldtitle + ": " + desc)
-            log("< done", out)
-    log("Successfully installed %s." % 'RhaptosSite', out)
-    return out.getvalue()
+            logger.info("< done")
+    logger.info("Successfully installed %s." % 'RhaptosSite')
