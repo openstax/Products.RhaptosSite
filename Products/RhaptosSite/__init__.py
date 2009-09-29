@@ -78,5 +78,3 @@ except ImportError:
 else:
     RhaptosMessageFactory = MessageFactory('rhaptos')
 
-from Extensions import Install  # check syntax on startup
-del Install
