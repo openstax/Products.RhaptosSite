@@ -145,7 +145,8 @@ def customizeMemberdata(self, portal):
         ('account_type', 'string', 'person'),
         ('fullname', 'string', ''),
         ('shortname', 'string', ''),
-        ('visible_ids', 'boolean', 0)
+        ('visible_ids', 'boolean', 0),
+        ('wysiwyg_editor', 'string', 'Kupu'),
         )
 
     mdtool = getToolByName(portal,'portal_memberdata')
@@ -326,10 +327,13 @@ def customizeTypes(self, portal):
     types_tool.ChangeSet._actions=actions
 
     # Customize Workgroup type
-    wg = getattr(types_tool, 'Workgroup')
-    wg.manage_changeProperties(immediate_view='folder_contents',
-                               filter_content_types=1,
-                               allowed_content_types=('File', 'Image', 'Module', 'Collection'))
+    # XXX this breaks the workspace_contents template which expects
+    # allowed_content_types to be set to ('Collection', 'Module',
+    # "UnifiedFile')
+    #wg = getattr(types_tool, 'Workgroup')
+    #wg.manage_changeProperties(immediate_view='folder_contents',
+    #                           filter_content_types=1,
+    #                           allowed_content_types=('File', 'Image', 'Module', 'Collection'))
 
 def customizeWorkflow(self, portal):
     wf_tool=getToolByName(portal,'portal_workflow')
