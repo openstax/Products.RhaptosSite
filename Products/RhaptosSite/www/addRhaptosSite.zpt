@@ -43,6 +43,39 @@
     <textarea name="description" cols="60" rows="10"
      style="width: 95%"></textarea>
 
+     <div class="form-title">Database Options</div>
+
+     <div class="form-label">
+     Use existing DBA username
+     <input type="text" name="dbauser" size="20" value="rhaptos_dba"/>
+     and password (optional)
+     <input type="text" name="dbapass" size="20" value=""/>
+     </div>
+
+     <div class="form-label">
+     <!--<select name="dbuser_create">
+        <option value="1">Create a new</option>
+        <option value="0">Use existing</option>
+      </select>-->	
+     DB username
+     <input type="text" name="dbuser" size="20" value="rhaptos"/>
+     and password (optional)
+     <input type="text" name="dbpass" size="20" value=""/>
+     </div>
+
+     <div class="form-label">
+     <!--<select name="db_create">
+        <option value="1">Create a new</option>
+        <option value="0">Use existing</option>
+      </select>-->	
+      DB with name
+     <input type="text" name="dbname" size="20" value="repository"/>
+     on server (optional)
+     <input type="text" name="dbserver" size="20" value=""/>
+     on port (optional)
+     <input type="text" name="dbport" size="20" value=""/>
+     </div>
+    
     <div class="form-element" style="padding-top: 1em;">
     <input class="form-element" type="submit" name="submit" 
      value=" Add Rhaptos Site "/>

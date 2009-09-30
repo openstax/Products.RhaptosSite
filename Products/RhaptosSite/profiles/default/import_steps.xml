@@ -1,15 +1,9 @@
 <?xml version="1.0"?>
 <import-steps>
- <import-step id='rhaptos-dbconfig' version="20090925-01"
-     handler="Products.RhaptosSite.setup.db.importDBConfig"
-     title="Import Database Config">
-     Import database config
- </import-step>
  <import-step id="rhaptos_install" version="20070809-1"
               handler="Products.RhaptosSite.setup.runPolicy.runPolicy"
               title="Rhaptos Customization Policy">
    Run the old Rhaptos Customization Policy
-   <dependency step="rhaptos-dbconfig"/>
  </import-step>
  <import-step id="rhaptos_extra" version="20070809-1"
               handler="Products.RhaptosSite.setuphandlers.install"
