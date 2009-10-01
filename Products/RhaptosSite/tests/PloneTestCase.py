@@ -142,7 +142,9 @@ def optimize():
         ps = getToolByName(p, 'portal_skins')
         ps.manage_addFolder(id='custom')
         ps.addSkinSelection('Basic', 'custom')
-    from Products.CMFPlone.Portal import PloneGenerator
+    """
+    #from Products.CMFPlone.Portal import PloneGenerator
+    from Products.CMFPlone.setuphandlers import PloneGenerator
     PloneGenerator.setupDefaultSkins = setupDefaultSkins
     # Don't setup default Members folder
     def setupMembersFolder(self, p):
@@ -153,6 +155,7 @@ def optimize():
         p.invokeFactory('Large Plone Folder', id='Members')
         p.portal_catalog.unindexObject(p.Members)
     PloneGenerator.setupPortalContent = setupPortalContent
+    """
 
 
 optimize()

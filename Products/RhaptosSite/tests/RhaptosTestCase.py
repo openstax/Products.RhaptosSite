@@ -86,6 +86,6 @@ def setupRhaptosSite(app=None, id=portal_name, quiet=0, with_default_memberarea=
         if not quiet: ZopeTestCase._print('done (%.3fs)\n' % (time.time()-_start,))
 
 # Create a Plone site in the test (demo-) storage
-app = ZopeTestCase.app()
-setupRhaptosSite(app)
-ZopeTestCase.close(app)
+#app = ZopeTestCase.app()
+#setupRhaptosSite(app)
+#ZopeTestCase.close(app)
