@@ -28,9 +28,6 @@ def installProducts(self, portal):
     import_context = portal_setup.getImportContextID()
     qi.installProduct('Archetypes')
     portal_setup.setImportContext(
-            'profile-Products.CatalogMemberDataTool:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
             'profile-Products.CMFDiffTool:default')
     portal_setup.runAllImportSteps()
     portal_setup.setImportContext(
@@ -92,6 +89,9 @@ def installProducts(self, portal):
     portal_setup.runAllImportSteps()
     portal_setup.setImportContext(
             'profile-Products.RhaptosBugTrackingTool:default')
+    portal_setup.runAllImportSteps()
+    portal_setup.setImportContext(
+            'profile-Products.CatalogMemberDataTool:default')
     portal_setup.runAllImportSteps()
 
     # siyavula products...
