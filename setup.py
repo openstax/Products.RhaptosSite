@@ -37,6 +37,8 @@ setup(name='Products.RhaptosSite',
           'Products.References==0.10-rhaptosdev-r30378',
           'Products.SimpleAttachment==3.0.1-rhaptosdev-r30378',
           'Products.ZPsycopgDA==1.11-rhaptosdev-r30378',
+          'Products.ExternalFile==0.1-rhaptosdev-r30470',
+          'Products.ExternalStorage',
 
           # Rhaptos core dependencies
           'Products.CatalogMemberDataTool',

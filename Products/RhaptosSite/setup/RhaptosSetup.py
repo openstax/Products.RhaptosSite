@@ -137,7 +137,7 @@ def customizeMemberdata(self, portal):
         ('affiliation', 'string', ''),
         ('affiliation_url','string',''),
         ('interests', 'lines', []),
-        ('biography', 'text', ''),
+        ('biography', 'lines', []),
         ('preferred_language', 'string', ''),
         ('alternative_languages','lines',[]),
         ('location','string',''),
