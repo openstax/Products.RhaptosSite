@@ -156,7 +156,7 @@ mostly different names for macros and styles.
                   tal:attributes="class python:grouphighlight and 'currentNavItem' or None">
                   <a href="prefs_group_details"
                      tal:define="link group/link | nothing;"
-                     tal:attributes="href python:link and '%s/%s' % (portal_url,link) or None">
+                     tal:attributes="href python:link and link or None">
                     <span tal:replace="group/title">group name</span>
                   </a>
               </li>
