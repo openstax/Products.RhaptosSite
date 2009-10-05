@@ -479,6 +479,14 @@ def setPASPlugins(self, portal):
         plugin = pas['xuf_hash']
         plugin.manage_activateInterfaces(['IAuthenticationPlugin'])
 
+def createHelpSection(self, portal):
+    if 'help' in portal.objectIds():
+        portal._delObject('help')
+    portal._importObjectFromFile(
+        os.path.join(os.path.dirname(__file__), 'data', 'help.zexp'),
+        verify=False,
+        set_owner=True)
+
 functions = {
     'Install Products': installProducts,
     'Customize Tools': customizeTools,
@@ -502,6 +510,7 @@ functions = {
     'Customize Diff Tool':customizeDiffTool,
     'Customize Object Descriptions':customizeObjectDescriptions,
     'Set PAS Plugins':setPASPlugins,
+    'Create Help Section': createHelpSection,
     }
 
 class RhaptosSetup:
@@ -566,5 +575,6 @@ class RhaptosSetup:
             'Customize Control Panel',
             'Customize Diff Tool',
             'Customize Object Descriptions',
-            'Set PAS Plugins'
+            'Set PAS Plugins',
+            'Create Help Section',
             ]
