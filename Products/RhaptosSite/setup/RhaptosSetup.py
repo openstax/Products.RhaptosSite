@@ -199,6 +199,9 @@ def customizeActions(self, portal):
     pa_tool=getToolByName(portal,'portal_actions')
 
     actions=pa_tool._cloneActions()
+    order = ['Content', 'Lenses', 'About Us', 'Help', 'MyCNX']
+    toorder = list()
+    tmp_actions = list()
     for a in actions:
         if a.id == 'index_html':
             a.title = 'Home'
@@ -206,10 +209,18 @@ def customizeActions(self, portal):
             a.title = 'Remove'
         elif a.id in ('Members', 'news', 'search_form', 'change_status', 'small_text', 'normal_text', 'large_text', 'sendto', 'print', 'change_state', 'addtofavorites'):
             a.visible = 0
+        if a.title in order:
+            a.visible = 1
+            toorder.append((order.index(a.title), a))
+        else:
+            tmp_actions.append(a)
+    actions = tmp_actions
+    toorder.sort()
+    for i,a in toorder:
+        actions.append(a)
     pa_tool._actions=tuple(actions)
 
 
-    pa_tool.addAction('content', 'Content', 'string:$portal_url/content/', '', 'View', 'portal_tabs')
     #pa_tool.addAction('courses', 'Courses', 'string:$portal_url/content/browse_course_titles','', 'View', 'site_actions')
     pa_tool.addAction('Members', 'Work Area', 'string:$portal_url/Members/$member',
                       "python:member and not 'GroupWorkspaces' in folder.getPhysicalPath()",
