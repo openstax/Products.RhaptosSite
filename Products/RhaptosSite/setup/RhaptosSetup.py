@@ -308,11 +308,6 @@ def customizeSlots(self, portal):
     else:
         wsfolder._setProperty('right_slots', right_slots, type='lines')
 
-    # Content Repository
-    right_slots = ['here/portlet_repository_stats/macros/portlet']
-    portal.content._updateProperty('right_slots', right_slots)
-
-
 
 def customizeSkins(self, portal):
     st = getToolByName(portal, 'portal_skins')
