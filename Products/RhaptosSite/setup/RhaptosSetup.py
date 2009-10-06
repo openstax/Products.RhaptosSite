@@ -283,13 +283,16 @@ def customizeObjectDescriptions(self, portal):
     tt.Image.description = 'An image is a picture, drawing, or graphic to be included in a module.'
     
 def customizeSlots(self, portal):
-    left_slots=['here/portlet_navigation/macros/portlet',
+    left_slots=[
+                'here/portlet_navigation/macros/portlet',
                 'here/workspaces_slot/macros/portlet',
-                'here/portlet_login/macros/portlet'
                 ]
 
-    right_slots=['here/portlet_news/macros/portlet',
-                 'here/portlet_review/macros/portlet'
+    right_slots=[
+                 'here/portlet_loggedin/macros/portlet',
+                 'here/portlet_login/macros/portlet',
+                 'here/portlet_news/macros/portlet',
+                 'here/portlet_review/macros/portlet',
                  ]
 
     portal.manage_changeProperties(left_slots=left_slots,
