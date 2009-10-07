@@ -492,12 +492,16 @@ def setPASPlugins(self, portal):
         plugin.manage_activateInterfaces(['IAuthenticationPlugin'])
 
 def createHelpSection(self, portal):
-    if 'help' in portal.objectIds():
-        portal._delObject('help')
-    portal._importObjectFromFile(
-        os.path.join(os.path.dirname(__file__), 'data', 'help.zexp'),
-        verify=False,
-        set_owner=True)
+    if 'help' not in portal.objectIds():
+        portal._importObjectFromFile(
+            os.path.join(os.path.dirname(__file__), 'data', 'help.zexp'),
+            verify=False,
+            set_owner=True)
+
+def createCollectionPrinter(self, portal):
+    if 'RCPrinter' not in portal.objectIds():
+        portal.manage_addProduct['RhaptosCollection'].manage_addAsyncPrinter(
+                'RCPrinter', '', '', '', '')
 
 functions = {
     'Install Products': installProducts,
@@ -515,7 +519,6 @@ functions = {
     'Customize Portal': customizePortal,
 #    'Customize Portal Catalog': customizePortalCatalog,
     'Customize Front Page': customizeFrontPage,
-    'Customize Help Content': customizeHelpContent,
     'Customize Member Catalog':customizeMemberCatalog,
     'Customize Control Panel':customizeControlPanel,
     'Customize Factory Tool':customizeFactoryTool,
@@ -523,6 +526,7 @@ functions = {
     'Customize Object Descriptions':customizeObjectDescriptions,
     'Set PAS Plugins':setPASPlugins,
     'Create Help Section': createHelpSection,
+    'Create Collection Printer': createCollectionPrinter,
     }
 
 class RhaptosSetup:
@@ -583,10 +587,10 @@ class RhaptosSetup:
             'Customize Portal',
 #            'Customize Portal Catalog',
             'Customize Front Page',
-            'Customize Help Content',
             'Customize Control Panel',
             'Customize Diff Tool',
             'Customize Object Descriptions',
             'Set PAS Plugins',
             'Create Help Section',
+            'Create Collection Printer',
             ]
