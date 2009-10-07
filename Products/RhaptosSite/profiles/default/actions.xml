@@ -12,6 +12,16 @@
      url_expr="string:$portal_url/content" visible="True">
    <permission>View</permission>
   </action>
+  <action title="About Us" action_id="aboutus" category="portal_tabs"
+     condition_expr=""
+     url_expr="string:$portal_url/aboutus" visible="True">
+   <permission>View</permission>
+  </action>
+  <action title="Help" action_id="help" category="portal_tabs"
+     condition_expr=""
+     url_expr="string:$portal_url/help" visible="True">
+   <permission>View</permission>
+  </action>
   <!-- show MyCNX tab generally for auth users; highlights when in 'mycnx' object .
        goes away on objects that have their own actions, or else we duplicate tabs -->
   <action title="MyCNX" action_id="mycnx" category="portal_tabs"

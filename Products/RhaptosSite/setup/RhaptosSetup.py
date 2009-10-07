@@ -503,6 +503,21 @@ def createCollectionPrinter(self, portal):
         portal.manage_addProduct['RhaptosCollection'].manage_addAsyncPrinter(
                 'RCPrinter', '', '', '', '')
 
+def creataAboutUSSection(self, portal):
+    if 'aboutus' not in portal.objectIds():
+        portal.invokeFactory('Folder', 'aboutus')
+        folder = portal.aboutus
+        folder.setTitle('About')
+        folder.invokeFactory('Document', 'placeholder')
+        placeholder = folder.placeholder
+        placeholder.setTitle('Placeholder')
+        text = ('<p>This is a placeholder for the default about us page. '
+                'To replace it create a new Document and use the display '
+                'dropdown on the aboutus folder to change the default view.'
+                '</p>')
+        placeholder.edit('html', text)
+        folder.setDefaultPage('placeholder')
+
 functions = {
     'Install Products': installProducts,
     'Customize Tools': customizeTools,
@@ -527,6 +542,7 @@ functions = {
     'Set PAS Plugins':setPASPlugins,
     'Create Help Section': createHelpSection,
     'Create Collection Printer': createCollectionPrinter,
+    'Create About Us Section': creataAboutUSSection,
     }
 
 class RhaptosSetup:
@@ -593,4 +609,5 @@ class RhaptosSetup:
             'Set PAS Plugins',
             'Create Help Section',
             'Create Collection Printer',
+            'Create About Us Section',
             ]
