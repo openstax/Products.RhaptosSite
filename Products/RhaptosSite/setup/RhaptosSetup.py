@@ -222,12 +222,6 @@ def customizeActions(self, portal):
 
 
     #pa_tool.addAction('courses', 'Courses', 'string:$portal_url/content/browse_course_titles','', 'View', 'site_actions')
-    pa_tool.addAction('Members', 'Work Area', 'string:$portal_url/Members/$member',
-                      "python:member and not 'GroupWorkspaces' in folder.getPhysicalPath()",
-                      'View', 'portal_tabs')
-    pa_tool.addAction('GroupWorkspaces', 'Work Area', 'string:$portal_url/Members/$member',
-                      "python:member and 'GroupWorkspaces' in folder.getPhysicalPath()",
-                      'View', 'portal_tabs')
 
     m_tool=getToolByName(portal,'portal_membership')
     for a in m_tool._actions:
