@@ -361,6 +361,7 @@ def customizePermissions(self, portal):
     # created upon joining, at which point the user is still
     # anonymous.  There ought to be a better way...
     portal.Members.manage_permission('Add portal content', ('Anonymous', 'Member',), acquire=1)
+    portal.Members.manage_permission('Add Annotation Servers', ('Manager', 'Owner',), acquire=1)
     portal.Members.manage_permission('Delete objects', ('Maintainer', 'Owner',), acquire=1)
     portal.Members.manage_permission('Change Images and Files', ('Maintainer', 'Owner',), acquire=1)
     portal.Members.manage_permission('List folder contents', ('Manager', 'Owner',), acquire=0)
@@ -368,6 +369,7 @@ def customizePermissions(self, portal):
     portal.Members.manage_permission('View', ('Manager', 'Owner',), acquire=0)
 
     groups = portal.portal_groups.getGroupWorkspacesFolder()
+    groups.manage_permission('Add Annotation Servers', ('Manager', 'Owner',), acquire=1)
     groups.manage_permission('Add portal content', ('Member',), acquire=1)
     groups.manage_permission('Delete objects', ('Maintainer', 'Owner',), acquire=1)
     groups.manage_permission('Change Images and Files', ('Maintainer', 'Owner',), acquire=1)
@@ -512,6 +514,14 @@ def creataAboutUSSection(self, portal):
         placeholder.edit('html', text)
         folder.setDefaultPage('placeholder')
 
+def addPDFsFolder(self, portal):
+    portal_types = getToolByName(portal, 'portal_types')
+    large_folder = portal_types['Large Plone Folder']
+    large_folder.manage_changeProperties(global_allow=True)
+    if 'pdfs' not in portal.objectIds():
+        portal.invokeFactory('Large Plone Folder', 'pdfs')
+    large_folder.manage_changeProperties(global_allow=False)
+
 functions = {
     'Install Products': installProducts,
     'Customize Tools': customizeTools,
@@ -537,6 +547,7 @@ functions = {
     'Create Help Section': createHelpSection,
     'Create Collection Printer': createCollectionPrinter,
     'Create About Us Section': creataAboutUSSection,
+    'Create PDFs Folder': addPDFsFolder,
     }
 
 class RhaptosSetup:
@@ -604,4 +615,5 @@ class RhaptosSetup:
             'Create Help Section',
             'Create Collection Printer',
             'Create About Us Section',
+            'Create PDFs Folder',
             ]
