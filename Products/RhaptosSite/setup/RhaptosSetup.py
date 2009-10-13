@@ -197,12 +197,10 @@ def customizeMembershipTool(self, portal):
     
 def customizeActions(self, portal):
     pa_tool=getToolByName(portal,'portal_actions')
-    pa_tool.addAction('login', 'Log In', 'string:$portal_url/login_form',
-             'python:member is None', 'View', 'site_actions')
 
     actions=pa_tool._cloneActions()
-    order = ['Log In', 'Contact Us', 'Report a Bug', 'Content', 'Lenses',
-            'About Us', 'Help', 'MyCNX']
+    order = ['Log In', 'Log Out', 'Contact Us', 'Report a Bug', 'Content',
+            'Lenses', 'About Us', 'Help', 'MyCNX']
     toorder = list()
     tmp_actions = list()
     for a in actions:
@@ -300,14 +298,24 @@ def customizeSlots(self, portal):
                                    right_slots=right_slots)
 
     # WS Slots
-    right_slots = ['here/log_action_slot/macros/portlet']
+    slots = dict(
+            right_slots = ['here/log_action_slot/macros/portlet',],
+            left_slots = ['here/workspaces_slot/macros/portlet',]
+            )
 
     portal.Members._updateProperty('right_slots', right_slots)
     wsfolder = portal.portal_groups.getGroupWorkspacesFolder()
-    if wsfolder.hasProperty('right_slots'):
-        wsfolder._updateProperty('right_slots', right_slots)
-    else:
-        wsfolder._setProperty('right_slots', right_slots, type='lines')
+    for folder in (portal.Members, wsfolder):
+        for slot_attr, slot_value in slots.items():
+            if folder.hasProperty(slot_attr):
+                folder._updateProperty(slot_attr, slot_value)
+            else:
+                folder._setProperty(slot_attr, slot_value, type='lines')
+
+    if 'content' in portal.objectIds():
+        folder = portal.content
+        if not folder.hasProperty('left_slots'):
+            folder._setProperty('left_slots', list(), type='lines')
 
 
 def customizeSkins(self, portal):
