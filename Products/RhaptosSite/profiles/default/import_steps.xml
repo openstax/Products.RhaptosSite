@@ -4,19 +4,13 @@
               handler="Products.RhaptosSite.setup.runPolicy.runPolicy"
               title="Rhaptos Customization Policy">
    Run the old Rhaptos Customization Policy
+  <dependency step="actions"/>
  </import-step>
  <import-step id="rhaptos_extra" version="20070809-1"
               handler="Products.RhaptosSite.setuphandlers.install"
               title="Rhaptos install">
   Run the old Rhaptos install method
   <dependency step="rhaptos_install"/>
- </import-step>
- <import-step id="rhaptos_actions" version="20070809-01"
-              handler="Products.RhaptosSite.setup.customize_plone.setActions"
-              title="Actions">
-  <dependency step="rhaptos_install"/>
-  <dependency step="actions"/>
-    Customize Plone's default actions
  </import-step>
  
  <import-step id="rhaptos_cmfformcontroller" version="20090410-1"

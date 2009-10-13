@@ -201,7 +201,8 @@ def customizeActions(self, portal):
              'python:member is None', 'View', 'site_actions')
 
     actions=pa_tool._cloneActions()
-    order = ['Content', 'Lenses', 'About Us', 'Help', 'MyCNX']
+    order = ['Log In', 'Contact Us', 'Report a Bug', 'Content', 'Lenses',
+            'About Us', 'Help', 'MyCNX']
     toorder = list()
     tmp_actions = list()
     for a in actions:
@@ -209,13 +210,16 @@ def customizeActions(self, portal):
             a.title = 'Home'
         elif a.id == 'delete':
             a.title = 'Remove'
-        elif a.id in ('Members', 'news', 'search_form', 'change_status', 'small_text', 'normal_text', 'large_text', 'sendto', 'print', 'change_state', 'addtofavorites'):
+        elif a.id in ('Members', 'news', 'search_form', 'change_status', 
+                'small_text', 'normal_text', 'large_text', 'sendto', 'print', 
+                'change_state', 'addtofavorites', 'sitemap', 'accessibility', 
+                'full_screen'):
             a.visible = 0
+        if a.title == 'Contact':
+            a.title = 'Contact Us'
         if a.title in order:
             a.visible = 1
             toorder.append((order.index(a.title), a))
-        elif a.title in ('Log In',):
-            tmp_actions.insert(0, a)
         else:
             tmp_actions.append(a)
     actions = tmp_actions
@@ -283,7 +287,6 @@ def customizeObjectDescriptions(self, portal):
 def customizeSlots(self, portal):
     left_slots=[
                 'here/portlet_navigation/macros/portlet',
-                'here/workspaces_slot/macros/portlet',
                 ]
 
     right_slots=[

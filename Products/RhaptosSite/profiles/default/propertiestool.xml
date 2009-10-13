@@ -4,6 +4,7 @@
   <property name="typesUseViewActionInListings" purge="False">
    <element value="Workspace" />
   </property>
+  <property name="disable_folder_sections" type="boolean">True</property>
  </object>
 </object>
 
