@@ -197,6 +197,8 @@ def customizeMembershipTool(self, portal):
     
 def customizeActions(self, portal):
     pa_tool=getToolByName(portal,'portal_actions')
+    pa_tool.addAction('login', 'Log In', 'string:$portal_url/login_form',
+             'python:member is None', 'View', 'site_actions')
 
     actions=pa_tool._cloneActions()
     order = ['Content', 'Lenses', 'About Us', 'Help', 'MyCNX']
@@ -212,6 +214,8 @@ def customizeActions(self, portal):
         if a.title in order:
             a.visible = 1
             toorder.append((order.index(a.title), a))
+        elif a.title in ('Log In',):
+            tmp_actions.insert(0, a)
         else:
             tmp_actions.append(a)
     actions = tmp_actions
