@@ -7,6 +7,16 @@
        work on actions in this version.) Then we can use this instead.
   -->
   
+  <action title="Log In" action_id="login" category="site_actions"
+     condition_expr="python:member is None"
+     url_expr="string:$portal_url/login_form" visible="True">
+   <permission>View</permission>
+  </action>
+  <action title="Log Out" action_id="logout" category="site_actions"
+     condition_expr="python:member is not None"
+     url_expr="string:$portal_url/logout" visible="True">
+   <permission>View</permission>
+  </action>
   <action title="Content" action_id="content" category="portal_tabs"
      condition_expr=""
      url_expr="string:$portal_url/content" visible="True">
