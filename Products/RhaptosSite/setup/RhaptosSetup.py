@@ -200,7 +200,7 @@ def customizeActions(self, portal):
 
     actions=pa_tool._cloneActions()
     order = ['Log In', 'Log Out', 'Contact Us', 'Report a Bug', 'Content',
-            'Lenses', 'About Us', 'Help', 'MyCNX']
+            'Lenses', 'About Us', 'Help', 'MyRhaptos']
     toorder = list()
     tmp_actions = list()
     for a in actions:

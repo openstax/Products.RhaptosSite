@@ -33,7 +33,7 @@ Rhaptos Notes:
             <li>
               <a tal:attributes="href string:$portal_url/mycnx"
                  i18n:translate="label_mycnx">
-                MyCNX Home
+                MyRhaptos Home
               </a>
             </li>
             <li>

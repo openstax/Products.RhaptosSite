@@ -42,7 +42,7 @@ mostly different names for macros and styles.
       <li tal:define="highlighthome python:highlightsection == 'home'"
           tal:attributes="class python:highlighthome and 'currentNavItem' or None">
         <a href="mycnx" tal:attributes="href string:$portal_url/mycnx">
-          <span i18n:translate="box_text_mycnx" tal:omit-tag="">MyCNX Home</span>
+          <span i18n:translate="box_text_mycnx" tal:omit-tag="">MyRhaptos Home</span>
         </a>
       </li>
       <li tal:define="twist twistdict/cnx_by_type | nothing;
