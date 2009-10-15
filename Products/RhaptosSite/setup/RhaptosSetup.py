@@ -10,11 +10,13 @@ Public License Version 2 (GPL).  See LICENSE.txt for details.
 
 ## FIXME!!! not idempotent; should be made so
 
+import re
 import os
 from zLOG import INFO, ERROR
 from Acquisition import aq_base
 from Globals import package_home
 
+from Products.Archetypes.utils import shasattr
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import Expression
 from Products.CMFCore.DirectoryView import addDirectoryViews
@@ -502,12 +504,34 @@ def setPASPlugins(self, portal):
         plugin = pas['xuf_hash']
         plugin.manage_activateInterfaces(['IAuthenticationPlugin'])
 
+def _findObjects(context, meta_type):
+    for obj in context.objectValues():
+        if (shasattr(obj, 'objectValues') and not (
+                meta_type == 'Plone Site' and obj.meta_type == 'Plone Site')):
+            for o in _findObjects(obj, meta_type):
+                yield o
+        if obj.meta_type == meta_type:
+            yield obj
+
+col_regx = re.compile(r'"(/content/col.*?)"')
+mod_regx = re.compile(r'"(/content/m.*?)"')
+
 def createHelpSection(self, portal):
     if 'help' not in portal.objectIds():
         portal._importObjectFromFile(
             os.path.join(os.path.dirname(__file__), 'data', 'help.zexp'),
             verify=False,
             set_owner=True)
+        for doc in _findObjects(portal.help, 'ATDocument'):
+            text = doc.getRawText()
+            col_match = col_regx.search(text)
+            if col_match:
+                text = col_regx.sub('"http://cnx.org\g<1>"', text)
+            mod_match = mod_regx.search(text)
+            if mod_match:
+                text = mod_regx.sub('"http://cnx.org\g<1>"', text)
+            if mod_match or col_match:
+                doc.setText(text, mimetype=doc.getContentType())
 
 def createCollectionPrinter(self, portal):
     if 'RCPrinter' not in portal.objectIds():
