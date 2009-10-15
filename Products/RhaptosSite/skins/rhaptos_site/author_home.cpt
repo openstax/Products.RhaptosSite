@@ -195,9 +195,13 @@
                   New author guide
                 </a>
               </li>
-              <li>
-                <a href="/content/col10151/latest/" i18n:translate="text_tut_ref"
-                   tal:attributes="href string:$portal_url/content/col10151/latest/">
+              <li tal:define="tutorial nocall:portal/content/col10151/latest|nothing;">
+                <a tal:condition="not:tutorial" href="http://cnx.org/content/col10151/latest/" i18n:translate="text_tut_ref" target="_blank">
+                  Connexions Tutorial and Reference
+                </a>
+                <a tal:condition="tutorial" href="http://cnx.org/content/col10151/latest/"
+                   tal:attributes="href string:$portal_url/content/col10151/latest/;"
+                   i18n:translate="text_tut_ref">
                   Connexions Tutorial and Reference
                 </a>
               </li>
