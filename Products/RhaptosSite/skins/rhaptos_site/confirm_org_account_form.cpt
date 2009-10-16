@@ -76,7 +76,7 @@ minor field style changes in conversion.
 	<input type="hidden" name="email" tal:attributes="value request/email" />
 	<input type="hidden" name="homepage" tal:attributes="value request/homepage" />
 	<input type="hidden" name="username" tal:attributes="value request/username" />
-	<input type="hidden" name="licenseagree" tal:attributes="value request/licenseagree" />
+	<input type="hidden" name="licenseagree" tal:attributes="value request/licenseagree|nothing" />
 	<input type="hidden" name="approved_time:date" tal:attributes="value python:DateTime()" />
 	<input type="hidden" name="status" value="Pending" />
 	<input type="hidden" name="account_type" value="org" />
