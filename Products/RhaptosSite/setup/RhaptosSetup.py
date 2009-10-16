@@ -516,6 +516,7 @@ def _findObjects(context, meta_type):
 col_regx = re.compile(r'"(/content/col\d+.*?)"')
 mod_regx = re.compile(r'"(/content/m\d+.*?)"')
 email_regx = re.compile(r'((cnx)|(techsupport))@cnx.org')
+cnxorg_regx = re.compile(r'"http://cnx.org(/.*?)"')
 
 def createHelpSection(self, portal):
     if 'help' not in portal.objectIds():
@@ -534,6 +535,9 @@ def createHelpSection(self, portal):
         help.AvailableFeeds.edit('html', text)
         for doc in _findObjects(help, 'ATDocument'):
             text = doc.getRawText()
+            cnxorg_match = cnxorg_regx.search(text)
+            if cnxorg_match:
+                text = cnxorg_regx.sub('"\g<1>"', text)
             col_match = col_regx.search(text)
             if col_match:
                 text = col_regx.sub('"http://cnx.org\g<1>"', text)
@@ -543,7 +547,7 @@ def createHelpSection(self, portal):
             email_match = email_regx.search(text)
             if email_match:
                 text = email_regx.sub('rhaptos@example.com', text)
-            if mod_match or col_match or email_match:
+            if mod_match or col_match or email_match or cnxorg_match:
                 doc.setText(text, mimetype=doc.getContentType())
 
 def createCollectionPrinter(self, portal):
