@@ -210,6 +210,8 @@ def customizeActions(self, portal):
             a.title = 'Home'
         elif a.id == 'delete':
             a.title = 'Remove'
+        elif a.id == 'rename':
+            a.edit(condition='not:exists:object/nearestCourse')
         elif a.id in ('Members', 'news', 'search_form', 'change_status', 
                 'small_text', 'normal_text', 'large_text', 'sendto', 'print', 
                 'change_state', 'addtofavorites', 'sitemap', 'accessibility', 
