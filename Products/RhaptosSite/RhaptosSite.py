@@ -37,10 +37,10 @@ Globals.InitializeClass(RhaptosSite)
 
 manage_addSiteForm = PageTemplateFile('www/addRhaptosSite', globals())
 manage_addSiteForm.__name__ = 'addRhaptosSite'
-def manage_addRhaptosSite(self, id, title='Portal', description='',
+def manage_addRhaptosSite(self, id, title='', description='',
                           create_userfolder=1,
-                          email_from_address='postmaster@localhost',
-                          email_from_name='Portal Administrator',
+                          email_from_address='',
+                          email_from_name='',
                           validate_email=0,
                           dbauser='rhaptos_dba',
                           dbapass=None,
