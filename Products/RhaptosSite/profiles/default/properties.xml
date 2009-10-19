@@ -2,5 +2,5 @@
 <site>
   <property name="title">Rhaptos</property>
   <property name="email_from_address"
-    type="string">rhaptos@example.com</property>
+    type="string">changeme@example.com</property>
 </site>
