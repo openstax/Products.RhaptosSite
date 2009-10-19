@@ -43,7 +43,7 @@
                 <a href="cc_license?type_name=Module"
                   tal:attributes="href string:$portal_url/mycnx/cc_license?type_name=Module">
                   <img src="/module_icon.gif" alt=""
-                      tal:attributes="href string:$portal_url/module_icon.gif">
+                      tal:attributes="src string:$portal_url/module_icon.gif">
                 </a>
               </p>
             </metal:macro>
@@ -55,7 +55,7 @@
                 <a href="cc_license?type_name=Collection"
                   tal:attributes="href string:$portal_url/mycnx/cc_license?type_name=Collection">
                   <img src="/repository_icon.gif" alt=""
-                      tal:attributes="href string:$portal_url/repository_icon.gif">
+                      tal:attributes="src string:$portal_url/repository_icon.gif">
                 </a>
               </p>
             </metal:macro>
