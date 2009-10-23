@@ -26,17 +26,19 @@ $Id: $
 
 import Products.RhaptosSite
 
-from Products.RhaptosTest import base
+from Products.RhaptosTest.base import RhaptosTestCase
 
 
-base.PRODUCTS_TO_LOAD_ZCML = [('configure.zcml', Products.RhaptosSite),]
-base.PRODUCTS_TO_INSTALL = ['Products.RhaptosSite',]
+class TestRhaptosSite(RhaptosTestCase):
 
+    def setUp(self):
+        RhaptosTestCase.setUp(self)
 
-class TestRhaptosSite(base.RhaptosTestCase):
+    def test_member_data_tool(self):
+        self.assertEqual(1, 1)
 
-    def test_pass(self):
-        assert 1 == 1
+    def test_membership_tool(self):
+        self.assertEqual(1, 1)
 
 
 def test_suite():
