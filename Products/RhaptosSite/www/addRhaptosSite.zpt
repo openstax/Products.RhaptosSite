@@ -69,11 +69,11 @@
         <option value="0">Use existing</option>
       </select>-->	
       DB with name
-     <input type="text" name="dbname" size="20" value="repository"/>
+     <input type="text" name="dbname" size="20" value="rhaptos_dev_db"/>
      on server (optional)
-     <input type="text" name="dbserver" size="20" value=""/>
+     <input type="text" name="dbserver" size="20" value="localhost"/>
      on port (optional)
-     <input type="text" name="dbport" size="20" value=""/>
+     <input type="text" name="dbport" size="20" value="5555"/>
      </div>
     
     <div class="form-element" style="padding-top: 1em;">
