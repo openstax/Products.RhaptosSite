@@ -24,15 +24,20 @@ $Id: $
 """
 
 
+from Products.RhaptosTest import config
 import Products.RhaptosSite
+config.products_to_install = ['RhaptosSite']
 
-from Products.RhaptosTest.base import RhaptosTestCase
+from Products.RhaptosTest import base
 
 
-class TestRhaptosSite(RhaptosTestCase):
+class TestRhaptosSite(base.RhaptosTestCase):
 
-    def setUp(self):
-        RhaptosTestCase.setUp(self)
+    def afterSetUp(self):
+        pass
+
+    def beforeTearDown(self):
+        pass
 
     def test_member_data_tool(self):
         self.assertEqual(1, 1)
