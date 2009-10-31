@@ -70,9 +70,13 @@ setup(name='Products.RhaptosSite',
           'Products.XMLTemplateMaker',
           'Products.ZAnnot',
 
+          # Unit tests dependencies
+          'Products.RhaptosTest',
+
       ],
       tests_require = [
            'zope.testing>=3.5',
+           'Products.RhaptosTest',
       ],
       entry_points="""
       # -*- Entry points: -*-
