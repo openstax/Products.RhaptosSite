@@ -69,6 +69,7 @@ setup(name='Products.RhaptosSite',
           'Products.UniFile',
           'Products.XMLTemplateMaker',
           'Products.ZAnnot',
+          'Products.Lineup',
 
           # Unit tests dependencies
           'Products.RhaptosTest',
