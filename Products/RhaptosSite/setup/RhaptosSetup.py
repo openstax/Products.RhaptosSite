@@ -603,7 +603,7 @@ functions = {
     'Customize Object Descriptions':customizeObjectDescriptions,
     'Set PAS Plugins':setPASPlugins,
     'Create Help Section': createHelpSection,
-    'Create Collection Printer': createCollectionPrinter,
+#    'Create Collection Printer': createCollectionPrinter,
     'Create About Us Section': creataAboutUSSection,
     'Create PDFs Folder': addPDFsFolder,
     }
@@ -671,7 +671,7 @@ class RhaptosSetup:
             'Customize Object Descriptions',
             'Set PAS Plugins',
             'Create Help Section',
-            'Create Collection Printer',
+#            'Create Collection Printer',
             'Create About Us Section',
             'Create PDFs Folder',
             ]
