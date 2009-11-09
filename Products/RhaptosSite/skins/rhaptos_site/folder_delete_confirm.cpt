@@ -19,7 +19,7 @@
     can be called from several locations which we specifically detect to do all sorts of little
       picky text changes. look for mode_*. Standard mode should work for general purposes.
   </tal:comment>
-  
+
   <body>
     <div metal:fill-slot="content_title_header">
       <tal:normal condition="mode_std">
@@ -32,7 +32,7 @@
         <metal:title use-macro="context/workspace_contents/macros/workspacetitle">Workyspacement</metal:title>
       </tal:lens>
     </div>
-    
+
     <div metal:fill-slot="main"
          tal:define="title context/Title;
                      type context/portal_type;">
@@ -130,14 +130,14 @@
             </li>
           </tal:loop>
         </ul>
-        
+
         <p i18n:translate="text_del_confirm_continue">
           Are you sure you want to continue?
         </p>
 
         <input type="hidden" name="orig_template"
                tal:attributes="value orig_template"/>
-        
+
         <input class="destructive"
                name="form.button.delete"
                value="Yes, Remove content"
@@ -152,7 +152,7 @@
                tabindex=""
                i18n:attributes="value"
                tal:attributes="tabindex tabindex/next;" />
-        
+
         <input type="hidden" name="form.submitted" value="1" />
       </form>
 
@@ -160,3 +160,4 @@
   </body>
 </html>
 </span>
+

@@ -1,0 +1,11 @@
+[default]
+title=Account Management
+
+[validators]
+
+[actions]
+action.success=traverse_to:string:prefs_branding_form
+action.success..search=traverse_to:string:prefs_branding_form
+action.success..showallorg=traverse_to:string:prefs_branding_form
+action.success..change=traverse_to:string:change_account_branding
+action.failure=traverse_to:string:prefs_branding_form

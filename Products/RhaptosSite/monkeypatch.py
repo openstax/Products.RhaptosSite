@@ -547,3 +547,54 @@ from Products.CMFPlone import utils
 MEMBER_IMAGE_SCALE = (150, 150)
 utils.IMAGE_SCALE_PARAMS['scale'] = MEMBER_IMAGE_SCALE
 
+
+## backport CMFPlone.patches.unicodehacks.FasterStringIO for CacheFu problem
+## needed for source_create not to explode with a plain restrictedTraverse with non-ASCII data
+## see http://plone.org/products/cachefu/issues/126 and
+##     http://dev.plone.org/collective/changeset/67165 for reason
+# see http://svn.plone.org/svn/plone/Plone/trunk/Products/CMFPlone/patches/unicodehacks.py for code
+from Products.PageTemplates.PageTemplate import PageTemplate
+
+if not hasattr(PageTemplate, 'FasterStringIO_patch'):
+    logger.info("Patching Products.PageTemplates.PageTemplate to use backported CMFPlone.unicodehacks StringIO")
+
+    PageTemplate.FasterStringIO_patch = 1
+
+    from collections import deque
+
+    def _unicode_replace(structure):
+        if isinstance(structure, str):
+            text = structure.decode('utf-8', 'replace')   # PATCH: error handling specified to deal with binary
+        else:
+            text = unicode(structure)
+        return text
+
+    class FasterStringIO(object):
+        """Append-only version of StringIO, which ignores any initial buffer.
+
+        Implemented by using an internal deque instead.
+        """
+        def __init__(self, buf=None):
+            self.buf = buf = deque()
+            self.bufappend = buf.append
+
+        def close(self):
+            self.buf.clear()
+
+        def seek(self, pos, mode=0):
+            raise RuntimeError("FasterStringIO.seek() not allowed")
+
+        def write(self, s):
+            self.bufappend(s)
+
+        def getvalue(self):
+            buf = self.buf
+            try:
+                result = u''.join(buf)
+            except UnicodeDecodeError:
+                result = u''.join([_unicode_replace(value) for value in buf])
+            buf.clear()
+            return result.encode('utf-8')   # PATCH: output regular strings, to avoid any more unicode surprises
+
+    PageTemplate._orig_StringIO = PageTemplate.StringIO
+    PageTemplate.StringIO = FasterStringIO

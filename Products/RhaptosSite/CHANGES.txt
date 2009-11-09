@@ -1,3 +1,31 @@
+RhaptosSite-1.28
+  - light-weight-branding (30 Oct 2009)
+    - Created accounts management page
+    - Added search and search results to accounts management page
+    - Fixing issues with padding in Rhaptos look and font-size in both
+      looks. Removing styling for #cnx_branding_logo in ploneCustom.css
+      files because that <div> shouldn't show up on the lens listing
+      page. Remove branding header from ploneCustom.css files because I
+      don't have such headers for anything else in those files (and don't
+      want to imply that everything under them is related to branding).
+    - change_account_branding script needed for its parameters to have defaults.
+    - empty search return sets were causing mischief.
+
+RhaptosSite-1.27
+  - collection-structure-redesign-1 (Oct. 22, 2009) [reqs reinstall]
+    - Updated links to help files
+    - UnicodeNormalizer removed; no longer in use
+    - import/export box styles made available globally
+    - email failure validation message made more generic
+    - navigationBuilder uses more clever speial-id-for-collapse instead of hard-coded whitelist
+       (upgrade needed for those hardcoded cases)
+    - navigationBuilder uses more efficient ExtendedPathIndex queries
+    - added util for really shutting down hanging ZCTL/debug sessions
+    - added property for "tech support" email address for queue notifications
+    - Lineup added to install procedure
+    - add monkeypatch for Unicode in templates so that we can successfully render CollXML with
+       Unicode data.
+
 RhaptosSite-1.26.1
   - #9533: Restrict recently-edited search to folders accessible by the current user
 

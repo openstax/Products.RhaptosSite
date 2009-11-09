@@ -99,9 +99,9 @@
           <td valign="top">
             <h1>
               <span i18n:translate="heading_access_lenses">Access lenses</span>
-              <span class="normal-text-in-header">
-                (<a href="/help/lens_what" i18n:translate="link_question_mark"
-                    tal:attributes="href string:$portal_url/help/lens_what">?</a>)
+              <span class="normal-text-in-header" tal:define="help nocall:portal/help/viewing/lenses | nothing" tal:condition="nocall:help">
+                (<a href="/help/viewing/lenses" i18n:translate="link_question_mark"
+                    tal:attributes="href help/absolute_url">?</a>)
               </span>
             </h1>
             <p tal:define="newlensmacro context/lens_folder_view/macros/newlens | nothing"
@@ -178,20 +178,20 @@
          <tr>
           <td style="padding-right: 30px;" valign="top">
             <ul>
-              <li>
-                <a href="/help/ModuleInMinutes" i18n:translate="text_module_minutes"
-                   tal:attributes="href string:$portal_url/help/ModuleInMinutes">
+              <li tal:define="help nocall:portal/help/authoring/createmodule | nothing" tal:condition="nocall:help">
+                <a href="/help/authoring/createmodule" i18n:translate="text_module_minutes"
+                   tal:attributes="href help/absolute_url">
                   How to create a module in minutes
                 </a>
               </li>
-              <li>
-                <a href="/help/CreateCollection" i18n:translate="text_create_coll"
-                   tal:attributes="href string:$portal_url/help/CreateCollection">
+              <li tal:define="help nocall:portal/help/authoring/createcollection | nothing" tal:condition="nocall:help">
+                <a href="/help/authoring/createcollection" i18n:translate="text_create_coll"
+                   tal:attributes="href help/absolute_url">
                   How to create a collection with existing modules</a>
               </li>
-              <li>
-                <a href="/help/authorguide" i18n:translate="text_author_guide"
-                   tal:attributes="href string:$portal_url/help/authorguide">
+              <li tal:define="help nocall:portal/help/authoring/authorguide | nothing" tal:condition="nocall:help">
+                <a href="/help/authoring/authorguide" i18n:translate="text_author_guide"
+                   tal:attributes="href help/absolute_url">
                   New author guide
                 </a>
               </li>
@@ -209,19 +209,19 @@
           </td>
           <td valign="top">
             <ul>
-              <li>
-                <a href="/help/myFavorites" i18n:translate="text_use_favorites"
-                   tal:attributes="href string:$portal_url/help/myFavorites">
+              <li tal:define="help nocall:portal/help/accounts/myfavorites | nothing" tal:condition="nocall:help">
+                <a href="/help/accounts/myfavorites" i18n:translate="text_use_favorites"
+                   tal:attributes="href help/absolute_url">
                   How to use "My Favorites"</a> 
               </li>
-              <li>
-                <a href="/help/start-from-where-i-last-left-off" i18n:translate="text_track_reading"
-                   tal:attributes="href string:$portal_url/help/start-from-where-i-last-left-off">
+              <li tal:define="help nocall:portal/help/accounts/trackprogress | nothing" tal:condition="nocall:help">
+                <a href="/help/accounts/trackprogress" i18n:translate="text_track_reading"
+                   tal:attributes="href help/absolute_url">
                   How to track your reading with "My Favorites"</a>
               </li>
-              <li>
-                <a href="/help/createlens" i18n:translate="text_create_lens"
-                   tal:attributes="href string:$portal_url/help/createlens">
+              <li tal:define="help nocall:portal/help/authoring/createlens | nothing" tal:condition="nocall:help">
+                <a href="/help/authoring/createlens" i18n:translate="text_create_lens"
+                   tal:attributes="href help/absolute_url">
                   How to create a lens of Connexions content</a>
               </li>
             </ul>

@@ -14,6 +14,7 @@
 ##  create fullname here
 ##     (Plone has a field, previously we created it in a hidden field
 ##      in confirm_account_form, now deleted.)
+##  change email fail message
 
 from Products.CMFPlone import PloneMessageFactory as _
 from ZODB.POSException import ConflictError
@@ -58,7 +59,7 @@ if site_properties.validate_email or REQUEST.get('mail_me', 0):
         # We should notify them.
         #
         # (MSL 12/28/03) We also need to delete the just made member and return to the join_form.
-        msg = _(u'We were unable to send your password to your email address: ${address}',
+        msg = _(u'We were unable to send to your email address: ${address}',
                 mapping={u'address' : str(err)})
         state.setError('email', msg)
         state.set(came_from='login_success')

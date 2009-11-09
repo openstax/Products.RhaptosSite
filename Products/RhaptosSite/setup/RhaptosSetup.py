@@ -98,6 +98,7 @@ def installProducts(self, portal):
             'profile-Products.MathEditor:default')
     portal_setup.runAllImportSteps()
 
+    qi.installProduct('Lineup')
     # siyavula products...
     #portal_setup.setImportContext(
     #        'profile-Products.XMLTemplateMaker:default')

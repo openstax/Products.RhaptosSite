@@ -4506,7 +4506,7 @@ msgstr ""
 msgid "text_contentstats_TopTableRow2Part2"
 msgstr ""
 
-#. Default: "This item has been published.  If you wish to create a new revision, you must check out a copy to the workspace for editing (<a href=\"/help/reference/status\">What does \"Checked out\" mean</a>?)"
+#. Default: "This item has been published.  If you wish to create a new revision, you must check out a copy to the workspace for editing (<a href=\"/help/authoring/authorguide#status\">What does \"Checked out\" mean</a>?)"
 #: ./RhaptosModuleEditor/skins/rhaptos_module_editor/content_published.pt:28
 msgid "text_contpubd_alreadypubd"
 msgstr ""

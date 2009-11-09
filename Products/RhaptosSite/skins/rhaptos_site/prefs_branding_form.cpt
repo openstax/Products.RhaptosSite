@@ -1,0 +1,199 @@
+<tal:page tal:define="overTitle string:Account Management">
+
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/prefs_main_template/macros/master"
+      i18n:domain="ploneboard">
+
+<head>
+    <metal:top fill-slot="top_slot">
+      <tal:block define="dummy python:request.set('disable_border', 1)"/>
+    </metal:top>
+    <metal:css fill-slot="css_slot">
+    <style type="text/css" media="all"
+           tal:content="string: @import url($portal_url/ploneboard.css);"></style>
+    </metal:css>
+</head>
+
+<body>
+    <div metal:fill-slot="prefs_configlet_main">
+
+      <h1>Account Management</h1>
+
+      <a class="link-parent" href="plone_control_panel" i18n:translate="up_to_site_setup">
+       Up to Site Setup
+      </a>
+
+      <div class="documentDescription">
+      Choose lens properties for member accounts
+      </div>
+
+      <h2 style="margin-bottom: 1em;">Find accounts</h2>
+
+      <p>Find people and organizations below to change whether or not they can make a lens with a branding bar, can make endorsement lenses, and can make affiliation lenses. Currently only organizational accounts can create endorsement or affiliation lenses and these are set to defaults and not changeable.</p>
+
+      <p>
+        <form action="."
+              style="display:inline"
+              name="accountsearch"
+              tal:attributes="action template/getId">
+          <input tabindex=""
+                 type="text"
+                 name="searchstring"
+                 value=""
+                 tal:attributes="tabindex tabindex/next;
+                                 value request/searchstring | default" />
+
+          <input class="context searchButton"
+                 tabindex=""
+                 type="submit"
+                 name="form.button.search"
+                 value="Search"
+                 i18n:attributes="value value_search"
+                 tal:attributes="tabindex tabindex/next;" />
+          <input type="hidden" name="form.submitted" value="1" />
+        </form>
+        <span>OR</span>
+        <form action="."
+              style="display:inline"
+              name="orgaccountsearch"
+              tal:attributes="action template/getId">
+          <input class="context searchButton"
+                 tabindex=""
+                 type="submit"
+                 name="form.button.showallorg"
+                 value="Show all organizational accounts"
+                 i18n:attributes="value value_showallorg"
+                 tal:attributes="tabindex tabindex/next;" />
+          <input type="hidden" name="form.submitted" value="1" />
+        </form>
+      </p>
+
+      <form action="."
+            name="changeaccount"
+            method="post"
+            tal:attributes="action template/getId"
+            tal:define="bSearch  request/searchstring | nothing;
+                        bShowAll request/form.button.showallorg | nothing;
+                        mtool    nocall:context/portal_membership;">
+        <tal:table>
+          <input tal:condition="bSearch" type="hidden"
+                 name="searchstring" value=""
+                 tal:attributes="value request/searchstring">
+          <input tal:condition="bShowAll" type="hidden"
+                 name="form.button.showallorg" value=""
+                 tal:attributes="value request/form.button.showallorg">
+          <table class="listing" id="add_roles_table">
+            <tbody>
+              <tr>
+                <th>Account</th>
+                <th>Type</th>
+                <th>Branding Bar</th>
+                <th>Endorsement Lens Maker</th>
+                <th>Affiliation Lens Maker</th>
+              </tr>
+              <tal:search tal:condition="bSearch">
+                <tal:rows tal:define="searchstring request/searchstring | nothing;
+                                      accounts python:searchstring and mtool.searchForMembers(name=searchstring)
+                                                      or None;
+                                      accounts python:accounts and
+                                                      [m for m in accounts if m.getObject().status == 'Approved']"
+                          tal:condition="python:accounts is not None and len(accounts) > 0"
+                          tal:repeat="account accounts">
+                  <tr tal:attributes="class python:repeat['account'].even() and 'even' or 'odd';"
+                      tal:define="member_data   python:account.getObject();
+                                  member_id     python:member_data.getId();
+                                  acl_user      python:mtool.getMemberById(member_id);
+                                  fullname      python:acl_user.fullname or '';
+                                  account_type  python:acl_user.getProperty('account_type') or '';
+                                  type          python:account_type=='org' and 'Organization' or
+                                                       account_type=='person' and 'Individual' or
+                                                       'Unknown';
+                                  isOrganization python:type == 'Organization';
+                                  isIndividual   python:type == 'Individual';
+                                  roles          python:acl_user.getRoles() or ();
+                                  canUserBrand   python:'Branding' in roles;">
+                    <td>
+                      <a href=""
+                         tal:attributes="href string:/member_profile/${acl_user/id}"
+                        ><span tal:content="fullname"/><br/>(<span tal:content="member_id"/>)</a>
+                    </td>
+                    <td tal:content="type">Organization or Individual</td>
+                    <td class="checkbox">
+                      <input class="noborder" type="checkbox" checked=""
+                             name="checked_now:list" value=""
+                             tal:attributes="checked python:canUserBrand and 'checked' or '';
+                                             value   member_id"/>
+                      <input type="hidden"
+                             name="checked_initial:list" value=""
+                             tal:attributes="value   python:canUserBrand and member_id or None"/>
+                    </td>
+                    <td class="checkbox">
+                      <input tal:condition="isOrganization"
+                             class="noborder" type="checkbox" checked="checked" disabled="disabled"/>
+                      <input tal:condition="not:isOrganization"
+                             class="noborder" type="checkbox" disabled="disabled"/>
+                    </td>
+                      <td class="checkbox">
+                      <input tal:condition="isOrganization"
+                             class="noborder" type="checkbox" checked="checked" disabled="disabled"/>
+                      <input tal:condition="not:isOrganization"
+                             class="noborder" type="checkbox" disabled="disabled"/>
+                    </td>
+                  </tr>
+                </tal:rows>
+              </tal:search>
+              <tal:orgaccounts tal:condition="bShowAll">
+                <tal:rows tal:define="orgs python:[member_data_brain.getObject().getId() for member_data_brain in mtool.searchForMembers(name='*') if hasattr(member_data_brain.getObject(), 'getId') and hasattr(mtool.getMemberById(member_data_brain.getObject().getId()), 'getProperty') and mtool.getMemberById(member_data_brain.getObject().getId()).getProperty('account_type') == 'org'] or None"
+                          tal:condition="orgs"
+                          tal:repeat="org orgs">
+                  <tr tal:attributes="class python:repeat['org'].even() and 'even' or 'odd';"
+                      tal:define="member_id     org;
+                                  acl_user      python:mtool.getMemberById(member_id);
+                                  fullname      python:acl_user.fullname or '';
+                                  roles         python:acl_user.getRoles() or ();
+                                  canUserBrand  python:'Branding' in roles;">
+                    <td>
+                      <a href=""
+                         tal:attributes="href string:/member_profile/${acl_user/id}"
+                        ><span tal:content="fullname"/><br/>(<span tal:content="member_id"/>)</a>
+                    </td>
+                    <td>Organization</td>
+                    <td class="checkbox">
+                      <input class="noborder" type="checkbox" checked=""
+                             name="checked_now:list"
+                             tal:attributes="checked python:canUserBrand and 'checked' or '';
+                                             value   member_id"/>
+                      <input type="hidden"
+                             name="checked_initial:list" value=""
+                             tal:attributes="value   python:canUserBrand and member_id or None"/>
+                    </td>
+                    <td class="checkbox">
+                      <input class="noborder" type="checkbox" checked="checked" disabled="disabled"/>
+                    </td>
+                    <td class="checkbox">
+                      <input class="noborder" type="checkbox" checked="checked" disabled="disabled"/>
+                    </td>
+                  </tr>
+                </tal:rows>
+              </tal:orgaccounts>
+            </tbody>
+          </table>
+        </tal:table>
+        <tal:input tal:condition="python:bSearch or bShowAll">
+          <input class="context searchButton"
+                 tabindex=""
+                 type="submit"
+                 name="form.button.change"
+                 value="Save Changes"
+                 i18n:attributes="value value_save"
+                 tal:attributes="tabindex tabindex/next;" />
+          <input type="hidden" name="form.submitted" value="1" />
+        </tal:input>
+      </form>
+    </div>
+</body>
+
+</html>
+
+</tal:page>

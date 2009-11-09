@@ -1,0 +1,5 @@
+[default]
+title=Change account branding
+
+[actions]
+action.success = traverse_to:string:prefs_branding_form

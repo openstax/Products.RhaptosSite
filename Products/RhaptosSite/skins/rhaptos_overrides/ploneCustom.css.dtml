@@ -154,8 +154,9 @@ h1{
   margin: .5em 0 1.25em;
 }
 
-h1 img, .normal-text-in-header{
+h1 img, h1 .normal-text-in-header{
   margin-top: -3px;
+  font-size: 0.6em;
 }
 
 .normal-text-in-header{
@@ -244,6 +245,17 @@ body.fullscreen #portal-searchbox{
   -o-text-overflow:ellipsis;   /* webkit (Safari; apparently inactive in Chrome) */
   -ms-text-overflow:ellipsis;  /* IE 8 */
   /* not in FF, currently. see https://developer.mozilla.org/en/CSS/text-overflow */
+}
+
+.importexport {
+  border: 1px solid #8cacbb;
+  padding: 0 0.5em;
+  margin-bottom: 1em;
+  background-color: #EEEEEE;
+}
+
+#cnx_branding_banner{
+  padding: 0.2em 2em;
 }
 
 /* </dtml-with> */

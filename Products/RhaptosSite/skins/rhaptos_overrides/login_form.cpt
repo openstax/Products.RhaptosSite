@@ -156,11 +156,15 @@
                   allows you to:</p>
                 <ul>
                   <li><b>Author content</b></li>
-                  <li><b>Rate modules</b> and <a href="/help/ratings_what" 
-                          tal:attributes="href string:$portal_url/help/ratings_what">let others know what you think</a></li> 
-                  <li><b>Make a <a href="/help/lens_what" i18n:translate="link_lens"
-                                   tal:attributes="href string:$portal_url/help/lens_what">lens</a></b> 
-                      of content (including saving to 
+                  <li><b>Rate modules</b> and <a href="/help/viewing/ratings"
+                          tal:define="help nocall:portal/help/viewing/ratings | nothing"
+                          tal:omit-tag="not:help"
+                          tal:attributes="href help/absolute_url | nothing">let others know what you think</a></li>
+                  <li><b>Make a <a href="/help/viewing/lenses" i18n:translate="link_lens"
+                                   tal:define="help nocall:portal/help/viewing/lenses | nothing"
+                                   tal:omit-tag="not:help"
+                                   tal:attributes="href help/absolute_url | nothing">lens</a></b>
+                      of content (including saving to
                       <span style="white-space: nowrap;"><img src="star.png"> <b>My Favorites</b></span>)
                   </li>
                   <li><b>Save your place</b> when reading through a collection</li>

@@ -1,0 +1,19 @@
+from Products.CMFCore.tests.base.security import AnonymousUser, OmnipotentUser
+from AccessControl.SecurityManagement import newSecurityManager
+#user = OmnipotentUser().__of__(app)
+user = app.acl_users.getUser('jcc')
+newSecurityManager(None, user)
+
+from Testing.makerequest import makerequest
+app=makerequest(app)
+
+qi = app.plone.portal_quickinstaller
+name = 'RhaptosSite'
+if not qi.isProductInstalled(name):
+    qi.installProduct(name)
+else:
+    qi.reinstallProducts([name])
+
+import transaction
+transaction.commit()
+print "transaction complete"

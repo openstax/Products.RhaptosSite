@@ -19,6 +19,9 @@ RhaptosSite
       It also customizes member search to use member_catalog from
       CatalogMemberDataTool (or CMFMember) and AdvancedQuery
 
+  Creates a new portal property 'techsupport_email_address' for an email
+  to send technical warnings to. On install is set to 'email_from_name'
+  but may be changed.
 
   Requirements:
 
