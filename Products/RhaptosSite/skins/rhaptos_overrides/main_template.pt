@@ -53,6 +53,10 @@ Rhaptos notes:
 
     <metal:javascriptslot fill-slot="javascript_head_slot">
       <tal:comment replace="nothing"> A slot where you can insert javascript in the header from a template </tal:comment>
+
+      <tal:comment replace="nothing"> The following is used globally by javascript to get the portal_url</tal:comment>
+      <script type="text/javascript"
+              tal:content="string:var portal_url='${context/portal_url}';"></script>
       <metal:javascriptslot define-slot="javascript_head_slot" />
     </metal:javascriptslot>
   </head>
