@@ -92,13 +92,14 @@ def installProducts(self, portal):
             'profile-Products.RhaptosBugTrackingTool:default')
     portal_setup.runAllImportSteps()
     portal_setup.setImportContext(
-            'profile-Products.CatalogMemberDataTool:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
             'profile-Products.MathEditor:default')
     portal_setup.runAllImportSteps()
 
     qi.installProduct('Lineup')
+    portal_setup.setImportContext(
+            'profile-Products.CatalogMemberDataTool:default')
+    portal_setup.runAllImportSteps()
+
     # siyavula products...
     #portal_setup.setImportContext(
     #        'profile-Products.XMLTemplateMaker:default')
