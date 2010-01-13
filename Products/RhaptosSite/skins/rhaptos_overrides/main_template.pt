@@ -109,6 +109,8 @@ Rhaptos notes:
            </div>
       </div>
 
+      <metal:brandingslot define-slot="branding_banner" />
+
       <div class="visualClear" id="clear-space-before-wrapper-table"><!-- --></div>
 
       <tal:comment replace="nothing">

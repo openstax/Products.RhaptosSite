@@ -258,4 +258,33 @@ body.fullscreen #portal-searchbox{
   padding: 0.2em 2em;
 }
 
+.lens_tag_table b{
+  color: #444;
+}
+
+.lens_tag_table{
+  background-color: #f5f5f5;
+  border-top: 1px solid #ccc;
+  margin-top: 0.15em;
+  margin-bottom:0.5em;
+  width:100%;
+}
+
+.lens_tag_table td{
+  vertical-align:top;
+}
+
+.tag-column{
+  padding-right: 1em;
+  width: 50%;
+}
+
+.error .fieldRequired{
+  color: &dtml-notifyBackgroundColor; !important;
+}
+
+.discreet-link{
+  color: &dtml-discreetColor;;
+}
+
 /* </dtml-with> */

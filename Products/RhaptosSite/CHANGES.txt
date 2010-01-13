@@ -1,3 +1,7 @@
+RhaptosSite-1.29
+  - lwb-hot-fixes (03 Dec 2009)
+    - #9812: create branding banner bar and set branding cookie, server side
+
 RhaptosSite-1.28
   - light-weight-branding (30 Oct 2009)
     - Created accounts management page

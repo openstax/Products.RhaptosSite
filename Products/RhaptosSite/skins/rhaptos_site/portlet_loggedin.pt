@@ -38,7 +38,6 @@ Rhaptos Notes:
             </li>
             <li>
               <a href="/plone_memberprefs_panel"
-                 tal:attributes="href string:$portal_url/plone_memberprefs_panel"
                  i18n:translate="label_my_account">
                 Profile &amp; Account Settings
               </a>
@@ -50,21 +49,6 @@ Rhaptos Notes:
                  i18n:translate="link_edit">edit</a>)
             </li>
 
-            <tal:siyavula condition="context/@@siyavula|nothing">
-              <tal:something_to_review define="modules python:context.restrictedTraverse('@@lensmaker.reviewlist.modules')()"
-                                       condition="modules">
-                <li tal:define="inReviewList python:request.URL.endswith('@@lensmaker.reviewlist');
-                                home context/portal_membership/getHomeFolder;
-                                homeurl home/absolute_url"
-                    tal:attributes="class python:inReviewList and 'currentNavItem' or None">
-                   <a tal:attributes="href string:${homeurl}/@@lensmaker.reviewlist"
-                      style="color: #ee7700">
-                     <span i18n:translate="box_text_review_and_approve" tal:omit-tag="">Review and Approve (<span tal:replace="python:len(modules)"/>)</span>
-                   </a>
-                </li>
-              </tal:something_to_review>
-            </tal:siyavula>
-
             <li tal:define="ct here/portal_collaboration;
                             pt here/portal_patch;
                             mt here/portal_moduledb;
@@ -72,8 +56,10 @@ Rhaptos Notes:
                             u user/getUserName;
                             collabs python:ct.searchCollaborations(user=u, status='pending');
                             my_content python:[m.objectId for m in mt.sqlGetModulesByRole(user=u,role='maintainer')];
-                            patches python:my_content and pt.searchPatches(orig_id=my_content, review_state='submitted');"
-                tal:condition="python:collabs or patches"
+                            patches python:my_content and pt.searchPatches(orig_id=my_content, review_state='submitted');
+                            modules python:context.restrictedTraverse('@@lensmaker.reviewlist.modules')();
+                            siyavula context/@@siyavula|nothing"
+                tal:condition="python:collabs or patches or (modules and siyavula)"
                 id="portlet-pending">
 
               <tal:comment tal:Replace="nothing"> define for future org account approval:
@@ -81,17 +67,35 @@ Rhaptos Notes:
 
               <span i18n:translate="label_pending">Pending Messages:</span>
                 <div tal:condition="collabs" class="portletContent even linkdata">
-                <span tal:replace="python:len(collabs)">1</span>
-                <a href="/collaborations" i18n:translate="box_pending_role_requests">Role Request(s)</a>
+                <a href="/collaborations" i18n:translate="box_pending_role_requests">
+                  <span tal:replace="python:len(collabs)">1</span>
+                  Role Request(s)
+                </a>
                 </div>
                 <div tal:condition="patches" class="portletContent odd linkdata">
-                  <span tal:replace="python:len(patches)">1</span>
-                  <a href="/patches" i18n:translate="box_pending_suggested_edits">Suggested Edit(s)</a>
+                  <a href="/patches" i18n:translate="box_pending_suggested_edits">
+                    <span tal:replace="python:len(patches)">1</span>
+                    Suggested Edit(s)
+                  </a>
                 </div>
                 <div tal:condition="nothing" class="portletContent even linkdata">
-                  <span tal:replace="python:len(org_accounts)">1</span>
-                  <a href="/management/pending_accounts" i18n:translate="box_pending_org_accounts">Approve Org Accounts</a>
+                  <a href="/management/pending_accounts" i18n:translate="box_pending_org_accounts">
+                    <span tal:replace="python:len(org_accounts)">1</span>
+                    Approve Org Accounts
+                  </a>
                 </div>
+                <tal:siyavula condition="siyavula">
+                  <div tal:define="home context/portal_membership/getHomeFolder;
+                                   homeurl home/absolute_url"
+                       tal:condition="modules"
+                       class="portletContent even linkdata">
+                  
+                    <a tal:attributes="href string:${homeurl}/@@lensmaker.reviewlist">
+                      <span tal:replace="python:len(modules)">1</span>
+                      Review Request(s)
+                    </a>
+                  </div>
+                </tal:siyavula>
             </li>
           </ul>
         </dd>
