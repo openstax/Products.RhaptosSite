@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="rhaptos">
+
+<tal:comment tal:replace="nothing">
+Rhaptos note: changes only to make old-style slot into portlet.
+mostly different names for macros and styles.
+A few i18n fixes
+
+2.5 upgrade note:
+  toLocalizedTime now used
+</tal:comment>
+
+<body>
+
+    <!-- The log action box -->
+    <div metal:define-macro="portlet" tal:define="o here/nearestRhaptosObject | nothing" 
+                                      tal:condition="python:o and o.license">
+
+      <dl class="portlet"
+          tal:define="type o/aq_explicit/archetype_name | o/aq_explicit/portal_type | string:Content;
+                      state o/state;
+                      objUrl o/absolute_url"
+          id="portlet-logaction">
+
+        <dt class="portletHeader">
+          <span class="portletTopLeft"></span>
+          <span i18n:translate="box_heading_log_action" style="white-space: nowrap"><span i18n:name="obj_type"><tal:type i18n:translate="" tal:content="type">[type]</tal:type></span> Status</span>
+          <span class="portletTopRight"></span>
+        </dt>
+
+        <dd class="portletItem even">
+          <strong i18n:translate="text_action_state_heading">State</strong>:
+
+          <span tal:content="python:o.displayState(state)" 
+            i18n:translate="">[state]</span>
+        </dd>
+
+        <dd class="portletItem odd" i18n:translate="text_log_last_action"
+                 tal:define="action o/action | nothing;
+	                     actor o/actor | nothing;
+	                     actor_home python:container.portal_membership.getHomeUrl(actor);">
+
+          <span i18n:name="last_action"><strong i18n:translate="text_last_action">Last action</strong></span>:
+          <span i18n:name="action"><tal:action tal:content="action">create</tal:action></span>
+          by <span i18n:name="actor"><strong tal:content="actor">bob</strong></span>
+          on <span i18n:name="time"><span tal:replace="python:here.toLocalizedTime(o.timestamp)" tal:on-error="default">[date]</span></span>
+
+          <div i18n:name="a_message">
+            <div tal:condition="o/message | nothing">
+              <br /><strong i18n:translate="text_comment_header">Comment</strong>:
+              <em><span tal:replace="o/message">message</span></em>
+            </div>
+          </div>
+        </dd>
+
+        <dd class="portletItem even"
+            tal:condition="python:state !='published'">
+          <strong i18n:translate="text_available_actions">Actions</strong>
+          <ul>
+            <li tal:repeat="action o/getObjectActions">
+              <a tal:attributes="href action/url"
+                 tal:content="action/name"
+                 i18n:translate="">[action]</a>
+            </li>
+          </ul>
+        </dd>
+
+        <dd class="portletItem odd">
+          <strong i18n:translate="text_view_action">View</strong>
+          <ul>
+            <li tal:repeat="action o/getViewActions">
+              <a tal:attributes="href action/url"
+                 tal:content="action/name"
+                 i18n:translate="">[action]</a>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </body>
+</html>
+

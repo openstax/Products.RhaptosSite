@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<object name="portal_javascripts" meta_type="JavaScripts Registry">
+ <javascript id="rhaptosutils.js" enabled="True"
+    inline="False" cacheable="True" compression="safe" cookable="True"
+    expression="" />
+ <javascript id="workspaces_slot_init.js" enabled="True"
+    inline="False" cacheable="True" compression="safe" cookable="True"
+    expression="python:'workspaces_slot' in [x.split('/')[1] for x in object.left_slots]" />
+ <javascript id="fullscreenmode.js" enabled="True"
+    inline="False" cacheable="True" compression="safe" cookable="True"
+    expression="python:getattr(object, 'nearestRhaptosObject', None) is not None"/>
+</object>

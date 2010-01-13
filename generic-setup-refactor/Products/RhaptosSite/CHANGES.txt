@@ -1,0 +1,286 @@
+RhaptosSite-1.28
+  - light-weight-branding (30 Oct 2009)
+    - Created accounts management page
+    - Added search and search results to accounts management page
+    - Fixing issues with padding in Rhaptos look and font-size in both
+      looks. Removing styling for #cnx_branding_logo in ploneCustom.css
+      files because that <div> shouldn't show up on the lens listing
+      page. Remove branding header from ploneCustom.css files because I
+      don't have such headers for anything else in those files (and don't
+      want to imply that everything under them is related to branding).
+    - change_account_branding script needed for its parameters to have defaults.
+    - empty search return sets were causing mischief.
+
+RhaptosSite-1.27
+  - collection-structure-redesign-1 (Oct. 22, 2009) [reqs reinstall]
+    - Updated links to help files
+    - UnicodeNormalizer removed; no longer in use
+    - import/export box styles made available globally
+    - email failure validation message made more generic
+    - navigationBuilder uses more clever speial-id-for-collapse instead of hard-coded whitelist
+       (upgrade needed for those hardcoded cases)
+    - navigationBuilder uses more efficient ExtendedPathIndex queries
+    - added util for really shutting down hanging ZCTL/debug sessions
+    - added property for "tech support" email address for queue notifications
+    - Lineup added to install procedure
+    - add monkeypatch for Unicode in templates so that we can successfully render CollXML with
+       Unicode data.
+
+RhaptosSite-1.26.1
+  - #9533: Restrict recently-edited search to folders accessible by the current user
+
+RhaptosSite-1.26
+  - #9440: Change max size for profile images to 150x150
+
+RhaptosSite-1.25
+  - content-actions-move (17 Aug 2009)
+    - #9090 - Add "Rate content" to login form
+    - #9294 - typographical error on items(s).
+    - some Rhaptos install problems fixed
+    - #9331 - add link to MyCNX page to take people to search/browse (content tab)
+    - don't check js_enabled during login to short-circuit came_from redirect
+
+RhaptosSite-1.24.1
+  - #9291: lens-edit link sent in email didn't work for anonymous users
+
+RhaptosSite-1.24
+  - Module Edit Workflow (30 Jun 2009) [install reqd (@Upgrades/upMew.zctl)]
+    - new list-by-types pages for finding editing content
+    - new workgroups management page
+    - workspaces_slot navbar restyled and modified for items above
+      - new categories have "twisties" with cookie state storage
+    - 'getWorkspaces' moves to RhaptosWorkgroups
+    - author_home displays recently modified content
+    - created install script
+    - new 'mycnx' object installed, to make tab highlighting and URLs better
+    - redo actions installation with GenericSetup profile
+      - new 'listInList' script added to manage action TALES expressions
+    - content editor objects created without context
+      - cc_license pages now work without context in creating content
+      - cc_license_accept now creates temp object if given 'type_name' param for use by content_title
+      - temp object concretization moved to update_metadata
+      - author_home and listcontent given context-less add content links
+    - show current Rhaptos editor object (if any) title in the workspaces_slot navbar, exclusively highlighted
+    - scripts folder_[cut,edit,delete,rename,paste].cpy uncustomized, replaced with
+      CMFFormController action customizations, through GenericSetup. #8722
+      - various products (RhaptosModuleEditor, RhaptosWorkspaces, RhaptosCollection) control their
+        own actions, now
+    - #9183: Collection-composer column width issues
+    - #8899: "Truncated" long words in the navbar
+    - Styled expander widget
+    - Various style tweaks to new pages or features (including new parts of navbar) and various tweaks with 
+      regard to new placement of existing features (mostly spacing kinds of things)
+    - Made <h1> size more consistent among different pages and browsers
+
+RhaptosSite-1.23
+ - Siyavula Release (May 14, 2009)
+  - Added My Templates link for workspace
+  - Added Forums to Workgroups
+  - Added link to Lens Organizers
+  - Updated tab highlighting
+
+RhaptosSite-1.22
+  - Add Hewlett Google Analytics to all pages (ticket:8565)
+
+RhaptosSite-1.21
+  - Monkeypatch to fix bug in MimeTypesRegistry.classify where it doesn't
+    provide for a negative return from 'lookup'. Fix #8488.
+
+RhaptosSite-1.20
+  - cnxml-0.6 (30 Jan 2009)
+    - bare ampersand causing fits, apparently, for JS. Use entity, correctly, instead
+    - Close input tag, to be more correct. This is valid HTML, but not XHTML
+    - Remove special module case of schema selection (really just MathML choice). The 
+      duties of module_set_schema.cpy have moved into manage_afterAdd, so index.cnxml 
+      is now created as soon as the module object is.
+    - Modified all references to unibrowser to cnxml_render. 
+    - Fixed lack of a space in "Warning:Your changes..."
+    - Makes the use of content_title as landing page on new content explicit, instead of 
+      relying on the redirect in getContentOverridePage (which no longer performs the redirect
+       for modules).
+    - Add the 3.0 version of the attribution license to the list of licenses, and make it the 
+      default. This fixes several places where version 2.0, or a choice between 1.0 and 2.0, was 
+      hardcoded. getDefaultLicense.py is still not in a license tool like it should be, but it's 
+      moved from RMS to RhaptosContent, and there's now a getLicenseData method both on content and 
+      on the ModuleDBTool that pulls license data from the postgres database.
+    - Added 3.0 license to list
+
+RhaptosSite-1.19.3
+  - fix API problem with checking for site_license, which caused it to be always false
+    (portal_url is a string, not the portal object). Follows a cnx.org hotfix.
+
+RhaptosSite-1.19.2
+  - vocw-fixes
+    - make absence of site license not break join_form
+    - remove obsolete portlet_pending from site setup
+    - add "Rhaptos Powered" logo to colophon
+
+RhaptosSite-1.19.1
+  - Tiny post-mycnx-phase2 wording tweak
+
+RhaptosSite-1.19
+  - My CNX phase 2
+    - #6532: User will now stay on current page when they choose to log out
+    - #6652: change text on control panel page with script
+    - #6532: added portal message on log out
+    - #6777: restore mentions of 'track reading' and links to help about it.
+    - #6556: links to "My Favorites" become "My Favorites (edit)"; links get portal_url
+
+RhaptosSite-1.18
+  - MyCNX lands
+    - registration simplification
+    - login now uses came_from to return to same page
+    - portlet pending merged into loggedin
+    - some form controller warnings fixed
+    - login_form becomes MyCNX; author_home reworked as MyCNX landing page
+
+RhaptosSite-1.17.2
+   - Fixed patch view breaking when images involved (#6024)
+
+RhaptosSite-1.17.1
+   - clarification about license terms on various pages (#5740, #5750)
+
+RhaptosSite-1.17
+   - postplone25: make sortable_title consider ids as well; see #4110. (requires update to sortable_title index; see upgrade script.)
+   - postplone25: fix http://mountainbunker.org/tasks/detail?taskid=3224 regarding unicode titles in collections (also probably mb3225)
+   - postplone25: add top/bottom arrows to standard folder_contents, for admin use
+
+RhaptosSite-1.16
+   - upgrade to Plone 2.5
+   - fix spelling of "publicly"
+
+RhaptosSite-1.15
+   - fix links from member profile for extra space issues
+   - remove :method to fix search/search problem
+
+RhaptosSite-1.14.2
+   - remove modules from contexts.rdf
+   - fix member search for case sensitivity.
+
+RhaptosSite-1.14.1
+  - edit-interface wording tweaks to go with subject and collection type editing
+
+RhaptosSite-1.14
+  landing lenses0 branch
+  - add organization accounts, being normal accounts with some different
+    properties and a unique role. Must be logged in to create.
+  - improve some account-related items, like reporting password set
+    expiration in days and hours, and Quickstart normalization
+  - add normalizeString as monkey patch from Plone 2.5.2, for use in
+    creating ids based on title
+  - normalize "webpage" forms to "Web page"
+  - add lens into to search box targeting (though this is currently unused)
+  - add lens listing and help info to workspaces_slot and author_home
+
+RhaptosSite-1.13.5
+  - Add username as a field to member profile
+
+RhaptosSite-1.13.4
+  - Add new expansion page header elements to dummy i18n template
+  - Override the batch navigation macro so that it always renders the
+    "next" and "previous" links, but hides them when they used to not
+    display. This helps to make spacing more consistent.
+  - Fix front-page breadcrumb special-casing
+
+RhaptosSite-1.13.3
+  - nlt0225: use "summary" instead of "abstract"
+  - nlt0094: removal of "My Content" link from Account Preferences
+  - nlt0117: display logout as a button (requires CNXPloneSite change)
+  - nlt0209: remove broken images from member prefs page
+  - nlt0006: consistent name for Role Requests
+  - nlt0204: "Create a Workgroup" wording consistency
+  - nlt0083: go directly to login page upon unauthorized visit to author_home
+  - make link to work areas the first one on login landing page
+  - various breadcrumbs fixes
+
+RhaptosSite-1.13.2
+  - newlook bugfixes:
+    - overrides of auto-generated title
+    - vertical separator for upper-right nav links
+
+RhaptosSite-1.13.1
+  - newlook bugfixes:
+    - blank list of maintainers on profile pages
+    - bunch of useless "User Feedback" nav links showing up suddenly on /feedback  
+
+RhaptosSite-1.13
+  - March 2007 site redesign (newlook)
+
+RhaptosSite-1.12
+  - addition of optional roles (currently Editor and Translator)
+
+RhaptosSite-1.11.1
+  - i18n changes for endorsements
+
+RhaptosSite-1.11
+  - i18n Translation Support
+  - Added a new templte, "rhaptos_i18n_dummy_template.pt" to hold
+  literal i18n traslations ids so that they will be picked up by
+  i18ndude and not have to be added to the .pot file by hand.
+
+RhaptosSite-1.10
+  - add Opensearch 1.1 autodiscovery tagging to site pages (jccooper)
+  - Removed now unnecessary forced white-space behavior in collaborations.pt (max)
+
+RhaptosSite-1.9
+  - Major change to the installation procedure for installing a new
+  Rhaptos Site.  Instead of choosing a "Plone Site" with a "Rhaptos
+  customization policy," you can now just choose a "Rhaptos Site."
+  This makes setting up the database properties needed by
+  RhaptosModuleStorage much easier
+  - Also, added a RhaptosTestCase for writing unit tests that require
+  a working RhaptosSite to be installed. 
+
+RhaptosSite-1.8
+  - member_profile updated to show the number of modules someone maintains as well as authors
+
+RhaptosSite-1.7
+  - workspace_contents updated to no longer preserve the structure (and thus display HTML) of the title
+
+RhaptosSite-1.6
+  - Preserve order of suggested user names; allows import of sets module (task 1966, bugday, jccooper)
+  - Link directly from navtree to URLs from Link items (task 1544, bugday, jccooper)
+  - Link to default views in changesets (task 1799, bugday, jccooper)
+  - Better explanations for our public portal_types (task 1340, bugday, kclarks)
+  - Add '+' in monkeypatch as valid for email addresses (bugday, reedstrm)
+  - Handle empty files and non-images in portrait upload (task 2238, bugday, reedstrm)
+  - Make login name cookie checkbox opt-in (task 1340, bugday, kclarks)
+  - Remove extra portal status message on profile editing (?) (bugday, kclarks)
+  - Right-justify size column in workgroups. (task 1862, bugday, maxwell)
+    - requires changes r13823 and r13827 in CNXPloneSite and RhaptosModuleEditor
+  - Don't suggest Unicode usernames, since they're not valid (task 1916, bugday, kclarks)
+  - Preserve form data during renaming conflict (task 1416, bugday, kclarks)
+  - Remove mention of file metadata we don't track or display (task 1268, bugday, jenn)
+  - Trim name/email whitespace in account creation and profile editing (task 2236, bugday, kclarks)
+  - Added "up to module" links to file view/edit forms (tasks 1477/1256, bugday, kclarks)
+
+RhaptosSite-1.5.3
+  - Fixed role request page to work with new collaboration request structure
+
+RhaptosSite-1.5.2
+  - Added a new member profile page
+  - Changed author names to link to the new member profile page
+
+RhaptosSite-1.5.1
+  - Replace RhaptosOOoImportTool with CNXMLTransforms
+
+RhaptosSite-1.5
+  - Renamed RISA to Rhaptos
+  - Various setup fixes
+
+RisaSite-1.3.1
+  - Changed "RISA" logo to a "Rhaptos" one
+  - Fix for bug #1419: can't rename modules using workspace rename form
+  - Fixed accessor for course titles in contexts.rdf
+  - Remove special casing of 'Create New Item' button translation
+  - Use CatalogMemberDataTool to speedup member searches
+  - Add OOoImportTool to newly created sites
+  - Workgroups are now sorted by title
+
+RisaSite-1.3
+  - New Edit-In-Place enhancements
+  - Microsoft Word Importer
+  - Bug fixes
+
+RisaSite-1.2
+  - Initial public release

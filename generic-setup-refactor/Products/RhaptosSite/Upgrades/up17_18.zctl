@@ -1,0 +1,2 @@
+app.plone.portal_properties.site_properties.localLongTimeFormat = '%Y-%m-%d %I:%M%P'
+get_transaction().commit()

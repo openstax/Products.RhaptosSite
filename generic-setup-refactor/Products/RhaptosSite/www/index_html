@@ -1,0 +1,15 @@
+Rhaptos is a web-based collaborative publishing system for educational material.  It is based on <a href="http://plone.org">Plone</a>, the Open-Source Content Management System and shares many of features.
+
+In Rhaptos, 
+
+<ul>
+  <li><strong>Authors</strong> collaborate in <strong>workgroups</strong> to create chunks of content called <strong>modules</strong>.</li>
+  <li>The authors publish modules into a versioned <strong>repository</strong> that provides shared access to content.</li>
+  <li><strong>Instructors</strong> arrange published modules into a hierachical structure called a <strong>course<strong></li>
+  <li>The instructors publish courses into the same repository.</li>
+  <li><strong>Students</strong> (formal or otherwise) access materials for learning</li>
+</ul>
+
+<p>
+  <a href="index_html/edit">Edit this page</a>
+</p>

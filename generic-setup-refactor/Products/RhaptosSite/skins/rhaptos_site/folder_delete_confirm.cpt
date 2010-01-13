@@ -1,0 +1,163 @@
+<span xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone"
+      tal:define="orig_template request/orig_template | nothing;
+                  mode python:orig_template and orig_template.split('?')[0] or None;
+                  mode_list python:mode=='listcontent';
+                  mode_lens python:mode in ('lens_content_view', 'favorite_content_view');
+                  mode_std python:not mode_list and not mode_lens;
+                  default_tab python:mode_lens and 'contents' or 'view'">
+<html xml:lang="en" lang="en"
+      metal:use-macro="here/main_template/macros/master">
+
+  <tal:comment tal:replace="nothing">
+    new to Rhaptos.
+    see also RhaptosWorkgroups/skins/rhaptos_workgroup/workgroup_members_delete_confirm
+    relies on changing the folder_buttons delete action to point here instead.
+    can be called from several locations which we specifically detect to do all sorts of little
+      picky text changes. look for mode_*. Standard mode should work for general purposes.
+  </tal:comment>
+
+  <body>
+    <div metal:fill-slot="content_title_header">
+      <tal:normal condition="mode_std">
+        <metal:title use-macro="context/workspace_contents/macros/workspacetitle">Workyspacement</metal:title>
+      </tal:normal>
+      <tal:list condition="mode_list">
+        <h1 i18n:translate="header_all_content_editing_areas">All content in my editing areas</h1>
+      </tal:list>
+      <tal:lens condition="mode_lens">
+        <metal:title use-macro="context/workspace_contents/macros/workspacetitle">Workyspacement</metal:title>
+      </tal:lens>
+    </div>
+
+    <div metal:fill-slot="main"
+         tal:define="title context/Title;
+                     type context/portal_type;">
+
+      <div class="return-link">
+        <a href="" i18n:translate="text_return_wg"
+           tal:condition="mode_std">
+          &#171; Return to complete contents listing for
+          <span i18n:name="title" tal:content="title">Title</span>
+        </a>
+        <a href="" i18n:translate="text_return_listing"
+           tal:attributes="href orig_template"
+           tal:condition="mode_list">
+          &#171; Return to full list of
+          <span i18n:name="modscols">
+            <tal:choice define="whichtype python:orig_template and orig_template.split('?')[1];
+                                inclmodules python:'Module' in whichtype;
+                                inclcollections python:'Collection' in whichtype;
+                                modonly python:inclmodules and not inclcollections;
+                                colonly python:inclcollections and not inclmodules;
+                                allcont python:inclmodules and inclcollections;">
+              <tal:mods tal:condition="modonly">modules</tal:mods>
+              <tal:cols tal:condition="colonly">collections</tal:cols>
+              <tal:both tal:condition="allcont">modules &amp; collections</tal:both>
+            </tal:choice>
+          </span>
+          in my editing areas
+        </a>
+        <a href="lens_content_view" i18n:translate="text_return_lens"
+           tal:condition="mode_lens">
+          &#171; Return to full listing of lens contents
+        </a>
+      </div>
+
+      <h2 i18n:translate="header_remove_content"
+          tal:condition="mode_std">
+        Remove item(s) from <span i18n:name="title" tal:content="title">Title</span>
+      </h2>
+      <h2 i18n:translate="header_remove_content_list"
+          tal:condition="mode_list">
+        Remove content from your editing areas
+      </h2>
+      <h2 i18n:translate="header_remove_content_lens"
+          tal:condition="mode_lens">
+        Remove content from lens
+      </h2>
+
+      <p style="margin: 1em 0;" i18n:translate="text_remove_confirm"
+         tal:condition="mode_std">
+        You are about to remove the following items from
+        <span i18n:name="title" tal:content="title">Title</span>.
+        This action will not delete any already published content from the Content Commons.
+      </p>
+      <p style="margin: 1em 0;" i18n:translate="text_remove_confirm_list"
+         tal:condition="mode_list">
+        You are about to remove the following items from your editing areas.
+        This action will not delete any already published content from the Content Commons.
+      </p>
+      <p style="margin: 1em 0;" i18n:translate="text_remove_confirm_lens"
+         tal:condition="mode_lens">
+        You are about to remove the following items from
+        <span i18n:name="title" tal:content="title">Title</span>.
+        This action will not delete the content from
+        <span i18n:name="portal" tal:content="portal/Title">Title</span>,
+        but rather just remove it from the lens.
+      </p>
+
+      <form action="." method="post" name="confirm"
+            tal:attributes="action template/getId">
+        <ul class="removal list_listing"
+            tal:define="paths request/paths;
+                        wgmap python:{};">
+          <tal:loop tal:repeat="path paths">
+            <li class="module"
+                tal:define="item                 python:context.restrictedTraverse(path);
+                            item_title_or_id     item/pretty_title_or_id;
+                            item_type            item/getInnerType | item/portal_type;
+                            item_type_class      python:'visualIcon contenttype-' + normalizeString(item_type);
+                            item_url             item/getURL|item/absolute_url;"
+                tal:attributes="class item_type_class">
+              <strong>
+                <a href="" tal:content="item_title_or_id" tal:attributes="href item_url">The title of some module</a>
+              </strong>
+              <span tal:define="wg python:mode_list and context.wgforcontent(path, wgmap)"
+                    tal:condition="nocall:wg"
+                    tal:omit-tag=""
+                    i18n:translate="text_from_wg">
+                from: <span i18n:name="title"
+                            tal:define="title wg/Title;
+                                        type wg/portal_type;"
+                            tal:replace="title">Personal Workspace</span>
+              </span>
+              <input type="hidden" name="paths:list" value=""
+                     tal:attributes="value path" />
+            </li>
+          </tal:loop>
+        </ul>
+
+        <p i18n:translate="text_del_confirm_continue">
+          Are you sure you want to continue?
+        </p>
+
+        <input type="hidden" name="orig_template"
+               tal:attributes="value orig_template"/>
+
+        <input class="destructive"
+               name="form.button.delete"
+               value="Yes, Remove content"
+               type="submit"
+               tabindex=""
+               i18n:attributes="value"
+               tal:attributes="tabindex tabindex/next;" />
+        <input class="standalone"
+               name="form.button.cancel"
+               value="No, Cancel"
+               type="submit"
+               tabindex=""
+               i18n:attributes="value"
+               tal:attributes="tabindex tabindex/next;" />
+
+        <input type="hidden" name="form.submitted" value="1" />
+      </form>
+
+    </div>
+  </body>
+</html>
+</span>
+

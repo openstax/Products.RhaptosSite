@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en" lang="en"
+      i18n:domain="plone">
+
+<tal:comment tal:replace="nothing">
+This template based on version from Plone 2.5.4-2.
+Only difference is the addition of the Powered by Rhaptos logo.
+</tal:comment>
+
+  <head><title></title></head>
+  <body>
+
+    <div id="portal-colophon" metal:define-macro="colophon" i18n:domain="plone">
+      <tal:comment replace="nothing">
+
+        Please keep the Plone Powered button (or a textual link to us) if you use
+        Plone on your site. It's a nice token of gratitude, and we appreciate your
+        help in promoting the Plone name.
+
+        Plone is powered by the combined forces of Zope and CMF, two absolutely
+        great systems made by Zope Corporation (http://zope.com) and they in turn
+        are based on the best programming language in the world - Python
+        (http://www.python.org). We owe these guys a lot, thanks for making Plone
+        possible!
+
+      </tal:comment>
+
+      <a href="http://rhaptos.org"
+         class="colophonIcon colophonIconRhaptos"
+         title="This Plone site is running the Rhaptos suite of products, developed by Connexions (cnx.org). Click for more information."
+         i18n:attributes="title title_built_with_plone;"
+         i18n:translate="label_powered_by_rhaptos">
+        Powered by Rhaptos (rhaptos.org)
+      </a>
+
+      <a href="http://plone.org"
+         class="colophonIcon colophonIconPlone"
+         title="This Plone site was built using Plone CMS, the Open Source Content Management System. Click for more information."
+         i18n:attributes="title title_built_with_plone;"
+         i18n:translate="label_powered_by_plone">
+        Powered by Plone CMS, the Open Source Content Management System
+      </a>
+
+      <metal:slot define-slot="colophon" />
+
+    </div>
+
+  </body>
+</html>

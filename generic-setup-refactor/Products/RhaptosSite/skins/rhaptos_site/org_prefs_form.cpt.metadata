@@ -1,0 +1,15 @@
+[default]
+title=Preference settings
+
+[security]
+View=0:Authenticated
+
+[validators]
+validators=
+
+[actions]
+action.success=traverse_to:string:org_prefs
+action.success..Save=traverse_to:string:org_prefs
+action.success..LogoDelete=traverse_to:string:portrait_delete
+action.success..Cancel=redirect_to:string:org_prefs_form
+action.failure=traverse_to:string:org_prefs_form

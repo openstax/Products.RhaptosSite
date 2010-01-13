@@ -1,0 +1,12 @@
+from AccessControl.SecurityManagement import newSecurityManager
+from Products.CMFCore.tests.base.security import AnonymousUser, OmnipotentUser
+#user = OmnipotentUser().__of__(app)
+#newSecurityManager(None, user)
+user = app.plone.acl_users.getUserById('jccman').__of__(app.plone.acl_users)
+newSecurityManager(None, user)
+
+
+app.plone.portal_catalog.reindexIndex(['sortable_title'], None)
+
+import transaction
+transaction.commit()

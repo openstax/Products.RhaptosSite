@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+
+<tal:comment tal:replace="nothing">
+This template based on version from Plone 2.5.2-1
+
+Rhaptos notes: 
+  - inserted html, tal, metal, i18n namespaces
+  - Changed name of search argument to 'words' to match our form (from 'SearchableText')
+  - action is /content/search
+  - added hidden variable to specify "weakAND" search
+  - Added hidden button for workgroup id if we're in a workgroup
+  - added name="search:method" to search button
+  - turned off Plone advanced search form accessibility link
+  - make searchbox size 20 instead of 15 to be consistent with past and content objects
+</tal:comment>
+
+<body>
+
+<!-- THE SEARCHBOX DEFINITION -->
+<div id="portal-searchbox" metal:define-macro="quick_search">
+    <form name="searchform"
+          action="/content/search"
+          tal:define="livesearch site_properties/enable_livesearch|nothing"
+          tal:attributes="action string:${portal_url}/content/search;
+                          onsubmit python:test(livesearch==True,'return liveSearchSubmit()','')"
+          style="white-space:nowrap">
+
+        <label for="searchGadget" class="hiddenStructure"
+                    i18n:translate="text_search">Search Site</label>
+
+        <div class="LSBox">
+        <input id="searchGadget"
+               tabindex=""
+               name="words"
+               type="text"
+               size="20"
+               value=""
+               title="Search Site"
+               accesskey="4"
+               i18n:attributes="title title_search_site;"
+               tal:attributes="value request/words|nothing;
+                               tabindex tabindex/next"
+               class="visibility:visible" />
+
+        <input name="allterms"
+               value="weakAND"
+               type="hidden" />
+
+        <input class="searchButton"
+               type="submit"
+               name="search"
+               tabindex=""
+               value="Search"
+               accesskey="accesskeys-search"
+               tal:attributes="tabindex tabindex/next"
+               i18n:attributes="value label_search;" />
+
+        <input type="hidden"
+               name="target"
+               tal:attributes="value here/getWorkgroupId | here/getId | nothing"
+	       tal:condition="here/getWorkgroupId | python:here.portal_type in ('Workgroup', 'ContentSelectionLens')" />
+
+       <div class="LSResult" id="LSResult" style=""><div class="LSShadow" id="LSShadow"></div></div>
+        </div>
+    </form>
+
+    <div id="portal-advanced-search" tal:condition="nothing"
+         class="hiddenStructure">
+        <a href="#"
+           tal:attributes="href string:$portal_url/search_form"
+           i18n:translate="label_advanced_search"
+           accesskey="5">
+            Advanced Search&hellip;
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

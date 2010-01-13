@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<object name="portal_actions" meta_type="Plone Actions Tool">
+ <action-provider name="portal_actions">
+  <!-- FIXME: Currently mostly handles actions dealing with MyRhaptos; eventually, we should have here any changes
+       between Rhaptos and default Plone sets of actions, replacing whatever is in setup/customize_plone.py
+       and the install script. (We may still need to delete programmatically, since remove="True" doesn't
+       work on actions in this version.) Then we can use this instead.
+  -->
+  
+  <action title="Log In" action_id="login" category="site_actions"
+     condition_expr="python:member is None"
+     url_expr="string:$portal_url/login_form" visible="True">
+   <permission>View</permission>
+  </action>
+  <action title="Log Out" action_id="logout" category="site_actions"
+     condition_expr="python:member is not None"
+     url_expr="string:$portal_url/logout" visible="True">
+   <permission>View</permission>
+  </action>
+  <action title="Content" action_id="content" category="portal_tabs"
+     condition_expr=""
+     url_expr="string:$portal_url/content" visible="True">
+   <permission>View</permission>
+  </action>
+  <action title="About Us" action_id="aboutus" category="portal_tabs"
+     condition_expr=""
+     url_expr="string:$portal_url/aboutus" visible="True">
+   <permission>View</permission>
+  </action>
+  <action title="Help" action_id="help" category="portal_tabs"
+     condition_expr=""
+     url_expr="string:$portal_url/help" visible="True">
+   <permission>View</permission>
+  </action>
+  <!-- show MyRhaptos tab generally for auth users; highlights when in 'mycnx' object .
+       goes away on objects that have their own actions, or else we duplicate tabs -->
+  <action title="MyRhaptos" action_id="mycnx" category="portal_tabs"
+     condition_expr="python:member and not portal.listInList(['Members', 'GroupWorkspaces', 'lenses'], folder.getPhysicalPath())"
+     url_expr="string:$portal_url/mycnx" visible="True">
+   <permission>View</permission>
+  </action>
+  <!-- show MyRhaptos tab only on Members folders, where it's highlighted -->
+  <action title="MyRhaptos" action_id="Members" category="portal_tabs"
+     condition_expr="python:'Members' in folder.getPhysicalPath()"
+     url_expr="string:$portal_url/mycnx" visible="True">
+   <permission>View</permission>
+  </action>
+  <!-- show MyRhaptos tab only on Group folders, where it's highlighted -->
+  <action title="MyRhaptos" action_id="GroupWorkspaces" category="portal_tabs"
+     condition_expr="python:'GroupWorkspaces' in folder.getPhysicalPath()"
+     url_expr="string:$portal_url/mycnx" visible="True">
+   <permission>View</permission>
+  </action>
+  <!-- show MyRhaptos tab generally for unauth users; highlights on login_form -->
+  <action title="MyRhaptos" action_id="login_form" category="portal_tabs"
+     condition_expr="python:not member and not portal.listInList(['Members', 'GroupWorkspaces', 'lenses'], folder.getPhysicalPath())"
+     url_expr="string:$portal_url/mycnx" visible="True">
+   <permission>View</permission>
+  </action>
+  
+  
+  <!-- delete button named "remove" and uses confirmation -->
+  <action title="Remove" action_id="delete" category="folder_buttons"
+     condition_expr=""
+     url_expr="string:folder_delete_confirm_dispatch:method" visible="True">
+   <permission>View</permission>
+  </action>
+ </action-provider>
+</object>

@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="rhaptos"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+  <metal:block fill-slot="top_slot" tal:define="dummy python:request.set('disable_border', 1)" />
+
+  <style type="text/css" metal:fill-slot="css_slot">
+  </style>
+
+  <body>
+    <td id="portal-column-one" metal:fill-slot="column_one_slot">
+      <div class="visualPadding">
+        <metal:block metal:use-macro="context/workspaces_slot/macros/portlet" />
+      </div>
+    </td>
+
+    <div metal:fill-slot="main"
+         tal:define="whichtype request/type | nothing;
+                     inclmodules python:'Module' in whichtype;
+                     inclcollections python:'Collection' in whichtype;
+                     modonly python:inclmodules and not inclcollections;
+                     colonly python:inclcollections and not inclmodules;
+                     allcont python:inclmodules and inclcollections;
+                     sort request/sort | nothing;
+                     all_editable_content python:context.all_editable_content(sort=sort, types=whichtype)">
+      <h1 i18n:translate="header_all_content_editing_areas">All content in my editing areas</h1>
+      
+      <div class="listcontent_createlinks" metal:define-macro="rightsidecontentadd"
+           tal:condition="all_editable_content">
+        <tal:p tal:condition="inclmodules">
+          <metal:replace use-macro="context/author_home/macros/newmodule" />
+        </tal:p>
+        <tal:p tal:condition="inclcollections">
+          <metal:replace use-macro="context/author_home/macros/newcollection" />
+        </tal:p>
+      </div>
+      
+      <div>
+        <strong><a href="listcontent?type:list=Module"
+                   tal:omit-tag="modonly">Modules</a></strong> |
+        <strong><a href="listcontent?type:list=Collection"
+                   tal:omit-tag="colonly">Collections</a></strong> |
+        <strong><a href="listcontent?type:list=Collection&amp;type:list=Module"
+                   tal:omit-tag="allcont">
+            Modules &amp; Collections</a></strong>
+      </div>
+
+      <div tal:condition="not:all_editable_content">
+        <p style="margin: 1em 0pt;">
+          <em i18n:translate="text_no_modules_edit_areas"
+              tal:condition="modonly">
+            You do not have any modules in your editing areas yet.
+          </em>
+          <em i18n:translate="text_no_collections_edit_areas"
+              tal:condition="colonly">
+            You do not have any collections in your editing areas yet.
+          </em>
+          <em i18n:translate="text_no_content_edit_areas"
+              tal:condition="allcont">
+            You do not have any modules or collections in your editing areas yet.
+          </em>
+        </p>
+        <ul>
+          <li tal:condition="inclmodules">
+            <metal:replace use-macro="context/author_home/macros/newmodule" />
+          </li>
+          <li tal:condition="inclcollections">
+            <metal:replace use-macro="context/author_home/macros/newcollection" />
+          </li>
+        </ul>
+      </div>
+
+      <form name="listcontent_form"
+            action="."
+            method="post"
+            tal:attributes="action template/getId"
+            tal:condition="all_editable_content">
+      <input type="hidden" name="orig_template"
+             tal:attributes="value string:$template_id?${request/QUERY_STRING}"/>
+
+      <div style="margin: 2em 0pt 0.75em;">
+        <input class="context" name="form.button.rename" value="Rename" type="submit" />
+        <input class="context" name="form.button.delete" value="Remove" type="submit" />
+      </div>
+
+      <tal:comment replace="nothing">See folder_contents/workspace_contents for inspiration</tal:comment>
+      <table id="sortable" class="listing"
+             style="margin: 0pt; width: 100%; clear: both;"
+             summary="Content listing">
+        <thead i18n:domain="plone">
+          <tr>
+            <th class="nosort">
+              <input type="checkbox"
+                     class="noborder"
+                     name="selectButton"
+                     src="select_all_icon.gif"
+                     title="Select/unselect all items"
+                     onclick="toggleSelect(this,'paths:list');"
+                     alt="Select/unselect all items"
+                     i18n:attributes="title label_select_all_items; alt label_select_all_items;">
+            </th>
+            <th style="white-space:nowrap" id='listcontent_sortable_title'
+                >&nbsp;<tal:title i18n:translate="listingheader_title"
+                >Title</tal:title>&nbsp;</th>
+            <th style="white-space:nowrap" id='listcontent_id'
+                >&nbsp;<tal:size i18n:translate="listingheader_objectid"
+                >ID</tal:size>&nbsp;</th>
+            <th style="white-space:nowrap" i18n:domain="rhaptos"
+                >&nbsp;<tal:location i18n:translate="listingheader_location"
+                >Location</tal:location>&nbsp;</th>
+            <th style="white-space:nowrap" id='listcontent_modified'
+                >&nbsp;<tal:modified i18n:translate="listingheader_modified"
+                >Modified</tal:modified>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tal:items repeat="item all_editable_content">
+            <tr tal:define="oddrow repeat/item/odd;"
+                tal:attributes="class python:test(oddrow, 'even', 'odd');">
+              <td class="notDraggable" style="text-align:center">
+                <input type="checkbox" class="noborder"
+                      name="paths:list"
+                      id="m9000"
+                      value="/plone/Members/alice/m9000"
+                      tal:attributes="value item/content_path;
+                                      id item/content_id">
+              </td>
+              <td class="notDraggable">
+                <span class="visualIcon contenttype-module"
+                      tal:define="item_type item/content_portal_type;
+                                  item_type_class python:'visualIcon contenttype-' + normalizeString(item_type);"
+                      tal:attributes="class item_type_class">
+                  <a tal:content="item/content_title"
+                     tal:attributes="href item/content_url;"
+                     class="visualIconPadding">
+                    The circle of liges
+                  </a>
+                </span>
+              </td>
+              <td class="notDraggable">
+                <span tal:condition="item/content_published" tal:replace="item/content_id">
+                  m9999
+                  </span>
+              </td>
+              <td class="notDraggable">
+                <a href="#"
+                   tal:content="item/work_title"
+                   tal:attributes="href item/work_url">
+                  Personal Workspace
+                </a>
+              </td>
+              <td class="notDraggable"
+                  tal:define="item_modified item/content_modified"
+                  tal:content="python:toLocalizedTime(item_modified, long_format=1)">
+                2005-01-12 02:39pm
+              </td>
+            </tr>
+          </tal:items>
+        </tbody>
+      </table>
+      
+      <input type="hidden" name="multicontainers" value="1" />
+      
+      <div style="margin: .5em 0 1em;">
+        <div metal:use-macro="template/macros/rightsidecontentadd" />
+        <input class="context" name="form.button.rename" value="Rename" type="submit" />
+        <input class="context" name="form.button.delete" value="Remove" type="submit" />
+      </div>
+
+      <input type="hidden" name="form.submitted" value="1" />
+
+      </form>
+    </div>
+  </body>
+
+</html>

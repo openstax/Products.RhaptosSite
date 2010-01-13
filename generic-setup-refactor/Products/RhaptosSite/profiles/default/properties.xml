@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<site>
+  <property name="title">Rhaptos</property>
+  <property name="email_from_address"
+    type="string">changeme@example.org</property>
+</site>

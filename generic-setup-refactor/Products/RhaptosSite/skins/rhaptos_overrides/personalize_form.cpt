@@ -1,0 +1,734 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      metal:use-macro="here/prefs_main_template/macros/master"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="rhaptos">
+
+<tal:comment tal:replace="nothing">
+Rhaptos notes:
+ Fields in Plone 2 style.
+ Name sizes: 30 for names, 8 for prefix/suffix
+ Remove listed pref, portrait
+ Keep email
+ Add homepage
+ Pop-up help preference goes away in Plone 2
+ Short ids, skins prefs stay
+ No "click for password change": exposed in Plone 2 prefs UI
+ Also change the "View action" to point to member_profile
+ Change 'Up to...' Link to say 'Profile & Account Settings page'
+ Removed description sentence.
+</tal:comment>  
+
+<metal:block fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border',1)" />
+
+<body>
+<div metal:fill-slot="prefs_configlet_content"
+     tal:define="errors options/state/getErrors;">
+
+<span tal:condition="python:(member and member.getProperty('account_type') != 'person')"
+	tal:replace="python:request.RESPONSE.redirect('/org_prefs_form')" />
+
+
+    <span tal:define="dummy python:request.response.setHeader('pragma','no-cache')" />
+
+     <div id="content" 
+          class="documentEditable">
+
+            <h5 class="hiddenStructure">Views</h5>
+        
+            <ul class="contentViews">
+              <li>
+                <a href=""
+                   tal:attributes="href string: ${portal_url}/member_profile/${member}"
+                   i18n:translate="label_view">View</a>
+              </li>
+              <li class="selected">
+                <a href=""
+                   tal:attributes="href string:${portal_url}/personalize_form"
+                   i18n:translate="label_edit">Edit</a>
+              </li>
+            </ul>
+
+            <div class="contentActions">
+              &nbsp;
+            </div>
+
+            <div class="documentContent" id="region-content">
+
+                <a name="documentContent"></a>
+
+                <div metal:use-macro="here/global_statusmessage/macros/portal_message">
+                    Portal status message
+                </div>
+
+                <h1 i18n:translate="heading_member_profile">Member Profile</h1>
+
+                <a href=""
+                   class="link-parent"
+                   tal:attributes="href string: $portal_url/plone_memberprefs_panel"
+                   i18n:translate="label_up_to_preferences">
+                Up to Profile & Account Settings page
+                </a>
+
+                <form action="personalize"
+                      method="post"
+                      enctype="multipart/form-data"
+                      tal:condition="member"
+                      tal:attributes="action template_id" 
+                      tal:define="macros here/additional_memberdata/macros | nothing;
+                                  top_macro macros/top | nothing;
+                                  showTop python:top_macro;
+                                  bottom_macro macros/bottom | nothing;
+                                  showBottom python:bottom_macro;
+                                  after_primary macros/after_primary| nothing;
+                                  showAfterPrimary python:after_primary;">
+
+                    <fieldset>
+
+                        <legend i18n:translate="legend_member_details_name">Name</legend>
+	    
+                        <tal:macro condition="showTop">
+                            <div metal:use-macro="top_macro"/>
+                        </tal:macro>
+
+            <div class="field"
+                 tal:define="error errors/honorific | nothing;
+                             honorific python:request.get('honorific', member.getProperty('honorific', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="honorific" i18n:translate="label_member_name_title">Title</label>
+    
+                <div class="formHelp" i18n:translate="help_member_name_title">
+                  Enter your title e.g. Sir, Dr.
+                </div>
+                
+            <div tal:content="error" 
+              i18n:translate="">Validation error output</div>
+    
+                <input type="text"
+                       id="honorific"
+                       name="honorific"
+                       size="8"
+                       tabindex=""
+                       value="member.honorific html_quote"
+                       tal:attributes="value honorific;
+                                       tabindex tabindex/next;"
+                       />
+    
+            </div>
+	    <table>
+	    <tr>
+	    <td>
+            <div class="field"
+                 tal:define="error errors/firstname | nothing;
+                             firstname python:request.get('firstname', member.getProperty('firstname', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="firstname" i18n:translate="label_member_name_first">First Name</label>
+    
+                <span class="fieldRequired" title="Required"
+                      i18n:attributes="title"
+                      i18n:translate="label_required">(Required)</span>
+    
+                <div class="formHelp" i18n:translate="help_member_name_first">
+                   Enter your first name, e.g. John
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <input type="text"
+                       id="firstname"
+                       name="firstname"
+                       size="15"
+                       tabindex=""
+                       value="member.firstname html_quote"
+                       tal:attributes="value firstname;
+                                       tabindex tabindex/next;"
+                       />
+    
+            </div>
+	    </td>
+	    <td>
+            <div class="field"
+                 tal:define="error errors/othername | nothing;
+                             othername python:request.get('othername', member.getProperty('othername', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="othername" i18n:translate="label_member_name_middle">Middle Name</label>
+    
+                <div class="formHelp" i18n:translate="help_member_name_middle">
+                   Enter your middle name or initial, e.g. Q.
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <input type="text"
+                       id="othername"
+                       name="othername"
+                       size="15"
+                       tabindex=""
+                       value="member.othername html_quote"
+                       tal:attributes="value othername;
+                                       tabindex tabindex/next;"
+                       />
+    
+            </div>
+	    </td>
+	    <td>
+            <div class="field"
+                 tal:define="error errors/surname | nothing;
+                             surname python:request.get('surname', member.getProperty('surname', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="surname" i18n:translate="label_member_name_last">Last Name</label>
+    
+                <span class="fieldRequired" title="Required"
+                      i18n:attributes="title"
+                      i18n:translate="label_required">(Required)</span>
+    
+                <div class="formHelp" i18n:translate="help_member_name_last">
+                  Enter your last name, e.g. Doe.
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <input type="text"
+                       id="surname"
+                       name="surname"
+                       size="15"
+                       tabindex=""
+                       value="member.surname html_quote"
+                       tal:attributes="value surname;
+                                       tabindex tabindex/next;"
+                       />
+    
+            </div>
+	    </td>
+	    </tr>
+	    </table>
+
+            <div class="field"
+                 tal:define="error errors/lineage | nothing;
+                             lineage python:request.get('lineage', member.getProperty('lineage', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="lineage" i18n:translate="label_member_name_suffix">Suffix</label>
+    
+                <div class="formHelp" i18n:translate="help_member_name_suffix">
+                  Enter any name suffix, e.g. Jr. or III
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <input type="text"
+                       id="lineage"
+                       name="lineage"
+                       size="8"
+                       tabindex=""
+                       value="member.lineage html_quote"
+                       tal:attributes="value lineage;
+                                       tabindex tabindex/next;"
+                       />
+            </div>
+
+            <div class="field"
+                 tal:define="error errors/fullname | nothing;
+                             fullname python:request.get('fullname', member.getProperty('fullname', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="fullname" i18n:translate="label_member_name_full">Full Name</label>
+		       
+		<span class="fieldRequired" title="Required"
+                      i18n:attributes="title"
+                      i18n:translate="label_required">(Required)</span>
+      
+                <div class="formHelp" i18n:translate="help_member_name_full">
+                  Enter exactly how you would like your name
+                  displayed, e.g. Dr John Q. Doe, III
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <input type="text"
+                       id="fullname"
+                       name="fullname"
+                       size="30"
+                       tabindex=""
+                       value="member.fullname html_quote"
+                       tal:attributes="value fullname;
+                                       tabindex tabindex/next;"
+                       />
+    
+            </div>
+	</fieldset>
+	<fieldset>
+	  <legend i18n:translate="legend_member_detail_contact">Contact Information</legend>
+
+            <div id="email" class="field"
+                 tal:define="error errors/email | nothing;
+                             email python:request.get('email', member.getProperty('email',''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="email" i18n:translate="label_member_contact_email">E-mail</label>
+                    
+                <span class="fieldRequired" title="Required"
+                      i18n:attributes="title"
+                      i18n:translate="label_required">(Required)</span>
+    
+                <div class="formHelp" i18n:translate="help_member_contact_email">
+                    Enter your new e-mail address here, if you want to change it.
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <input type="text"
+                       id="email"
+                       name="email"
+                       size="25"
+                       tabindex=""
+                       value="member.email html_quote"
+                       tal:attributes="value email;
+                                       tabindex tabindex/next;"
+                       />
+    
+            </div>
+    
+            <div class="field"
+                 tal:define="error errors/homepage | nothing;
+                             homepage python:request.get('homepage', member.getProperty('homepage', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="homepage" i18n:translate="label_member_contact_homepage">Home page</label>
+    
+                <div class="formHelp" i18n:translate="help_member_contact_homepage">
+                  Enter the address of your Web page e.g. http://www.example.com/~jdoe
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <input type="text"
+                       id="homepage"
+                       name="homepage"
+                       size="50"
+                       tabindex=""
+                       value="member.homepage html_quote"
+                       tal:attributes="value homepage;
+                                       tabindex tabindex/next;"
+                       />
+            
+            </div>
+                        
+                        <tal:macro condition="showAfterPrimary">
+                            <div metal:use-macro="after_primary"/>
+                        </tal:macro>
+	  </fieldset>
+<!--                        
+            <div class="field"
+                     tal:define="wysiwyg_editor python:request.get('wysiwyg_editor',
+                                                member.getProperty('wysiwyg_editor',''))">
+                <label for="wysiwyg_editor" i18n:translate="label_content_editor">Content editor</label>
+    
+                <div class="formHelp" i18n:translate="help_content_editor">
+                Select the content editor that you would like to use.
+                Note that content editors often have specific browser
+                requirements.
+                </div>
+    
+                <select name="wysiwyg_editor"
+                        id="wysiwyg_editor"
+                        tabindex=""
+                        tal:attributes="tabindex tabindex/next;">
+                    <tal:block tal:repeat="editor site_properties/available_editors">
+                    <option tal:condition="python:editor != 'None'"
+                            value="None"
+                            tal:attributes="value editor;
+                                            selected python:test(editor==wysiwyg_editor, 'selected', None);"
+                            tal:content="editor">
+                    WYSIWYG-editor
+                    </option>
+                    <option tal:condition="python:editor == 'None'"
+                            value="None"
+                            tal:attributes="value editor;
+                                            selected python:test(editor==wysiwyg_editor, 'selected', None);"
+                            tal:content="editor"
+                            i18n:translate="label_ordinary_content_editor">
+                    Ordinary Form-based Editor (works in all browsers)
+                    </option>
+    
+                    </tal:block>
+                 </select>
+             </div>
+    
+            <div class="field"
+                 tal:define="listed python:request.get('listed', member.getProperty('listed',''));">
+                
+                <input type="checkbox"
+                       class="noborder"
+                       name="listed"
+                       id="cb_listed"
+                       tal:attributes="tabindex tabindex/next;
+                                       checked python:test(listed, 'checked', None);"
+                       />
+
+                <label for="cb_listed" i18n:translate="label_listed_status">Listed in searches</label>
+    
+                <div class="formHelp" i18n:translate="help_listed_search">
+                Determines if your user name is listed in member searches done on this site.
+                </div>
+    
+            </div>
+-->   <!-- 
+            <div class="field"
+           	     tal:define="visible_ids python:request.get('visible_ids', member.getProperty('visible_ids',''));">
+
+                <input type="checkbox"
+                       class="noborder"
+                       name="visible_ids"
+                       id="cb_invisible_ids"
+                       tal:attributes="tabindex tabindex/next;
+                                       checked python:test(visible_ids, 'checked', None);"
+                       />
+    
+                <label for="cb_invisible_ids" 
+                       i18n:translate="label_edit_short_names">Allow Editing of Short Names</label>
+    
+                <div class="formHelp" i18n:translate="help_display_names">
+                Determines if Short Names (also known as IDs) are
+                changable when editing items. If Short Names
+                are not displayed, they will be generated automatically.
+                </div>
+    
+            </div>
+    -->
+            <div class="field"
+                    tal:condition="here/portal_skins/allow_any"
+                    tal:define="skinvar python:request.get(here.portal_skins.getRequestVarname(), '');
+                    skindefault here/portal_skins/getDefaultSkin;
+                    skincurrent python:test(skinvar, skinvar, skindefault);">
+    
+                <label for="portal_skin" i18n:translate="label_prefernces_look">Look</label>
+                
+                <div i18n:translate="help_preferencees_look"
+                     class="formHelp">
+                Appearance of the site.
+                </div>
+    
+                <select name="portal_skin"
+                        id="portal_skin"
+                        tabindex=""
+                        tal:attributes="tabindex tabindex/next;"
+                        >
+                <option value="#"
+                        i18n:translate=""
+                        tal:repeat="skin container/portal_skins/getSkinSelections"
+                        tal:attributes="value skin;
+                                        selected python:test(skincurrent==skin, 'selected', None);"
+                        tal:content="skin"
+                        >dummy skin</option>
+                </select>
+            </div>
+
+	<fieldset>
+	  <legend i18n:translate="legend_member_details_background">Background Information</legend>
+	  <div class="field"
+	    tal:define="error errors/affiliation | nothing;
+	    affiliation python:request.get('affiliation', member.getProperty('affiliation', ''));"
+	    tal:attributes="class python:test(error, 'field error', 'field')">
+	    
+	    <label for="affiliation" i18n:translate="label_member_background_affiliation">Affiliation</label>
+	    
+	    <div class="formHelp" i18n:translate="help_member_backgroun_affiliation">
+	      Enter an educational institution or business with
+	      which you are affiliated.
+	    </div>
+	    
+	    <div tal:content="error" i18n:translate="">Validation error output</div>
+	    
+	    <input type="text"
+	      id="affiliation"
+	      name="affiliation"
+	      size="30"
+                       tabindex=""
+                       value="member.affiliation html_quote"
+                       tal:attributes="value affiliation;
+                                       tabindex tabindex/next;"
+                       />
+            
+            </div>
+
+	   <div class="field"
+                 tal:define="error errors/affiliation_url | nothing;
+                             affiliation_url python:request.get('affiliation_url', member.getProperty('affiliation_url', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="affiliation_url"
+                i18n:translate="label_member_background_aff_url">Affiliation URL</label>
+    
+                <div class="formHelp" i18n:translate="help_member_background_aff_url">
+                  Enter the Web site of the educational institution or business with
+                  which you affiliated.
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <input type="text"
+                       id="affiliation_url"
+                       name="affiliation_url"
+                       size="50"
+                       tabindex=""
+                       value="member.affiliation_url html_quote"
+                       tal:attributes="value affiliation_url;
+                                       tabindex tabindex/next;"
+                       />
+            
+            </div> 
+
+	    <div class="field"
+                 tal:define="error errors/preferred_language | nothing;
+                             preferred_language python:request.get('preferred_language', member.getProperty('preferred_language', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="preferred_language"
+                i18n:translate="label_member_background_pref_lang">Preferred Language</label>
+    
+                <div class="formHelp" i18n:translate="help_member_backgroun_pref_lang">
+                  Enter your primary language.
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <input type="text"
+                       id="preferred_language"
+                       name="preferred_language"
+                       size="30"
+                       tabindex=""
+                       value="member.preferred_language html_quote"
+                       tal:attributes="value preferred_language;
+                                       tabindex tabindex/next;"
+                       />
+            
+            </div> 
+
+	    <div class="field"
+                 tal:define="error errors/alternative_languages | nothing;
+                             alternative_languages python:request.get('alternative_languages', member.getProperty('alternative_languages', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="alternative_languages"
+                i18n:translate="label_member_background_alt_lang">Alternative Languages</label>
+    
+                <div class="formHelp" i18n:translate="help_member_background_alt_lang">
+                  Enter other languages with which you are
+                  comfortable, one per line. 
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <textarea
+                       id="alternative_languages"
+                       name="alternative_languages:lines"
+                       style="width: 50%"
+		       rows="3"
+                       tabindex=""
+                       value="member/alternative_languages html_quote"
+                       tal:attributes="value alternative_languages;
+                                       tabindex tabindex/next;">
+<span tal:repeat="language alternative_languages" tal:replace="string:${language}">[language]</span></textarea>
+            </div> 
+
+	    <div class="field"
+                 tal:define="error errors/location | nothing;
+                             location python:request.get('location', member.getProperty('location', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="location"
+                i18n:translate="label_member_background_location">Location</label>
+    
+                <div class="formHelp" i18n:translate="help_member_background_location">
+                  Enter your geographic area.
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <input type="text"
+                       id="location"
+                       name="location"
+                       size="30"
+                       tabindex=""
+                       value="member.location html_quote"
+                       tal:attributes="value location;
+                                       tabindex tabindex/next;"
+                       />
+            
+            </div> 
+
+	     <div class="field"
+                 tal:define="error errors/interests | nothing;
+                             interests python:request.get('interests', member.getProperty('interests', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="interests"
+                i18n:translate="label_member_background_interests">Interests</label>
+    
+                <div class="formHelp" i18n:translate="help_member_background_interests">
+                  List subject areas that you are interested in, one
+                  per line.
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+		 <textarea
+                       id="interests"
+                       name="interests:lines"
+		       wrap="physical"
+                       style="width: 50%"
+		       rows="3"
+                       tabindex=""
+                       tal:attributes="tabindex tabindex/next;">
+<span tal:repeat="interest interests" tal:replace="string:${interest}">[interest]</span></textarea>
+            </div>  
+
+	    <div class="field"
+                 tal:define="error errors/recommended_content | nothing;
+                             recommended_content python:request.get('recommended_content', member.getProperty('recommended_content', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="recommended_content"
+                i18n:translate="label_member_background_content">Recommended Content</label>
+    
+                <div class="formHelp" i18n:translate="help_member_background_content">
+                  Enter a module or course ID, e.g. m12018 or col10040, 
+		  that you would recommend to other people, one per line.
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+		<textarea
+                       id="recommended_content"
+                       name="recommended_content:lines"
+                       style="width: 50%"
+		       rows="3"
+                       tabindex=""
+                       value="member/recommended_content html_quote"
+                       tal:attributes="value recommended_content;
+                                       tabindex tabindex/next;">
+<span tal:repeat="content_item recommended_content"
+                       tal:replace="string:${content_item}">[Content Item]</span></textarea>
+
+            
+            </div>
+
+	     <div class="field"
+                 tal:define="error errors/biography | nothing;
+                             biography python:request.get('biography', member.getProperty('biography', ''));"
+                 tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="biography"
+                i18n:translate="label_member_background_bio">Biography</label>
+    
+                <div class="formHelp" i18n:translate="help_member_background_bio">
+                  Enter a brief description of yourself.
+                </div>
+                
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+		
+		<textarea
+                       id="biography"
+                       name="biography:lines"
+                       cols="50"
+		       rows="5"
+                       tabindex=""
+                       value="member/biography html_quote"
+                       tal:attributes="value biography;
+                                       tabindex tabindex/next;">
+<span tal:repeat="para biography"
+                       tal:replace="string:${para}">[paragraph]</span></textarea>            
+            </div>
+
+   
+	  <div class="field"
+	    tal:define="error errors/portrait | nothing;
+	    portrait python:mtool.getPersonalPortrait(member.getId());
+        scale python:here.calcImageScale(image=portrait);
+        p_height python:portrait.height/scale; 
+        p_width python:portrait.width/scale;
+	    delete_checked python:errors and request.get('delete_portrait', False);"
+            tal:attributes="class python:test(error, 'field error', 'field')">
+    
+                <label for="portrait" i18n:translate="label_member_portrait">Portrait</label>
+    
+	    <img tal:condition="portrait"
+	      tal:replace="structure python:portrait.tag(height=p_height,width=p_width,css_class='portraitPhoto',style='float: right')"
+	    />
+
+
+                <div class="formHelp" i18n:translate="help_member_portrait">
+                To add or change the portrait: click the "Browse" button;
+                select a picture of yourself. Maximum image size is 150
+                pixels wide by 150 pixels tall.
+                </div>
+    
+                <div tal:content="error" i18n:translate="">Validation error output</div>
+    
+                <input type="file"
+                       name="portrait"
+                       id="portrait"
+                       size="20"
+                       tabindex=""
+                       tal:attributes="value python:errors and getattr(request.portrait,'filename') or portrait.id; 
+		       tabindex tabindex/next;"/>
+
+
+                <br />
+
+                <input class="noborder"
+                    tabindex=""
+                    type="checkbox"
+            	    id="pdelete"
+                    value="Delete Portrait"
+                    name="delete_portrait"
+                    tal:attributes="tabindex tabindex/next;
+	            checked delete_checked"
+                    />
+                <label for="pdelete" i18n:translate="label_delete_portrait">Delete Portrait</label>
+		 
+            </div>
+                        
+                        <tal:macro condition="showBottom">
+                            <div metal:use-macro="bottom_macro" />
+                        </tal:macro>
+	  </fieldset>
+    
+            <div class="formControls">
+                <input class="context"
+                       tabindex=""
+                       type="submit"
+                       value="Save"
+                       name="form.button.Save"
+                       i18n:attributes="value value_save"
+                       tal:attributes="tabindex tabindex/next;"
+                       />
+                <input class="standalone"
+                       tabindex=""
+                       type="submit"
+                       value="Cancel"
+                       name="form.button.Cancel"
+                       i18n:attributes="value value_cancel"
+                       tal:attributes="tabindex tabindex/next;"
+                       />
+            </div>
+    
+	    <input type="hidden" name="form.submitted" value="1" />
+        
+                </form>
+
+            </div>
+     </div>
+
+</div>
+</body>
+
+</html>

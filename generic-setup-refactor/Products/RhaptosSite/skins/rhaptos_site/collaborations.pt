@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="rhaptos"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+<tal:comment tal:replace="nothing">
+Rhaptos note: no difference in conversion. no plone counterpart.
+</tal:comment>
+
+  <body>
+
+  <tal:block metal:fill-slot="css_slot">
+    <style>
+      table.listing tr.odd.pending {
+          background: transparent; 
+      }
+
+      table.listing tr.even.pending {
+          background: #FFE0E0;
+      }
+
+      table.listing th.pending {
+          background: #FFE0E0;
+          border-top: 1px solid #85A6CC;
+          border-bottom: 1px solid #85A6CC;
+          border-right: 1px solid #85A6CC;
+      }
+
+      table.listing th.pending.top {
+          border-top: 3px double #85A6CC;
+      }
+
+      table.listing tr.accepted {
+          background: #DCEDD0;
+      }
+
+      table.listing tr.rejected {
+          background: #F4C8C8;
+      }
+      .none {
+        margin-left: 1em;
+      }
+    </style>
+  </tal:block>	  
+
+  <div metal:fill-slot="main" tal:define="moduleRoles python:['Author', 'Maintainer', 'Licensor'];
+      ct here/portal_collaboration;
+      opt_roles_dict ct/optional_role_info;
+      opt_roles_list opt_roles_dict/keys;
+      opt_roles_names python:[opt_roles_dict[r][0] for r in opt_roles_list];
+      total_roles python:3+len(opt_roles_list);
+      pending python:ct.searchCollaborations(user=path('user/getUserName'), status='pending');
+      need_license python:[r for r in pending if 'Licensor' in r.roles and r.roles['Licensor']=='add']">
+
+    <h1 i18n:translate="heading_collaboration_requests">Role Requests</h1>
+
+	<div tal:condition="python:isAnon" i18n:translate="text_log_in_for_collab_requests">
+	  <p>You must 
+	  <span i18n:name="log_in">
+	    <a href="/login_form" i18n:translate="label_log_in">Log in</a>
+	  </span> to view your collaboration requests.
+	  </p>
+	</div>
+
+	<tal:block tal:condition="not:isAnon">
+
+    <p i18n:translate="description_roles_plus_and_minus">The role
+	  columns (Author, Maintainer, and  Copyright Holder, etc.) may
+	  contain a plus (+) or a minus (-), or be blank. A plus means
+	  you are being granted the role on the listed content; if you
+	  are being granted Copyright  Holder status you will have to
+	  agree to the content license to accept the role. A minus
+	  means you are being removed from the listed role, and a
+	  blank space indicates no change.</p>
+    
+    <h2 i18n:translate="heading_requests_waiting_approval">Requests Awaiting Your Approval</h2>
+    
+    <form tal:condition="pending" name="foryou" method="post" action="updateCollaborations">
+      <table class="listing">
+        <tr>
+          <th rowspan="2"><input class="noborder"
+                                 type="checkbox"
+                                 src="select_all_icon.gif"
+                                 name="selectButton"
+				 i18n:attributes="title title_un_select_all_items"
+                                 title="Select/Unselect all items"
+                                 alt="Select/Unselect all items"
+                                 onClick="toggleSelect(this, 'ids:list', false, 'foryou');"
+                                 tal:attributes="src string:$portal_url/select_all_icon.gif"
+                                 /></th>
+          <th rowspan="2" i18n:translate="listingheader_title">Title</th>
+          <th colspan="5" tal:attributes="colspan total_roles"  
+              i18n:translate="listingheader_role_changes">Role Changes</th>
+          <th rowspan="2" i18n:translate="listingheader_requester">Requester</th>
+          <th rowspan="2" i18n:translate="listingheader_date">Date</th>
+          <th rowspan="2" i18n:translate="listingheader_license">License</th>        
+        </tr>
+        <tr>
+          <th i18n:translate="listingheader_author">Author</th>
+          <th i18n:translate="listingheader_maintainer">Maintainer</th>
+          <th i18n:translate="listingheader_copyright_holder">Copyright Holder</th>
+          <th tal:repeat="role opt_roles_list">
+                <span i18n:translate=""
+                  tal:content="python:opt_roles_dict[role][0]">
+                </span>
+          </th>
+        </tr>
+        <tr tal:repeat="req pending"
+            tal:attributes="class python:test(path('repeat/req/odd'),'odd','even')" >
+          <tal:block tal:define="obj req/getObject">
+          <td class="checkbox"><input type="checkbox" class="noborder" name="ids:list" tal:attributes="value req/getRID" /></td>
+          <td tal:define="r_obj python:obj.aq_parent"
+                  ><a href="" tal:attributes="href string:${r_obj/absolute_url}"
+                    tal:content="r_obj/title">Object</a>
+                  <span tal:condition="python:r_obj.state == 'created' and r_obj.getParentId()" 
+		    i18n:translate="text_new_derived_copy">(New Derived Copy)</span></td>
+                <td class="checkbox" tal:repeat="role python:moduleRoles+opt_roles_names">
+                  <strong><span tal:condition="python:role in obj.roles and
+                      obj.roles[role] == 'add'" tal:replace="string:+">+</span></strong>
+		  <strong><span tal:condition="python:role in obj.roles and
+                      obj.roles[role] == 'del'" >&#150;</span></strong>
+                  
+          </td>
+          <td style="white-space:nowrap"><tal:badauthor tal:define="user python:here.desecured.getMemberById(req.requester)" 
+		    tal:on-error="string:(${user/id})"><a tal:content="python:user.getProperty('fullname')"
+		      tal:attributes="href string:/member_profile/${user/id}">Requester</a></tal:badauthor></td>
+	  <td tal:content="python:obj.bobobase_modification_time().aCommon()"></td>
+          <td class="status"><a tal:attributes="href
+	      obj/aq_parent/license" i18n:translate="label_attribution_license">Attribution License</a></td>
+          </tal:block>
+        </tr>
+      </table>
+      
+    <tal:block tal:condition="need_license">     
+          <p><input type="checkbox" class="noborder" name="agree"/>
+	      <b i18n:translate="text_collaboration_i_agree">I agree</b>
+	      <span i18n:translate="text_collaboration_agree_license">to place these materials under their associated license(s) as listed above. I understand that in doing so I </span></p>
+          <ol>
+            <li i18n:translate="text_license_retain_copyright"> 
+                  retain my copyright in the work and </li>
+            <li i18n:translate="text_license_owner_permission"> 
+                  warrant that I am the author or the owner or have
+              permission to distribute the work in question and
+            </li>
+            <li i18n:translate="text_license_work_distributed"> 
+                wish this work to be distributed under the terms of the license(s) as listed above
+             (including allowing modification of this work and requiring
+             attribution) and </li>
+            <li i18n:translate="text_license_proper_attribution"> 
+                  agree that proper attribution of my work is any attribution that includes the authors' names, the title of the work, and the 
+                  <span i18n:name="portal" tal:replace="portal/title">[portal]</span> 
+                  URL to the work.  </li>
+          </ol>
+    </tal:block>
+    <tal:block tal:condition="not:need_license"><input
+  type="hidden" name="agree"/></tal:block>
+      
+
+      <input type="submit" class="context" name="accept" i18n:attributes="value" value=" Accept " />
+      <input type="submit" class="context" name="reject" i18n:attributes="value" value=" Reject " />
+    </form>
+    <p class="none" tal:condition="not:pending">
+      <i i18n:translate="text_collaborations_no_pending">No requests pending</i>
+    </p>
+    <tal:block tal:define="byyou python:ct.searchCollaborations(requester=path('user/getUserName')); 
+                           pending python:[r for r in byyou if r.status=='pending'];
+                           accepted python:[r for r in byyou if r.status=='accepted'];
+                           rejected python:[r for r in byyou if r.status=='rejected']">
+    <h2 i18n:translate="heading_requests_you_made">Requests You Have Made</h2>
+    
+      <form tal:condition="pending" name="byyou" method="post" action="removeCollaborations">
+      <table class="listing">
+        <tr>
+          <th rowspan="2"><input class="noborder"
+                                 type="checkbox"
+                                 src="select_all_icon.gif"
+                                 name="selectButton"
+				 i18n:attributes="title title_un_select_all_items"
+                                 title="Select/Unselect all items"
+                                 alt="Select/Unselect all items"
+                                 onClick="toggleSelect(this, 'ids:list', false, 'byyou');"
+                                 tal:attributes="src string:$portal_url/select_all_icon.gif"
+                                 /></th>
+          <th rowspan="2" i18n:translate="listingheader_title">Title</th>
+          <th colspan="5" tal:attributes="colspan total_roles"  
+              i18n:translate="listingheader_role_changes">Role Changes</th>
+          <th rowspan="2" i18n:translate="listingheader_user">User</th>
+          <th rowspan="2" i18n:translate="listingheader_status">Status</th>
+        </tr>
+        <tr>
+          <th i18n:translate="listingheader_author">Author</th>
+          <th i18n:translate="listingheader_maintainer">Maintainer</th>
+          <th i18n:translate="listingheader_copyright_holder">Copyright Holder</th>
+          <th tal:repeat="role opt_roles_list">
+                <span i18n:translate=""
+                  tal:content="python:opt_roles_dict[role][0]">
+                </span>
+          </th>
+        </tr>
+          <tr tal:repeat="req python:ct.searchCollaborations(requester=path('user/getUserName'),status='pending')"
+              tal:attributes="class
+              python:test(path('repeat/req/odd'),'odd','even')" >
+		<tal:block tal:define="obj req/getObject">
+            <td class="checkbox"><input type="checkbox" class="noborder" name="ids:list" tal:attributes="value req/getRID" /></td>
+            <td class="object" tal:define="r_obj python:obj.aq_parent"
+		      ><a href="" tal:attributes="href string:${r_obj/absolute_url}"
+                                          tal:content="structure python:r_obj.title">Object</a></td>
+            <td class="checkbox" tal:repeat="role python:moduleRoles+opt_roles_names">
+              <strong><span tal:condition="python:role in obj.roles and
+              obj.roles[role] == 'add'" tal:replace="string:+">+</span></strong>
+		  <strong><span tal:condition="python:role in obj.roles and
+              obj.roles[role] == 'del'" >&#150;</span></strong>
+            </td>
+            <td style="white-space:nowrap"><tal:badauthor tal:define="user python:here.desecured.getMemberById(req.user)" 
+		    tal:on-error="string:(${user/id})"><a tal:content="python:user.getProperty('fullname')"
+		      tal:attributes="href string:/member_profile/${user/id}">User</a></tal:badauthor></td>
+            <td class="status" tal:content="req/status/capitalize"
+                    i18n:translate="">Status</td>
+		</tal:block>
+          </tr>
+	  </table>
+	  <input type="submit" class="destructive" name="remove" i18n:attributes="value" value="Cancel Selected Requests" />
+    </form>
+      <p class="none" tal:condition="not:pending">
+	    <i i18n:translate="text_collaborations_no_pending">No requests pending</i>
+      </p>
+
+      <h2 i18n:translate="heading_requests_you_made_completed">Requests You Have Made -- Completed</h2>
+    
+      <form tal:condition="python:accepted or rejected" name="completed_byyou" method="post" action="removeCollaborations">
+      <table class="listing">
+        <tr>
+          <th rowspan="2"><input class="noborder"
+                                 type="checkbox"
+                                 src="select_all_icon.gif"
+                                 name="selectButton"
+				 i18n:attributes="title alt"
+                                 title="Select/Unselect all items"
+                                 alt="Select/Unselect all items"
+                                 onClick="toggleSelect(this, 'ids:list', false, 'completed_byyou');"
+                                 tal:attributes="src string:$portal_url/select_all_icon.gif"
+                                 /></th>
+          <th rowspan="2" i18n:translate="listingheader_title">Title</th>
+          <th colspan="5" tal:attributes="colspan total_roles"  
+              i18n:translate="listingheader_role_changes">Role Changes</th>
+          <th rowspan="2" i18n:translate="listingheader_user">User</th>
+          <th rowspan="2" i18n:translate="listingheader_status">Status</th>
+        </tr>
+        <tr>
+          <th i18n:translate="listingheader_author">Author</th>
+          <th i18n:translate="listingheader_maintainer">Maintainer</th>
+          <th i18n:translate="listingheader_copyright_holder">Copyright Holder</th>
+          <th tal:repeat="role opt_roles_list">
+                <span i18n:translate=""
+                  tal:content="python:opt_roles_dict[role][0]">
+                </span>
+          </th>
+        </tr>
+        <tal:block tal:repeat="status python:['accepted', 'rejected']">
+          <tr tal:repeat="req python:ct.searchCollaborations(requester=path('user/getUserName'),status=status)"
+              tal:attributes="class status" >
+		<tal:block tal:define="obj req/getObject">
+            <td class="checkbox"><input type="checkbox" class="noborder" name="ids:list" tal:attributes="value req/getRID" /></td>
+            <td class="object"><a href="" tal:define="obj req/getObject" 
+                                          tal:attributes="href string:${obj/aq_parent/absolute_url}"
+                                          tal:content="structure python:obj.aq_parent.title">Object</a></td>
+            <td class="checkbox" tal:repeat="role python:moduleRoles+opt_roles_names">
+              <strong><span tal:condition="python:role in obj.roles and
+              obj.roles[role] == 'add'" tal:replace="string:+">+</span></strong>
+		  <strong><span tal:condition="python:role in obj.roles and
+              obj.roles[role] == 'del'" >&#150;</span></strong>
+            </td>
+            <td style="white-space:nowrap"><tal:badauthor tal:define="user python:here.desecured.getMemberById(req.user)"
+		      tal:on-error="string:(${user/id})"><a
+			tal:content="python:user.getProperty('fullname')"
+			tal:attributes="href string:/member_profile/${user/id}">User</a></tal:badauthor></td>
+            <td class="status"
+		      tal:content="req/status/capitalize"
+                      i18n:translate="">Status</td>
+		</tal:block>
+          </tr>
+        </tal:block>
+      </table>
+	  <input type="submit" class="destructive" name="remove" i18n:attributes="value" value="Remove Requests" />
+    </form>
+
+      <p class="none" tal:condition="not:python:accepted or rejected">
+	    <i i18n:translate="text_collaborations_no_completed">No requests completed</i>
+      </p>
+
+    </tal:block>    
+	</tal:block>
+  </div><!-- End of slot -->
+  </body>
+</html>

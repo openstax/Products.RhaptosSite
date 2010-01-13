@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<cmfformcontroller>
+  <!-- FIXME: I'm not sure what the Topic stuff here is good for... maybe we can delete it.
+       I don't think we use Topics at all. ...jccooper -->
+<!--
+  <validator
+    object_id="%s"
+    context_type="%s"
+    button="%s"
+    validators="%s"
+    />
+-->
+
+  <!-- folder_cut... -->
+  <!-- action.success.Workspace=redirect_to:string:workspace_contents -->
+  <action
+    object_id="folder_cut"
+    status="success"
+    context_type="Workspace"
+    button=""
+    action_type="redirect_to"
+    action_arg="string:workspace_contents"
+    />
+  <!-- action.failure.Workspace=redirect_to:string:workspace_contents -->
+  <action
+    object_id="folder_cut"
+    status="failure"
+    context_type="Workspace"
+    button=""
+    action_type="redirect_to"
+    action_arg="string:workspace_contents"
+    />
+  <!-- action.success_no_edit.Workspace=redirect_to:string:workspace_contents -->
+  <action
+    object_id="folder_cut"
+    status="success_no_edit"
+    context_type="Workspace"
+    button=""
+    action_type="redirect_to"
+    action_arg="string:workspace_contents"
+    />
+
+  <!-- action.success.Topic=redirect_to_action:string:subtopics -->
+  <action
+    object_id="folder_cut"
+    status="success"
+    context_type="Topic"
+    button=""
+    action_type="redirect_to_action"
+    action_arg="string:subtopics"
+    />
+  <!-- action.failure.Topic=redirect_to_action:string:subtopics -->
+  <action
+    object_id="folder_cut"
+    status="failure"
+    context_type="Topic"
+    button=""
+    action_type="redirect_to_action"
+    action_arg="string:subtopics"
+    />
+
+  <!-- folder_delete... -->
+  <!-- action.success.Workspace=redirect_to:string:workspace_contents -->
+  <action
+    object_id="folder_delete"
+    status="success"
+    context_type="Workspace"
+    button=""
+    action_type="redirect_to"
+    action_arg="string:workspace_contents"
+    />
+
+  <!-- action.failure.Workspace=redirect_to:string:workspace_contents -->
+  <action
+    object_id="folder_delete"
+    status="failure"
+    context_type="Workspace"
+    button=""
+    action_type="redirect_to"
+    action_arg="string:workspace_contents"
+    />
+
+  <!-- action.success_no_edit.Workspace=redirect_to:string:workspace_contents -->
+  <action
+    object_id="folder_delete"
+    status="success_no_edit"
+    context_type="Workspace"
+    button=""
+    action_type="redirect_to"
+    action_arg="string:workspace_contents"
+    />
+
+  <!-- action.success.Topic=redirect_to_action:string:subtopics -->
+  <action
+    object_id="folder_delete"
+    status="success"
+    context_type="Topic"
+    button=""
+    action_type="redirect_to_action"
+    action_arg="string:subtopics"
+    />
+
+  <!-- action.failure.Topic=redirect_to_action:string:subtopics -->
+  <action
+    object_id="folder_delete"
+    status="failure"
+    context_type="Topic"
+    button=""
+    action_type="redirect_to_action"
+    action_arg="string:subtopics"
+    />
+
+  <!-- folder_paste... -->
+
+  <!-- action.success.Workspace=redirect_to:string:workspace_contents -->
+  <action
+    object_id="folder_paste"
+    status="success"
+    context_type="Workspace"
+    button=""
+    action_type="redirect_to"
+    action_arg="string:workspace_contents"
+    />
+
+  <!-- action.failure.Workspace=redirect_to:string:workspace_contents -->
+  <action
+    object_id="folder_paste"
+    status="failure"
+    context_type="Workspace"
+    button=""
+    action_type="redirect_to"
+    action_arg="string:workspace_contents"
+    />
+
+  <!-- action.success_no_edit.Workspace=redirect_to:string:workspace_contents -->
+  <action
+    object_id="folder_paste"
+    status="success_no_edit"
+    context_type="Workspace"
+    button=""
+    action_type="redirect_to"
+    action_arg="string:workspace_contents"
+    />
+
+  <!-- action.success.Topic=redirect_to_action:string:subtopics -->
+  <action
+    object_id="folder_paste"
+    status="success"
+    context_type="Topic"
+    button=""
+    action_type="redirect_to_action"
+    action_arg="string:subtopics"
+    />
+
+  <!-- action.failure.Topic=redirect_to_action:string:subtopics -->
+  <action
+    object_id="folder_paste"
+    status="failure"
+    context_type="Topic"
+    button=""
+    action_type="redirect_to_action"
+    action_arg="string:subtopics"
+    />
+
+  <!-- folder_rename... -->
+  <!-- action.success.Workspace=redirect_to:string:workspace_contents -->
+  <action
+    object_id="folder_rename"
+    status="success"
+    context_type="Workspace"
+    button=""
+    action_type="redirect_to"
+    action_arg="string:workspace_contents"
+    />
+
+  <!-- action.success.Topic=redirect_to_action:string:subtopics -->
+  <action
+    object_id="folder_rename"
+    status="success"
+    context_type="Topic"
+    button=""
+    action_type="redirect_to_action"
+    action_arg="string:subtopics"
+    />
+
+  <!-- folder_edit... -->
+  <!-- action.success.Workspace=redirect_to:string:workspace_contents -->
+  <action
+    object_id="folder_edit"
+    status="success"
+    context_type="Workspace"
+    button=""
+    action_type="redirect_to"
+    action_arg="string:workspace_contents"
+    />
+
+</cmfformcontroller>

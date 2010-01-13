@@ -1,0 +1,29 @@
+There are three primary roles that a person may take when contributing
+to the system: Author, Maintainer, and Copyright Holder.
+The usual case is that the same person or people will fill all three
+roles for a given module or course, but that is not required.  You may
+take any combination of roles on a given module or course, and an
+entirely different set on another work.
+
+
+Author -- Users listed as authors receive credit for writing the
+          material.  The author is the one who is responsible for the
+          creation of the work, but may or may not be the one who
+          actually enters work.
+       
+Maintainer -- Users listed as maintainers have permission to submit
+	      successive versions of a module or course.  We expect
+	      that most authors will also serve as maintainers for
+	      their materials, but some may choose not to.  Authors
+	      may also wish to appoint additional maintainers to
+	      assist them in updating the materials. 
+ 
+Copyright Holder -- Users listed as copyright holders have the legal
+		    right to license the materials.  In most cases,
+		    the copyright holder is the same person as the
+		    author, but this may not be the case in some
+		    institutions where faculty and employees are
+		    required to sign over copyright to the
+		    institution.  In this case the institution serves
+		    as copyright holder and the individual retains the
+		    author and/or maintainer roles.

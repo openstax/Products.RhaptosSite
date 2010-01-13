@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="rhaptos"
+      metal:use-macro="here/main_template/macros/master">
+
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+  <style metal:fill-slot="css_slot">
+    .portraitPhoto{float: right; margin: 0 0 .5em 1em;}
+  </style>
+</head>
+
+<body>
+
+<tal:comment replace="nothing">
+    Plone2.5 Note:  This template is now loosely based off of the
+    Plone author.pt template which is similar in function to our
+    member_profile.  It should now have tabs that link to/from the
+    personalize_form.
+
+    Please note that this template fills the "content" slot instead of the
+    "main" slot, this is done so we can provide stuff like the content
+    tabs. This also means that we have to supply things that are normally
+    present from main_template.
+</tal:comment>
+
+<metal:main fill-slot="content">
+    <tal:main-macro metal:define-macro="main"
+                    tal:define="authorid python:(len(request.traverse_subpath) > 0 and request.traverse_subpath[0]) or request.get('author', None);
+      member python:here.desecured.getMemberById(authorid);
+      preferences_url string:/personalize_form;
+      profile_url string:/personalize_profile;">
+
+	<span tal:condition="python:not (member and member.getProperty('status') == 'Approved')"
+          tal:replace="python:request.RESPONSE.notFoundError()" />
+
+    <div id="content"
+         class="documentEditable"
+         tal:define="isOwner python:user.getId()==member.getId()"
+         tal:attributes="class python: test(isOwner, 'documentEditable', '')">
+
+        <h5 class="hiddenStructure"
+            tal:condition="isOwner">Views</h5>
+        
+        <ul class="contentViews"
+            tal:condition="isOwner">
+          <li class="selected">
+            <a href=""
+               tal:attributes="href string: ${portal_url}/member_profile/${member}"
+               i18n:translate="label_view">View</a>
+          </li>
+          <li>
+            <a href=""
+               tal:attributes="href string:${portal_url}/personalize_form"
+               i18n:translate="label_edit">Edit</a>
+          </li>
+        </ul>
+
+        <div class="contentActions"
+             tal:condition="isOwner">
+          &nbsp;
+        </div>
+
+        <div class="documentContent" id="region-content">
+
+      <tal:block tal:condition="python:member and member.getProperty('status') == 'Approved'">
+
+      <tal:block tal:define="fullname python:member.getProperty('fullname');
+                             account_type python:member.getProperty('account_type');
+                             is_org python:account_type != 'person';">
+      
+      <h1 style="margin-bottom: .5em;"
+	    i18n:translate="heading_member_profile">Member Profile: 
+	    <span tal:replace="fullname" i18n:name="user_full_name">[name]</span></h1>
+
+      <tal:portrait define="portrait python:mtool.getPersonalPortrait(member.getId());
+        scale python:here.calcImageScale(image=portrait);
+        p_height python:portrait.height/scale; 
+        p_width python:portrait.width/scale;"
+	  condition="python:portrait and (not(is_org) or portrait.title != 'Default user')">
+	  
+	  <img tal:replace="structure python:portrait.tag(height=p_height,width=p_width,css_class='portraitPhoto')"
+	    />
+
+      </tal:portrait>
+      
+        <p tal:define="uid member/getId">
+          <b i18n:translate="text_userid_header">Username:</b> <span tal:content="uid">alice</span>
+        </p>
+
+	<p tal:define="shortname python:member.getProperty('shortname')" 
+	  tal:condition="shortname">
+	  <b i18n:translate="text_contact_header">Short organization name:</b> <span tal:content="shortname">alice</span> 
+	</p>
+	<p tal:define="email python:member.getProperty('email')" 
+	  tal:condition="email">
+	  <b i18n:translate="text_contact_header">Contact:</b> <a 
+	    tal:attributes="href string:mailto:${email}"
+	    tal:content="email">[email]</a>
+	  <br/>
+	</p>
+      
+	<p tal:define="url python:member.getProperty('homepage')" 
+	  tal:condition="url">
+	  <b i18n:translate="text_homepage_header" tal:condition="not:is_org">Home page:</b><b i18n:translate="text_webpage_header" tal:condition="is_org">Web page:</b> <a
+	    tal:attributes="href url"
+	    tal:content="url">[homepage]</a><br />
+	</p>
+
+	<p tal:define="affiliation python:member.getProperty('affiliation').strip();
+	  affiliation_url python:member.getProperty('affiliation_url');" 
+	  tal:condition="affiliation">
+	  <b i18n:translate="text_affiliation_header">Affiliation:</b> 
+	      <a tal:attributes="href affiliation_url"
+		tal:content="affiliation"
+		tal:omit-tag="not:affiliation_url">[affiliation]</a>
+	  <br />
+	</p>
+      
+
+	<p tal:define="planguage python:member.getProperty('preferred_language')"
+	  tal:condition="planguage">
+	  <b i18n:translate="text_pref_language_header">Preferred Language:</b>
+	  <span tal:content="planguage">[language]</span>
+	</p>
+
+	<p tal:define="altlanguage python:member.getProperty('alternative_languages')"
+	  tal:condition="altlanguage">
+	  <b i18n:translate="text_alt_languages_header">Alternative Languages:</b>
+	  <tal:altlanguages tal:repeat="s altlanguage">
+	    <span tal:content="s">[language]</span><tal:comma tal:condition="not:repeat/s/end">,</tal:comma>
+	  </tal:altlanguages>
+	</p>
+
+	<p tal:condition="python:member.getProperty('location')">
+	  <b i18n:translate="text_location_header">Location:</b> 
+	      <span tal:define="location python:member.getProperty('location')"
+		tal:content="location">[location]</span>
+	</p>
+      
+	    <p tal:define="interests python:member.getProperty('interests')"
+	      tal:condition="interests">
+	      <b i18n:translate="text_interests_header">Interests:</b> 
+	      <tal:interest tal:repeat="s interests">
+		<a tal:attributes="href string:/content/search?words=${s}"
+		  tal:content="s">[subject]</a><tal:comma tal:condition="not:repeat/s/end">,</tal:comma>
+	      </tal:interest>
+	    </p>
+
+	    <tal:block define="r python:here.getAuthorContent(member.getId(), 'Title');
+	      content r/content;
+	      m_content r/m_content;
+	      num_mod python:len([o for o in content if o.portal_type=='Module']);
+	      num_c   python:len(content)-num_mod;
+	      num_m_mod python:len([o for o in m_content if o.portal_type=='Module']);
+	      num_m_c   python:len(m_content)-num_m_mod;
+              first_letter python:member.surname and member.surname[0] or member.shortname and member.shortname[0];
+	      content_url string:/content/expanded_browse_authors?letter=${first_letter}&author=${member/id};
+	      glob_maint python:bool(member.has_role('Maintainer'))"
+	      condition="python:content or m_content or glob_maint">
+	      <p tal:condition="content">
+		<b i18n:translate="text_author_of_header">Author of:</b> 
+		<a tal:attributes="href content_url"
+		  i18n:translate="label_profile_author_content">
+		  <span tal:replace="structure python:'&#32;'+str(num_mod)" tal:condition="num_mod"
+		    i18n:name="number_of_modules">[Number of Modules]</span><span 
+		  i18n:name="singular_modules"><tal:span 
+		    tal:condition="python:num_mod==1" 
+		      i18n:translate="text_profile_single_module">&#32;Module</tal:span></span><span 
+		  i18n:name="multiple_modules"><tal:span 
+		    tal:condition="python:num_mod&gt;1"
+		      i18n:translate="text_profile_multiple_modules">&#32;Modules</tal:span></span><span 
+		  i18n:name="and_seperator"><tal:and  
+		    tal:condition="python:num_mod and num_c"
+		      i18n:translate="text_profile_and_seperator">&#32;and</tal:and></span><span 
+		  tal:replace="structure python:'&#32;'+str(num_c)" tal:condition="num_c"
+		    i18n:name="number_of_courses">[Number of Courses]</span><span 
+		  i18n:name="singular_course"><tal:span 
+		    tal:condition="python:num_c==1"
+		      i18n:translate="text_profile_single_course">&#32;Course</tal:span></span><span 
+		  i18n:name="multiple_courses"><tal:span 
+		    tal:condition="python:num_c&gt;1"
+		      i18n:translate="text_profile_multiple_courses">&#32;Courses</tal:span></span></a>
+                <a tal:attributes="href string:${content_url}&view_mode=statistics&sorton=popularity"
+                  i18n:translate="label_profile_statistics_link">
+                  (view statistics)
+                </a>
+	      </p> 
+
+            <p tal:condition="m_content">
+              <b i18n:translate="text_maintainer_of_header">Maintainer of:</b> 
+              <a tal:attributes="href string:${content_url}&subset=m_content"
+                i18n:translate="label_profile_author_content">
+		  <span tal:replace="structure python:'&#32;'+str(num_m_mod)" tal:condition="num_m_mod"
+		    i18n:name="number_of_modules">[Number of Modules]</span><span 
+		  i18n:name="singular_modules"><tal:span 
+		    tal:condition="python:num_m_mod==1"
+		      i18n:translate="text_profile_single_module">&#32;Module</tal:span></span><span 
+		  i18n:name="multiple_modules"><tal:span 
+		    tal:condition="python:num_m_mod&gt;1"
+		      i18n:translate="text_profile_multiple_modules">&#32;Modules</tal:span></span><span 
+		  i18n:name="and_seperator"><tal:and  
+		    tal:condition="python:num_m_mod and num_m_c"
+		      i18n:translate="text_profile_and_seperator">&#32;and</tal:and></span><span 
+		  tal:replace="structure python:'&#32;'+str(num_m_c)" tal:condition="num_m_c"
+		    i18n:name="number_of_courses">[Number of Courses]</span><span 
+		  i18n:name="singular_course"><tal:span 
+		    tal:condition="python:num_m_c==1"
+		      i18n:translate="text_profile_single_course">&#32;Course</tal:span></span><span 
+		  i18n:name="multiple_courses"><tal:span 
+		    tal:condition="python:num_m_c&gt;1"
+		      i18n:translate="text_profile_multiple_courses">&#32;Courses</tal:span></span></a>
+                <a tal:attributes="href string:${content_url}&subset=m_content&view_mode=statistics&sorton=popularity"
+                  i18n:translate="label_profile_statistics_link">
+                  (view statistics)
+                </a>
+	      </p>
+	      
+	    </tal:block>
+
+
+	<tal:coauthors
+	  tal:define="r python:portal.content.getContentByAuthor(member.getId());
+	  collabs python:{}">
+	  <tal:content tal:repeat="c r">
+	    <tal:authors
+	      tal:repeat="a python:c.getRhaptosObject(c.objectId).latest.authors">
+	      <tal:check tal:condition="python:(str(a) != str(member))">
+		<tal:add tal:define="blank python:collabs.setdefault(a,1)"
+		  tal:replace="nothing">
+		  Make dictionary of authors
+		</tal:add>
+	      </tal:check>
+	    </tal:authors>
+	  </tal:content>
+	  <p tal:condition="python:collabs">
+	    <b i18n:translate="text_coauthors_header">Coauthors:</b>
+	    <tal:collaborators tal:repeat="a collabs">
+	      <a tal:define="m python:here.desecured.getMemberById(a);"
+		tal:content="python:m and m.getProperty('fullname') or '(Unknown)'"
+		class="author" 
+		tal:on-error="a"
+		tal:attributes="href
+		string:/member_profile/${a}">[fullname]</a><tal:comma
+		tal:condition="not:repeat/a/end">, </tal:comma>
+	    </tal:collaborators>
+	  </p>
+	</tal:coauthors>
+	      
+        <p tal:condition="lenses"
+	   tal:define="lenses python:len(here.lens_tool.getListsBy(memberid=member.getId(), all=True));">
+          <b i18n:translate="text_maker_if_header">Maker of:</b> 
+          <a tal:attributes="href string:${portal_url}/lenses/${member/id}"
+            i18n:translate="label_profile_author_lenses">
+            <span tal:replace="lenses"
+              i18n:name="number_of_lenses">[Number of Lenses]</span> 
+            <span i18n:name="singular_lens">
+              <tal:span tal:condition="python:lenses==1" 
+                i18n:translate="text_profile_single_lens">Lens</tal:span></span>
+            <span i18n:name="multiple_modules">
+              <tal:span tal:condition="python:lenses&gt;1"
+                i18n:translate="text_profile_multiple_lenses">Lenses</tal:span></span>
+          </a>
+        </p>
+      
+	<p tal:define="rec_content python:member.getProperty('recommended_content')"
+	  tal:condition="rec_content">
+	  <b i18n:translate="text_rec_content_header">Recommended Content:</b> 
+	  <tal:content tal:repeat="s rec_content">
+	    <tal:error on-error="s">
+	      <a tal:define="object python:here.content.getRhaptosObject(s).latest" 
+		tal:attributes="href object/url"
+		tal:content="object/title">[content item]</a></tal:error><tal:comma tal:condition="not:repeat/s/end">,</tal:comma>
+	  </tal:content>
+	</p>
+ 
+      <dl style="margin: 2em 0;"
+	tal:define="biography python:member.getProperty('biography')"
+	tal:condition="biography">      
+	<dt i18n:translate="text_biography_header" tal:condition="not:is_org">Biography:</dt>
+	<dt i18n:translate="text_biography_header" tal:condition="is_org">About this organization:</dt>
+	<dd>
+	  <p tal:repeat="para biography">
+	    <span tal:content="para">[bio]</span>
+	  </p>
+	</dd>
+      </dl>
+
+	</tal:block>
+	
+      </tal:block>
+          <div style="clear: both;" />
+        </div>
+    </div> <!-- end simulated tabs -->
+        
+
+    </tal:main-macro>
+
+</metal:main>
+
+</body>
+</html>

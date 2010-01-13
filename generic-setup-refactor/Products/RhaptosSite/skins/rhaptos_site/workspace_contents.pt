@@ -1,0 +1,200 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone"
+      metal:use-macro="context/main_template/macros/master">
+
+<tal:comment tal:replace="nothing">
+siyavula pahse-2 upgrade note:
+    added a conditional link to enable discussion forums
+
+2.5 upgrade note:
+  using folder_contents macro, like in collection_panel
+  header stuff stolen from folder_contents
+  table already width of 100%
+  remove dragging
+  remove ordering
+  enable sorting
+  take out the label tag inside the title a tag... this is causing IE
+    to break and the checkbox to check whenever you click on the title
+  description is changed to "*Description:* blah"
+
+2.5 todo:
+  isOrderable
+  s/add/create/ new item
+  id col shows all ids, not just objectId (we need this in catalog)
+
+old Rhaptos notes:
+ Derived from folder_contents.
+ Customize workspace messages: "no content" msg changed,
+  add search button (with target param), add ellipis to Select button
+ Use human readable states
+ Use toLocalizedTime (why isn't this in Plone 2)
+ Use 'structure' to display title so entities get expanded
+ Changed tooltip for select/unselect all
+ Add workspace ID to search URL as 'target' query parameter
+ Added in thead for content table so sorting works (already in Plone 2)
+ Three-form mod, as in original, no tenable, so button put above main form.
+ Sort contents
+ Disable ordering 
+ Added a column for object ID
+ Always call getObjSize, not just if an object is non-folderish
+ Remove special casing of 'Create New Item' button translation
+ 
+ Not done, because it seems useless:
+ - Put #160 between module ID and external edit icon (although this
+   doesn't seem to have the desired non-wrapping effect...)
+
+Yet to do:
+ Switch workspace description and instructions
+
+
+</tal:comment>
+  
+  <body>
+
+    <div metal:fill-slot="content_title_header">
+      <tal:block metal:define-macro="workspacetitle"
+                 tal:define="wgcontext nocall:wgcontext | nothing;
+                             wg python:wgcontext or context;
+                             orig_template request/orig_template | nothing;
+                             mode python:orig_template and orig_template.split('?')[0] or None;
+                             mode_lens python:mode=='lens_content_view'">
+        <h1>
+          <tal:block replace="structure python:getattr(wg, wg.getIcon(1))"/>
+          <span tal:replace="wg/Title">Work Group Name</span>
+        </h1>
+        <tal:block tal:define="description wg/Description;
+                               description python:description.strip();"
+                    tal:condition="description">
+          <div class="workarea_description">
+            <strong>Description:</strong>
+            <tal:lens condition="mode_lens">
+              <span tal:content="structure description">Description</span>
+            </tal:lens>
+            <tal:notlens condition="not: mode_lens">
+              <span tal:content="description">Description</span>
+            </tal:notlens>
+          </div>
+        </tal:block>
+      </tal:block>
+    </div>
+
+    <div metal:fill-slot="main"
+         tal:define="full_view python:False;
+                     tOrder python:['Module','Collection','UnifiedFile', 'File', 'Image'];
+    tOrder_comment string:File and Image above can be removed once we're using only UniFiles;
+                     contentFilter request/contentFilter|python:{'portal_type':tOrder};
+                     filler python:contentFilter.setdefault('sort_on','sortable_title');
+                     view_title view_title|request/view_title|string:;
+                     customFactory string:workspace_factories:method">
+
+      <tal:siyavula condition="context/@@siyavula-forum|nothing">
+      <tal:link condition="python:getattr(context, 'portal_type', '') == 'Workgroup'">
+      <p tal:define="qi_forums python:context.portal_quickinstaller.get('RhaptosForums', None)"
+         tal:condition="python:qi_forums and qi_forums.status == 'installed'">
+          <span i18n:translate="discuss_workgroup">Discuss the workgroup by posting in the</span>
+          <a tal:attributes="href string: ${context/absolute_url}/workgroup_discuss">
+              <img tal:attributes="src string:${portal_url}/ploneboard_forum_icon.gif"/>
+                <span i18n:translate="forum">Forum</span>
+          </a>
+      </p>
+      </tal:link>
+      </tal:siyavula>
+
+      <p i18n:translate="description_workspace_content_create" i18n:domain="rhaptos">
+        Create new content by pressing the 'Create New Item' button,
+        or
+        <span i18n:name="search_link">
+          <a tal:attributes="href string:/content/search?target=${context/getId}"
+            i18n:translate="label_workspace_contents_search">Search</a>
+        </span>
+        for existing content to add.
+      </p>
+
+      <form style="float: right;" name="searchExistingContentForm" action="/content/search" i18n:domain="rhaptos">
+        <input class="standalone"
+               type="submit"
+               value="Search for Published Content"
+               tabindex=""
+               i18n:attributes="value value_workspace_search_for_content"
+               tal:attributes="tabindex tabindex/next|nothing" />
+        <input type="hidden" name="target" tal:attributes="value context/getId" />
+      </form>
+
+      <metal:contentsmacro use-macro="context/folder_contents/macros/contents">
+
+        <div metal:fill-slot="h1" tal:omit-tag=""/>
+
+        <metal:header_slot metal:fill-slot="listingheader" i18n:domain="plone">
+                  <th style="white-space:nowrap"
+                      >&nbsp;<tal:title i18n:translate="listingheader_title"
+                      >Title</tal:title>&nbsp;</th>
+                  <th style="white-space:nowrap"
+                      >&nbsp;<tal:size i18n:translate="listingheader_objectid"
+                      >ID</tal:size>&nbsp;</th>
+                  <th style="white-space:nowrap"
+                      >&nbsp;<tal:size i18n:translate="listingheader_size"
+                      >Size</tal:size>&nbsp;</th>
+                  <th style="white-space:nowrap"
+                      >&nbsp;<tal:modified i18n:translate="listingheader_modified"
+                      >Modified</tal:modified>&nbsp;</th>
+                  <th style="white-space:nowrap"
+                      >&nbsp;<tal:state i18n:translate="listingheader_status"
+                      >State</tal:state>&nbsp;</th>
+        </metal:header_slot>
+        <metal:item_slot metal:fill-slot="item_display" i18n:domain="plone"
+                         tal:define="obj item/getObject | nothing">
+          <tal:comment replace="nothing">
+            FIXME performance: we wake objects here (getObject above) for a few trivial uses.
+            if we can do this all catalog we'll be much better off
+            'objectId' and 'hrstate' below are the only uses of the real object
+          </tal:comment>
+                    <td  class="notDraggable"
+                         tal:define="url python:test(item_use_view, item_url+'/view',
+                                    test(item_folderish, item_url+'/folder_contents', item_url+'/'));">
+                        <span tal:attributes="class item_type_class">
+                        <a href="#" tal:attributes="href  url;
+                                                  title string: $item_type: $item_description;
+                                                  class string:$item_wf_state_class visualIconPadding;">
+                            <strong tal:omit-tag="python:not isBrowserDefault">
+                            <span tal:replace="item_title_or_id">
+                              Item Title
+                            </span>
+                            </strong>
+                        </a>
+                        </span>
+
+                        <span class="state-expired"
+                              tal:condition="python:portal.isExpired(item)"
+                              i18n:translate="time_expired">expired</span>
+                    </td>
+                    <td class="notDraggable">
+                      <span tal:replace="obj/objectId | nothing"> m10000 </span>
+                    </td>
+                    <td class="notDraggable">
+                      <span tal:condition="not: item_size"> &nbsp; </span>
+                      <span tal:condition="python:item_size>0"
+                            tal:content="item_size"
+                            tal:attributes="class item_wf_state_class"> size </span>
+                    </td>
+                    <td tal:content="python:toLocalizedTime(item_modified, long_format=1)"
+                        tal:attributes="class string:notDraggable ${item_wf_state_class}">
+                        08/19/2001 03:01 AM
+                    </td>
+                    <td class="notDraggable"
+                        tal:define="item_state_title obj/hrstate | item_state_title;">
+                        <span i18n:translate=""
+                              tal:condition="item_state_title"
+                              tal:content="structure item_state_title"
+                              tal:attributes="class item_wf_state_class" />
+                        <span tal:condition="not: item_state_title">&nbsp;</span>
+                    </td>
+        </metal:item_slot>
+
+    </metal:contentsmacro>
+    </div>
+  </body>
+</html>

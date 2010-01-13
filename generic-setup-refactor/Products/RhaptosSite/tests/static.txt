@@ -1,0 +1,10 @@
+Static Implementation Tests
+===========================
+ 	
+Let's just make sure that our static views are working as expected.
+	
+The first thing we need to do is to make sure the interfaces are
+being correctly implemented::
+ 	
+    >>> from Products.RhaptosSite.RhaptosSite import manage_addRhaptosSite
+    

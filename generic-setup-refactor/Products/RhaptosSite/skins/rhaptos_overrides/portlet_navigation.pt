@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+
+<tal:comment tal:replace="nothing">
+Rhaptos note: new! and only for us. has severe limitations: see 'navigationBuilder'
+ - note! not recursive, handles only two levels!
+
+TODO to be like old tree:
+ - use navigation_tree_title() to calculate titles
+ - if getRemoteUrl, link instead of going to view action (already in 2.1)
+</tal:comment>
+
+<body>
+<div metal:define-macro="portlet"
+       i18n:domain="plone"
+       tal:omit-tag=""
+       tal:define="data context/navigationBuilder"
+       tal:condition="data">
+
+    <ul id="portlet-navigation-tree">
+      <tal:looping repeat="elt data">
+      <li tal:define="brain elt/elt; more elt/subtree; current elt/current"
+          tal:attributes="class python:current and 'currentNavItem' or 
+                                         more and 'ancestorOfCurrent' or None">
+        <a href="#" tal:attributes="href brain/getURL"
+           tal:content="python:brain.Title or brain.getId">People</a>
+        <ul tal:condition="more">
+          <li tal:repeat="moreelt more"
+              tal:attributes="class python:moreelt['current'] and 'currentNavItem' or None">
+            <a href="#" tal:define="morebrain moreelt/elt"
+               tal:attributes="href morebrain/getURL"
+               tal:content="python:morebrain.Title or morebrain.getId">Sponsors</a>
+          </li>
+        </ul>
+       </li>
+       </tal:looping>
+    </ul>
+
+</div>
+</body>
+</html>

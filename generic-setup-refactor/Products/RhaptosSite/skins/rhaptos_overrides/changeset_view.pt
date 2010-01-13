@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<tal:block tal:define="default_tab python:None">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      metal:use-macro="context/module_template/macros/master"
+      i18n:domain="plone"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n">	
+
+<tal:comment tal:replace="nothing">
+Rhaptos note: hide fields with _prefix
+</tal:comment>
+
+  <body>
+
+    <metal:block metal:fill-slot="super" tal:condition="show_border"
+                 tal:define="actions python:context.portal_actions.listFilteredActionsFor(context.nearestRhaptosObject());">
+      <div metal:use-macro="context/global_contentviews/macros/content_views">The content views</div>
+      <div metal:use-macro="context/global_contentviews/macros/content_actions">The content bar</div>
+    </metal:block>
+
+    <div metal:fill-slot="main">
+
+     <tal:block tal:define="diffingIndexCnxml python:context.id == 'index.cnxml'">
+      <!-- FIXME: other files like .txt files can also be diffed -->
+
+      <div class="return-link">
+        <a href=""
+           tal:condition="diffingIndexCnxml"
+           tal:attributes="href python:context.getParentNode().absolute_url()">&#171; Return to list of differences to module</a>
+      </div>
+
+      <h2>
+        <span tal:condition="diffingIndexCnxml"    >View changes to: index.cnxml</span>
+        <span tal:condition="not:diffingIndexCnxml">View changes to module</span>
+      </h2>
+
+      <!--<i tal:condition="context/same" i18n:translate="">No changes</i>-->
+    <metal:block metal:define-macro="changeset">
+      <tal:block tal:condition="not:context/same" tal:repeat="d context/getDiffs">
+	<div class="diff" tal:condition="not:d/same">
+	  <pre tal:condition="exists:d/ndiff" tal:content="d/ndiff">[ndiff]</pre>
+	  <div tal:condition="not:exists:d/ndiff"><em i18n:translate="">The items differ</em></div>
+	</div>
+      </tal:block>
+
+      <tal:block tal:condition="context/recursive">
+	<h4 i18n:translate="">Changed files</h4>
+	<tal:changed tal:define="changed python:[d for d in context.getSubDiffs() if not d.same]">
+	  <i tal:condition="not:changed" i18n:translate="">None</i>
+	  <ul tal:condition="changed">
+	    <li tal:repeat="cs changed">
+              <a tal:content="cs/id"
+                 tal:attributes="href cs/id">[filename]</a>
+            </li>
+	  </ul>
+	</tal:changed>
+
+	<h4 i18n:translate="">Removed files</h4>
+	<i tal:condition="not:context/getRemovedItems" i18n:translate="">None</i>
+	<ul tal:condition="context/getRemovedItems">
+	  <li tal:repeat="id context/getRemovedItems" tal:content="id">[filename]</li>
+	</ul>
+
+	<h4 i18n:translate="">Added files</h4>
+	<i tal:condition="not:context/getAddedItems" i18n:translate="">None</i>
+	<ul tal:condition="context/getAddedItems">
+	  <li tal:repeat="id context/getAddedItems">
+           <a tal:content="id"
+              tal:attributes="href python:context.changeset_link(id)">[filename]</a>
+          </li>
+	</ul>
+      </tal:block>
+    </metal:block>
+
+     </tal:block>
+
+    </div>
+
+  </body>
+</html>
+
+</tal:block>

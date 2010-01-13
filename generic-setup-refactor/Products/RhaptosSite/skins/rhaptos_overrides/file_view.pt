@@ -1,0 +1,146 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+    
+    <tal:comment tal:replace="nothing">
+      Rhaptos Note:
+      This is based off of the Plone2.0.5 template which has been dropped
+       from Plone for ATCT templates.
+    </tal:comment>
+
+    <div metal:fill-slot="content_title_header">
+      <tal:block tal:define="container_object python:here.getParentNode();
+                             container_type   container_object/portal_type;
+                             inWorkGroup      python:container_type == 'Workgroup';
+                             inWorkSpace      python:container_type == 'Workspace';
+                             inModule         python:container_type == 'Module'">
+        <tal:block tal:condition="inWorkGroup">
+          <div tal:define="container_title container_object/Title">
+            <h1>
+              <tal:block replace="structure python:getattr(here, container_object.getIcon(1))"/>
+              <span tal:replace="container_title" >Workgroup Title</span>
+            </h1>
+          </div>
+        </tal:block>
+        <tal:block tal:condition="inWorkSpace">
+          <div>
+            <h1><span>Personal Workspace</span></h1>
+            <div><strong>Description:</strong> <span tal:replace="container_object/Description">Description</span></div>
+          </div>
+        </tal:block>
+        <tal:block tal:condition="inModule">
+          <div tal:define="module            nocall:container_object;
+                           grandparent_url   python:module.navigationParent(module, template.getId());
+                           grandparent_title python:module.getParentNode().Title();
+                           moduleInWorkspace python:module.getParentNode().portal_type == 'Workspace'">
+            <h1><tal:block replace="structure python:getattr(here, container_object.getIcon(1))"/> <span>Module</span>: <span tal:replace="module/Title">Module Title</span></h1>
+            <div class="workarea_locator"
+                 tal:condition="grandparent_url">In:
+              <a href=""
+                tal:attributes="href grandparent_url"><span tal:condition="not:moduleInWorkspace" tal:replace="grandparent_title">Work Group Name</span><span tal:condition="moduleInWorkspace">Personal Workspace</span></a>
+            </div>
+          </div>
+        </tal:block>
+      </tal:block>
+    </div>
+
+<div metal:fill-slot="main">
+    <tal:main-macro metal:define-macro="main" 
+           tal:define="size python:here.getObjSize(here);
+                       content_type here/getContentType;
+                      ">
+      <div tal:define="parent_url python:here.navigationParent(here, fallThroughDefaultPage = False, checkPermissions = ['List folder contents']);"
+           tal:condition="parent_url"
+           class="return-link"
+           metal:define-macro="up">
+        <a href=""
+           tal:define="use_view python:parent_url and context.aq_parent.portal_type in site_properties.typesUseViewActionInListings;
+                       parent context/getParentNode;
+                       parentType parent/getPortalTypeName;
+                       inModule python:parentType == 'Module' and checkPermission('List folder contents', parent);
+                       inWorkgroup python:parentType == 'Workgroup' and checkPermission('List folder contents', parent);
+                       inWorkspace python:parentType == 'Workspace';
+                       viewpart python:inModule and 'module_files' or use_view and 'view' or 'folder_contents'"
+            tal:attributes="href string:${parent_url}/${viewpart}">
+          <span i18n:translate="label_return_to_workspace_listing"
+                tal:condition="inWorkspace">&#171; Return to complete contents listing for Personal Workspace</span>
+          <span i18n:translate="label_return_to_workgroup_listing"
+                tal:condition="inWorkgroup">&#171; Return to complete contents listing for <span i18n:name="workgroup_name" tal:content="parent/Title">Workgroup Name</span></span>
+          <span i18n:translate="label_return_to_file_listing"
+                tal:condition="inModule">&#171; Return to file listing for <span i18n:name="portal_type" tal:replace="python:parentType.lower()">Module</span></span>
+        </a>
+      </div>
+
+        <h1 tal:content="here/title_or_id" class="documentFirstHeading">
+            Title or id
+        </h1>
+
+        <div metal:use-macro="here/document_actions/macros/document_actions">
+            Document actions (print, sendto etc)
+        </div>
+    
+        <div class="documentDescription"
+             tal:content="here/Description">
+            description
+        </div>
+    
+        <p>
+            <a href=""
+               tal:attributes="href string:$here_url/download">
+                <img src="" tal:attributes="src string:${portal_url}/file_icon.gif" alt="" />
+                <tal:block i18n:translate="label_click_to_get_file">
+                Click here to download the file
+                </tal:block>
+            </a>
+        </p>
+    
+        <small class="discreet">
+            <span i18n:translate="label_size">
+            Size
+            </span>
+            
+            <span tal:condition="size"
+                tal:content="size">
+            257 KB
+            </span>
+    
+            <span tal:condition="python:test(size,0,1)" i18n:translate="no_file_uploaded">
+              (No file has been uploaded yet)
+            </span>
+    
+            -
+            
+            <span i18n:translate="label_file_type">
+            File type
+            </span>
+    
+            <span tal:content="content_type" i18n:translate="">
+            Content type
+            </span>
+        </small>
+    
+        <div class="row"
+             tal:condition="python:test(content_type.find('text')>-1, 1,0)">
+    
+                <h2 i18n:translate="heading_file_contents">File contents</h2>
+    
+                <pre tal:content="here/get_data|here/data|nothing" class="text_preview">
+                </pre>
+
+        </div>
+    
+        <div metal:use-macro="here/document_byline/macros/byline">
+          Get the byline - contains details about author and modification date.
+        </div>
+    </tal:main-macro>
+</div>
+
+</body>
+
+</html>

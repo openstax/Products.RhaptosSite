@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone">
+
+<tal:comment tal:replace="nothing">
+Rhaptos Notes:
+  Last Modified portlet
+</tal:comment>
+
+  <body>
+
+    <div metal:define-macro="portlet"
+         tal:define="raw_fieldList  python:context.all_editable_content(limit=6, sort='modified');
+                     fieldListDict  python:raw_fieldList[:5];"
+         tal:condition="raw_fieldList">
+      <dl class="portlet" id="portlet-recentedit">
+        <dt class="portletHeader">
+          <span class="portletTopLeft"></span>
+          <span i18n:translate="box_sign_out">Last Modified</span>
+          <span class="portletTopRight"></span>
+        </dt>
+        <dd class="portletItem odd">
+          <ul class="latest">
+            <tal:div tal:repeat="fieldList fieldListDict">
+              <li tal:define="isModule python:fieldList['content_portal_type'] == 'Module'"
+                  tal:attributes="class python:isModule and 'module' or 'collection'">
+                <a tal:attributes="href python:fieldList['content_url']"
+                     tal:content="python:fieldList['content_title']">title</a>
+                in
+                <tal:span tal:condition="python:fieldList['work_portal_type'] != 'Workspace'">
+                  Workgroup:
+                </tal:span>
+                <tal:span tal:content="python:fieldList['work_title']">parent title</tal:span>
+              </li>
+            </tal:div>
+            <li tal:condition="python:len(raw_fieldList) > 5" class="more">
+              <a href="listcontent?type:list=Collection&amp;type:list=Module&amp;sort=modified&amp;sort_order=descending">
+                More &#187;
+              </a>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+
+  </body>
+
+</html>

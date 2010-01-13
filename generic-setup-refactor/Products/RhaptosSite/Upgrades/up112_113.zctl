@@ -1,0 +1,162 @@
+from Products.CMFCore.tests.base.security import AnonymousUser, OmnipotentUser
+from AccessControl.SecurityManagement import newSecurityManager
+user = OmnipotentUser().__of__(app)
+#user = app.acl_users.getUser('jcc')
+newSecurityManager(None, user)
+
+portal = app.plone
+content = portal.content
+catalog = portal.portal_catalog
+
+## catalog index addition (for new navtree)
+newindex = 'getObjPositionInParent'
+if newindex not in catalog.indexes():
+    catalog.addIndex(newindex, 'FieldIndex')
+    #catalog.refreshCatalog()
+    #catalog.reindexIndex('getObjPositionInParent', None)    # should work, but doesn't seem to...
+
+## reconfigure portlets
+# global
+portal.left_slots = ["here/portlet_navigation/macros/portlet",]
+                    # "here/portlet_workspaces_hint/macros/portlet"]
+portal.right_slots = ["here/portlet_login/macros/portlet",
+                      "here/portlet_loggedin/macros/portlet",
+                      "here/portlet_pending/macros/portlet",
+                      "here/portlet_news/macros/portlet",
+                      "here/portlet_review/macros/portlet"]
+
+# setup up workspace props...
+workspaces = portal.Members
+groupspaces = portal.GroupWorkspaces
+
+left_slots = ['here/workspaces_slot/macros/portlet']
+ids = workspaces.propertyIds()
+if ('left_slots' not in ids): workspaces.manage_addProperty('left_slots', [], 'lines')
+workspaces.left_slots = left_slots
+
+ids = groupspaces.propertyIds()
+if ('left_slots' not in ids): groupspaces.manage_addProperty('left_slots', [], 'lines')
+groupspaces.left_slots = left_slots
+
+# remove right slots and acquire? or just add login?
+right_slots = ['here/portlet_login/macros/portlet',
+               'here/portlet_loggedin/macros/portlet',
+               'here/portlet_pending/macros/portlet',
+               'here/log_action_slot/macros/portlet']
+workspaces.right_slots = right_slots
+groupspaces.right_slots = right_slots
+
+## fix actions
+pa_tool = portal.portal_actions
+from Products.CMFCore.Expression import Expression
+
+hasContact = False
+hasMembers = False
+hasGroup = False
+hasLanding = False
+
+actions = pa_tool._cloneActions()
+for a in actions:
+    if a.id == 'technology':
+        a.visible = 0
+    elif a.id == 'aboutus':
+        a.title = "About Us"
+    elif a.id == 'bugreport':
+        a.category = 'site_actions'
+    elif a.id == 'contact':
+        hasContact = True
+        a.title = "Contact Us"
+    elif a.id == 'Members' and a.title != 'Members':
+        hasMembers = True
+        a.title = "Authoring Area"
+        a.condition = Expression("python:member and 'Members' in folder.getPhysicalPath()")
+    elif a.id == 'GroupWorkspaces':
+        hasGroup = True
+        a.title = "Authoring Area"
+    elif a.id == 'author_home':
+        a.title = "Authoring Area"
+        hasLanding = True
+    elif a.id == 'qstart':
+        a.visible = 0         # delete is much harder!
+    elif a.id == 'courses':
+        a.visible = 0
+pa_tool._actions = tuple(actions)
+
+if not hasContact:
+    pa_tool.addAction('contact', 'Contact Us', 'string:$portal_url/aboutus/contact', '', 'View', 'site_actions')
+if not hasMembers:
+    pa_tool.addAction('Members', 'Authoring Area', 'string:$portal_url/author_home',
+                      "python:member and 'Members' in folder.getPhysicalPath()", 'View', 'portal_tabs')
+if not hasGroup:
+    pa_tool.addAction('GroupWorkspaces', 'Authoring Area', 'string:$portal_url/author_home',
+                      "python:member and 'GroupWorkspaces' in folder.getPhysicalPath()", 'View', 'portal_tabs')
+if not hasLanding:
+    pa_tool.addAction('author_home', 'Authoring Area', 'string:$portal_url/author_home',
+                      "python:member and not 'Members' in folder.getPhysicalPath() and not 'GroupWorkspaces' in folder.getPhysicalPath()", 'View', 'portal_tabs')
+
+# move 'content' action up one, to be above 'aboutus'
+actlist = pa_tool.listActions()
+actindex = -1
+actfound = None
+for act in actlist:
+    if not actfound: actindex += 1
+    if act.id == 'content':
+        actfound = True
+if actfound and actindex > 13:  # don't move it up every time!
+    pa_tool.moveUpActions([str(actindex)])
+
+# move 'bugreport' action to after 'contact'
+actlist = pa_tool.listActions()
+bugidx = -1
+bugfound = None
+contactidx = -1
+contactfound = None
+
+for act in actlist:
+    if not bugfound: bugidx += 1
+    if not contactfound: contactidx += 1
+    if act.id == 'bugreport':
+        bugfound = True
+    if act.id == 'contact':
+        contactfound = True
+if bugidx < contactidx:
+    pa_tool.moveDownActions([str(x) for x in range(bugidx, contactidx)])
+
+actindex = -1
+actfound = None
+for act in actlist:
+    if not actfound: actindex += 1
+    if act.id == 'content':
+        actfound = True
+if actfound and actindex > 13:  # don't move it up every time!
+    pa_tool.moveUpActions([str(actindex)])
+
+# repoint configlet
+cp_tool = app.plone.portal_controlpanel
+actions = cp_tool._cloneActions()   #...just treat it like actions, since the configlet API is questionable
+for a in actions:
+    if a.id == 'content':
+        a.action = Expression("python:'%s/content/browse_content/author/%s/%s' % (portal_url, member.getId()[0].upper(), member)")
+cp_tool._actions = tuple(actions)
+
+
+## move 'technology' under 'aboutus'.
+if hasattr(portal,'technology') and portal.technology.meta_type != 'Script (Python)':
+    source = portal
+    dest = portal.aboutus
+    cutinfo = source.manage_cutObjects(['technology'])
+    dest.manage_pasteObjects(cutinfo)
+    #dest.plone_utils.reindexOnReorder(portal)
+
+## redirect requests to /technology
+if not hasattr(portal,'technology'):
+    portal.manage_addProduct['PythonScripts'].manage_addPythonScript('technology')
+    body = """# Redirect /cnxml -> /technology/cnxml
+context.REQUEST.RESPONSE.redirect('/aboutus/technology/%s' % '/'.join(traverse_subpath), status=301)
+"""
+    portal.technology.ZPythonScript_edit(params='', body=body)
+
+
+#portal.plone_utils.reindexOnReorder(portal)
+
+get_transaction().commit()

@@ -1,0 +1,131 @@
+<tal:block
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  tal:define="typeName           request/type_name | nothing;
+              isCollection       python:context.portal_type == 'Collection' or
+                                        (typeName and typeName == 'Collection');
+              isModule           python:context.portal_type == 'Module' or
+                                        (typeName and typeName == 'Module');
+              newCollectionTitle python:'New collection: License agreement';
+              newModuleTitle     python:'New module: License agreement';">
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      metal:use-macro="container/main_template/macros/master"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="rhaptos">
+  <metal:head metal:fill-slot="head_slot"
+              tal:define="global sl python:[x for x in sl if 'portlet_lastmod' not in x[0]]" />
+
+  <body>
+
+    <metal:block fill-slot="top_slot" tal:define="dummy python:request.set('disable_border', 1)" />
+
+    <div metal:fill-slot="main"
+         tal:define="license_url request/license_url | context/getDefaultLicense;
+                     license_data python:context.getLicenseData(license_url);
+                     license_name license_data/name">
+
+      <tal:block tal:condition="isCollection">
+        <h1 class="topheading"
+            i18n:translate="heading_new_collection_licensing"
+            tal:content='newCollectionTitle' />
+      </tal:block>
+      <tal:block tal:condition="isModule">
+        <h1 class="topheading"
+            i18n:translate="heading_new_module_licensing"
+            tal:content='newModuleTitle' />
+      </tal:block>
+
+      <p i18n:translate="text_license_requirements">
+	<span i18n:name="portal" tal:replace="portal/title">[portal]</span>
+        requires that all content submitted to our repository be
+	placed under an Open Content license that <b>allows others to
+	use, distribute, and create derivative works</b> based upon that
+	content.  The 
+        <span i18n:name="license_link">
+          <a i18n:translate="" style="font-style:
+            italic" tal:attributes="href license_url"
+            tal:content="license_name">Attribution</a>
+        </span> license from 
+        <span i18n:name="cc_link">
+          <a i18n:translate="label_creative_commons"
+            href="http://creativecommons.org">Creative Commons</a>
+        </span>
+	fulfills this requirement, while still allowing authors to
+	receive credit for their efforts.  Please take the time to
+	read the license and check the 
+        <span i18n:name="i_agree">
+          <strong i18n:translate="text_license_agree">I agree</strong>
+        </span> box below before continuing.
+      </p>
+
+      <a tal:replace="nothing" style="font-size: 80%" tal:attributes="href string:http://creativecommons.org/license/?partner=connexions&amp;exit_url=${template/absolute_url}?license_url=[license_url]%26license_name=[license_name]%26license_code=[license_code]">(change the license)</a>
+
+      <p i18n:translate="text_license_allow">
+	I hereby allow 
+        <span i18n:name="portal_name">
+          <span tal:replace="portal/title">[portal]</span>
+        </span> to distribute this content under the
+	terms of the Creative Commons 
+        <span i18n:name="license_name">
+          <span i18n:translate="" 
+            tal:content="license_name">Attribution</span>
+        </span> 
+        License available at 
+        <a style="font-style: italic"
+          tal:attributes="href license_url"
+          tal:content="license_url"
+          i18n:name="license_url">[license url]</a>.  I understand
+	that in doing so I
+      </p>
+
+      <ol>
+	<li i18n:translate="text_license_retain_copyright"> 
+          retain my copyright in the work and </li>
+	<li i18n:translate="text_license_owner_permission"> 
+          warrant that I am the author or the owner or have
+	  permission to distribute the work in question and 
+	</li>
+	<li i18n:translate="text_license_work_distributed"> 
+          wish this work to be distributed under the terms of that license
+	  (<b>including allowing modification of this work and requiring
+	  attribution</b>) and </li>
+	  <li i18n:translate="text_license_proper_attribution"> 
+          agree that proper attribution of my work is any attribution that includes the authors' names, the title of the work, and the Connexions URL to the work.  </li>
+      </ol>
+
+      <form action="." method="post" tal:attributes="action template/getId"
+            tal:define="errors options/state/getErrors">
+        <div class="field"
+             tal:define="error errors/agree | nothing;"
+             tal:attributes="class python:test(error, 'field error', 'field')">
+          <input type="checkbox" name="agree" class="noborder" />
+          <tal:i18n i18n:translate="cnx_license_one"> I have read the above, and 
+            <span i18n:name="i_agree">
+              <b i18n:translate="text_license_agree">I agree</b>
+            </span> 
+            to license this new work under its terms.</tal:i18n>
+          <div tal:content="error"
+            i18n:translate="">Validation error output</div>
+        </div>
+	<input type="submit" 
+          class="context" 
+          name="next" 
+          value="Next >>" 
+          tal:attributes="tabindex tabindex/next;" 
+          i18n:attributes="value value_next_with_arrows" />
+        <input type="hidden" name="license" value="by"
+               tal:attributes="value license_url;" />
+        <input type="hidden" name="type_name" value="Module"
+               tal:condition="request/type_name | nothing"
+               tal:attributes="value request/type_name" />
+        <input type="hidden" name="form.submitted" value="1" />       
+      </form>
+    </div>
+  </body>
+</html>
+
+</tal:block>
