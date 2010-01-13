@@ -14,9 +14,9 @@ setup(name='Products.RhaptosSite',
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
       keywords='',
-      author='',
-      author_email='',
-      url='',
+      author='Rhaptos developers',
+      author_email='rhaptos@cnx.rice.edu',
+      url='http://rhaptos.org',
       license='',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['Products', ],
@@ -24,7 +24,23 @@ setup(name='Products.RhaptosSite',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'elementtree',
+
+          # 3rd party dependencies : those eggs are insidedist.rhaptos.org
+          'Products.AdvancedQuery==2.2-rhaptosdev-r30378',
+          'Products.Five==1.4.5-rhaptosdev-r32037',
+          'Products.LocalFS==1.7-rhaptosdev-r30378',
+          'Products.ManagableIndex==1.7.3-rhaptosdev-r30378',
+          'Products.MasterSelectWidget==0.2.3-rhaptosdev-r30378',
+          'Products.NoHeaderFieldContinuation==0.1-rhaptosdev-r30378',
+          'Products.OFolder==1.0-rhaptosdev-r30378',
+          'Products.Ploneboard==1.1-rhaptosdev-r30378',
+          'Products.References==0.10-rhaptosdev-r30378',
+          'Products.SimpleAttachment==3.0.1-rhaptosdev-r30378',
+          'Products.ZPsycopgDA==1.11-rhaptosdev-r30378',
+          'Products.ExternalFile==0.1-rhaptosdev-r30470',
+          'Products.ExternalStorage',
+
+          # Rhaptos core dependencies
           'Products.CatalogMemberDataTool',
           'Products.CMFDiffTool',
           'Products.CNXMLDocument',
@@ -53,9 +69,15 @@ setup(name='Products.RhaptosSite',
           'Products.UniFile',
           'Products.XMLTemplateMaker',
           'Products.ZAnnot',
+          'Products.Lineup',
+
+          # Unit tests dependencies
+          'Products.RhaptosTest',
+
       ],
       tests_require = [
            'zope.testing>=3.5',
+           'Products.RhaptosTest',
       ],
       entry_points="""
       # -*- Entry points: -*-
