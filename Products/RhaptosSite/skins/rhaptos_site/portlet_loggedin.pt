@@ -38,6 +38,7 @@ Rhaptos Notes:
             </li>
             <li>
               <a href="/plone_memberprefs_panel"
+                 tal:attributes="href string:$portal_url/plone_memberprefs_panel"
                  i18n:translate="label_my_account">
                 Profile &amp; Account Settings
               </a>
