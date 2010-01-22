@@ -465,20 +465,6 @@ def customizeFrontPage(self, portal):
     frontpage.edit('html',content)
 
 
-def customizeHelpContent(self, portal):
-    portal.invokeFactory('Folder', 'help')
-    portal.help.invokeFactory('Folder', 'reference')
-    files = ['roles', 'status', 'workgroups']
-    for name in files:
-        portal.help.reference.invokeFactory('Document', name)
-        path = os.path.join(package_home(product_globals), 'www/help/reference', name)
-        f = open(path)
-        content = f.read()
-        f.close()
-        doc = getattr(portal.help.reference, name)
-        doc.edit('structured-text', content)
-        doc.title = name.capitalize()
-
 def customizeFactoryTool(self, portal):
     f_tool = getToolByName(portal, 'portal_factory')
     f_tool.manage_setPortalFactoryTypes(listOfTypeIds=['Collection', 'Module', 'Image', 'File'])
@@ -597,7 +583,6 @@ functions = {
     'Customize Portal': customizePortal,
 #    'Customize Portal Catalog': customizePortalCatalog,
     'Customize Front Page': customizeFrontPage,
-    'Customize Help Content': customizeHelpContent,
     'Customize Member Catalog':customizeMemberCatalog,
     'Customize Control Panel':customizeControlPanel,
     'Customize Factory Tool':customizeFactoryTool,
@@ -668,7 +653,6 @@ class RhaptosSetup:
             'Customize Portal',
 #            'Customize Portal Catalog',
             'Customize Front Page',
-            'Customize Help Content',
             'Customize Control Panel',
             'Customize Diff Tool',
             'Customize Object Descriptions',
