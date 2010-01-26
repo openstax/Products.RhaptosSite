@@ -89,9 +89,6 @@ def installProducts(self, portal):
             'profile-Products.RhaptosPrint:default')
     portal_setup.runAllImportSteps()
     portal_setup.setImportContext(
-            'profile-Products.RhaptosBugTrackingTool:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
             'profile-Products.MathEditor:default')
     portal_setup.runAllImportSteps()
 
