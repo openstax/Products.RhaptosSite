@@ -101,7 +101,7 @@ Rhaptos Notes:
           </ul>
         </dd>
 
-        <dd class="portletMore">
+        <dd class="portletMore portletItem">
         <form action="/logout" 
             tal:attributes="action string:$portal_url/logout;">
 	    <input class="context" name="submit" value="Log out" alt="Log out" type="submit" />
