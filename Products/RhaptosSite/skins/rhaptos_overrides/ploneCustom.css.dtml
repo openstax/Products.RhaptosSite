@@ -310,6 +310,11 @@ body.fullscreen #portal-searchbox{
   background-color: #ffce7b;
 }
 
+/* This one is also only here due to issues with content_browse.css */
+.spreadsheet_button{
+  font-family: "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif !important;
+}
+
 #browse_panels .unselected .portletBody{
   border: 1px solid #8cacbb !important;
 }
