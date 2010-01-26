@@ -226,7 +226,7 @@
               <li tal:define="help nocall:portal/help/authoring/createlens | nothing" tal:condition="nocall:help">
                 <a href="/help/authoring/createlens" i18n:translate="text_create_lens"
                    tal:attributes="href help/absolute_url">
-                  How to create a lens of Connexions content</a>
+                  How to create a lens of content</a>
               </li>
             </ul>
           </td>
