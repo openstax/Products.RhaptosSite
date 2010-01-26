@@ -33,6 +33,10 @@
   padding: 1em !important;
 }
 
+h2, h3, h4, h5, h6{
+  margin-top: .5em;
+}
+
 h1{
   margin-bottom: .5em;
   font-size: 1.7em;
@@ -287,5 +291,24 @@ body.fullscreen #portal-searchbox{
 .discreet-link{
   color: &dtml-discreetColor;;
 }
+
+/* These next three undo styles done in content_browse.css which had only taken the CNX look into consideration.  
+   content_browse.css should probably eventually be put directly into the individual ploneCustom.css files and
+   edited there for each different skin. */
+
+#browse_panels .selected .portletBody{
+  border: 1px solid #ffa500 !important;
+}
+
+#browse_panels .selected h5{
+  border: 1px solid #ffa500;
+  font-weight: bold;
+  background-color: #ffce7b;
+}
+
+#browse_panels .unselected .portletBody{
+  border: 1px solid #8cacbb !important;
+}
+
 
 /* </dtml-with> */
