@@ -241,6 +241,10 @@ body.fullscreen #portal-searchbox{
   font-weight: normal;
 }
 
+#archetypes-fieldname-title input{
+  font-size: 1em;
+}
+
 /* clipping for tag/criteria portlets */
 #portlet-lens-criteria .portletItem, #portlet-lens-tags .portletItem {
   width: 17em;
