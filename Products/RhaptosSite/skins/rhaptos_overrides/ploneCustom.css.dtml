@@ -18,6 +18,7 @@
 
 #portal-colophon .colophonIconRhaptos{
   background-image: url(&dtml-portal_url;/images/rhaptos_powered.png);
+  margin-bottom: 1em;
 }
 
 #portal-column-content #content{
