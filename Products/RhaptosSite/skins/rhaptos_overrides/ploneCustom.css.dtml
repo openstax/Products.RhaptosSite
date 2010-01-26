@@ -310,5 +310,9 @@ body.fullscreen #portal-searchbox{
   border: 1px solid #8cacbb !important;
 }
 
+table.listing td.checkbox{
+  font-weight: bold;
+  text-align: center;
+}
 
 /* </dtml-with> */
