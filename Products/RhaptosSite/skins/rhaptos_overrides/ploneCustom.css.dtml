@@ -21,6 +21,11 @@
   margin-bottom: 1em;
 }
 
+#content{
+  padding-left: 2em !important;
+  padding-right: 2em !important;
+}
+
 #portal-column-content #content{
   padding-top: 2em !important;
 }
@@ -92,7 +97,7 @@ h1{
 #portlet-navigation-tree ul li{
   /* IE and Chrome require explicit width for overflow ellipsis,
      and in a ul we're a bit indented, and thus shorter */
-  width: 13.5em;
+  width: 12em;
 }
 
 #portlet-recentview ul, #recentview ul {
