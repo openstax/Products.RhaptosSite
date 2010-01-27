@@ -345,4 +345,8 @@ h3 .whats_this{
   color: &dtml-linkColor; !important;
 } 
 
+.leftheadings th{
+  text-align: right;
+}
+
 /* </dtml-with> */
