@@ -5,7 +5,9 @@
    <element value="Workspace" />
   </property>
   <property name="disable_folder_sections" type="boolean">True</property>
+<!--
   <property name="enable_livesearch" type="boolean">False</property>
+-->
  </object>
 </object>
 
