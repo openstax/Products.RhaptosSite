@@ -95,6 +95,30 @@ h1{
   width: 13.5em;
 }
 
+#portlet-recentview ul, #recentview ul {
+  margin-left: 0px;
+}
+
+#portlet-recentview li, #recentview li {
+  display: block;
+  padding: 0 0 .8em 20px;
+  margin: -.2em 0 0;
+  background: no-repeat 0 0;
+  list-style: none none;
+}
+
+li.cnx_module{            
+  background-image: url(/module_icon.gif) !important;
+}
+
+li.cnx_collection{
+  background-image: url(/repository_icon.gif) !important;
+}
+
+li.cnx_lens{    
+  background-image: url(/lenses.gif) !important;
+}
+
 #portlet-recentedit li{
   width: 10em;
 }
