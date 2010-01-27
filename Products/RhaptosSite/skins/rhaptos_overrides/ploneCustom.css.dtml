@@ -182,7 +182,6 @@ h1 img, h1 .normal-text-in-header{
 }
 
 .normal-text-in-header{
-  font-size: 0.6em;
   color: black;
   font-weight: normal;
 }
@@ -340,5 +339,10 @@ table.listing td.checkbox{
   font-weight: bold;
   text-align: center;
 }
+
+h3 .whats_this{       
+  text-decoration: underline;
+  color: &dtml-linkColor; !important;
+} 
 
 /* </dtml-with> */
