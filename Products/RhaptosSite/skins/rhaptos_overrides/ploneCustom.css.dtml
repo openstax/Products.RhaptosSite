@@ -48,6 +48,14 @@ h1{
 
 #portlet-navigation-tree{
   margin-left: 0;
+  list-style-image: none;
+  list-style-type: none;
+}
+
+#portlet-navigation-tree ul{
+  list-style-image: none;
+  list-style-type: none;
+  
 }
 
 #portlet-navigation-tree .subheader{
@@ -60,6 +68,15 @@ h1{
   font-weight: bold;
   list-style-image: none;
   list-style-type: none;
+}
+
+.currentNavItem{
+  padding: .15em .5em;
+}
+
+.navtoggler .arrows{
+  float: left;
+  margin: .4em .4em 0 0;
 }
 
 #portlet-navigation-tree li, #portlet-recentedit li{
