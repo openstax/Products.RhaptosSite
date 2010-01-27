@@ -40,7 +40,7 @@ manage_addSiteForm.__name__ = 'addRhaptosSite'
 def manage_addRhaptosSite(self, id, title='', description='',
                           create_userfolder=1,
                           email_from_address='',
-                          email_from_name='',
+                          email_from_name='Rhaptos',
                           validate_email=0,
                           dbauser='rhaptos_dba',
                           dbapass=None,
