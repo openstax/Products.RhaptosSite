@@ -11,6 +11,10 @@
 /* <dtml-with base_properties> (do not remove this :) */
 /* <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either :) */
 
+#portal-logo{
+  width: <dtml-var "_[logoName].width">px;
+}
+
 #portal-breadcrumbs{
   border-top: &dtml-borderWidth; &dtml-borderStyle; &dtml-globalBorderColor;;
   background-color: &dtml-globalBackgroundColor;;
