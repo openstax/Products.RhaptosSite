@@ -378,4 +378,9 @@ h3 .whats_this{
   text-align: right;
 }
 
+td.orderingCell{
+  white-space: nowrap;
+  width: 1%;
+}
+
 /* </dtml-with> */
