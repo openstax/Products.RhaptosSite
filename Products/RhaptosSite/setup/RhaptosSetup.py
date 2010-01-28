@@ -279,9 +279,9 @@ def customizeControlPanel(self, portal):
 def customizeObjectDescriptions(self, portal):
     tt = getToolByName(portal, 'portal_types')
     tt['CNXML Document'].description = 'A CNXML Document is a text file formatted in Connexions Markup Language.' 
-    tt.Module.description = 'A module is a collection of files and images about a specific topic or one aspect of a complex topic.'
-    tt.File.description = 'A file is any information such as a program, text, or sound that you want to include in a module.'
-    tt.Collection.description = 'A course is a grouping of related modules.'
+    #tt.Module.description = 'A module is a collection of files and images about a specific topic or one aspect of a complex topic.'
+    #tt.File.description = 'A file is any information such as a program, text, or sound that you want to include in a module.'
+    #tt.Collection.description = 'A course is a grouping of related modules.'
     tt.Image.description = 'An image is a picture, drawing, or graphic to be included in a module.'
     
 def customizeSlots(self, portal):
