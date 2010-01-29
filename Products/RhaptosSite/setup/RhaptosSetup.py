@@ -110,8 +110,8 @@ def installProducts(self, portal):
     
     # Disable LiveSearch
     jstool=getToolByName(portal, 'portal_javascripts')
-	jstool.getResource('livesearch.js').setEnabled(False)
-	jstool.cookResources()
+    jstool.getResource('livesearch.js').setEnabled(False)
+    jstool.cookResources()
 
     portal_setup.setImportContext(import_context)
 
