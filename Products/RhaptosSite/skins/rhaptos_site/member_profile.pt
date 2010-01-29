@@ -189,7 +189,7 @@
 		    tal:condition="python:num_c&gt;1"
 		      i18n:translate="text_profile_multiple_courses">&#32;Courses</tal:span></span></a>
                 <a tal:attributes="href string:${content_url}&view_mode=statistics&sorton=popularity"
-                  i18n:translate="label_profile_statistics_link">
+                  i18n:translate="label_profile_statistics_link" tal:condition="context/has_stats">
                   (view statistics)
                 </a>
 	      </p> 
