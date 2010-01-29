@@ -107,6 +107,11 @@ def installProducts(self, portal):
     #portal_setup.setImportContext(
     #        'profile-Products.RhaptosForums:default')
     #portal_setup.runAllImportSteps()
+    
+    # Disable LiveSearch
+    jstool=getToolByName(portal, 'portal_javascripts')
+	jstool.getResource('livesearch.js').setEnabled(False)
+	jstool.cookResources()
 
     portal_setup.setImportContext(import_context)
 

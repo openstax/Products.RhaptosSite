@@ -5,9 +5,8 @@
    <element value="Workspace" />
   </property>
   <property name="disable_folder_sections" type="boolean">True</property>
-<!--
+  <!-- Disable LiveSearch. Also, see "Disable LiveSearch" in RhaptosSetup -->
   <property name="enable_livesearch" type="boolean">False</property>
--->
  </object>
 </object>
 
