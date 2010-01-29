@@ -387,4 +387,16 @@ td.orderingCell{
   width: 1%;
 }
 
+/* The following three declarations prevent the login boxes from leaking out of the "My Account" portlet in IE 
+(at least they otherwise would in IE6 and IE7) */
+#portlet-login form{
+  overflow-x: hidden\9
+}
+#portlet-login form{
+  width: 100%\9
+}
+#portlet-login label{
+  font-weight: normal\9
+}
+
 /* </dtml-with> */
