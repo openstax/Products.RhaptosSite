@@ -1,4 +1,7 @@
-RhaptosSite-1.20
+RhaptosSite-1.31
+  - generic setup refactor. Rhaptos 2.0 release
+
+RhaptosSite-1.30
   - siyavula-phase-3 (11 Jan 2010)
 
 RhaptosSite-1.29
