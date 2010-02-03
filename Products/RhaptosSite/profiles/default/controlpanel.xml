@@ -7,7 +7,7 @@
   <permission>Manage portal</permission>
  </configlet>
  <configlet title="Edit Profile" action_id="MemberPrefs"
-    appId="Plone" category="Account Maintenance" condition_expr=""
+    appId="Plone" category="Member" condition_expr=""
     url_expr="string:${portal_url}/personalize_form"
     visible="True">
   <permission>Set own properties</permission>
