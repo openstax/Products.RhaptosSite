@@ -546,7 +546,7 @@ def createHelpSection(self, portal):
             email_match = email_regx.search(text)
             if email_match:
                 text = email_regx.sub('changeme@example.org', text)
-            if mod_match or col_match or email_match or cnxorg_match:
+            if mod_match or col_match or email_match or cnxorg_match or cnx_match or mycnx_match:
                 doc.setText(text, mimetype=doc.getContentType())
 
 def createCollectionPrinter(self, portal):
