@@ -508,6 +508,8 @@ col_regx = re.compile(r'"(/content/col\d+.*?)"')
 mod_regx = re.compile(r'"(/content/m\d+.*?)"')
 email_regx = re.compile(r'((cnx)|(techsupport))@cnx.org')
 cnxorg_regx = re.compile(r'"http://cnx.org(/.*?)"')
+cnx_regx = re.compile(r'"Connexions"')
+mycnx_regx = re.compile(r'"MyCNX"')
 
 def createHelpSection(self, portal):
     if 'help' not in portal.objectIds():
@@ -529,6 +531,12 @@ def createHelpSection(self, portal):
             cnxorg_match = cnxorg_regx.search(text)
             if cnxorg_match:
                 text = cnxorg_regx.sub('"\g<1>"', text)
+            cnx_match = cnx_regx.search(text)
+            if cnx_match:
+                text = cnx_regx.sub('"Rhaptos"', text)
+            mycnx_match = mycnx_regx.search(text)
+            if mycnx_match:
+                text = mycnx_regx.sub('"MyRhaptos"', text)
             col_match = col_regx.search(text)
             if col_match:
                 text = col_regx.sub('"http://cnx.org\g<1>"', text)
