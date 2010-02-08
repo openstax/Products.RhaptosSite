@@ -28,6 +28,7 @@ Rhaptos notes:
      and gave them classes to be styled
    moved the hidden orig_template outside of the folder_buttons macro
    customized empty folder message for workgroup and collection contexts
+   populate browserDefaultResult once per folder versus twice per contained folder item(s)
 </tal:comment>
 
   <head>
@@ -234,7 +235,8 @@ Rhaptos notes:
                                arrowTop python:arrowTop.tag(alt='Move Top');
                                arrowBottom nocall:portal/arrowBottom.gif;
                                arrowBottom python:arrowBottom.tag(alt='Move Bottom');
-                               getRelativeContentURL nocall:utool/getRelativeContentURL
+                               getRelativeContentURL nocall:utool/getRelativeContentURL;
+                               browserDefaultResult here/browserDefault;
                                ">
                 <tal:items tal:repeat="item batch">
                    <tr tal:define="oddrow               repeat/item/odd;
@@ -253,8 +255,7 @@ Rhaptos notes:
                                    item_use_view        python:item_type in use_view_action;
                                    hasGetUrl            python:hasattr(item.aq_explicit, 'getURL');
                                    item_rel_url         python:hasGetUrl and item.getURL(relative=1) or getRelativeContentURL(item);
-                                   browserDefaultResult here/browserDefault;
-                                   isBrowserDefault     python:len(browserDefaultResult[1]) == 1 and item.id == here.browserDefault()[1][0];
+                                   isBrowserDefault     python:len(browserDefaultResult[1]) == 1 and item.id == browserDefaultResult[1][0];
                                    item_folderish       item/is_folderish|nothing"
                        tal:attributes="class python:test(oddrow, 'draggable even', 'draggable odd');
                                        id string:folder-contents-item-${item_id};" >
