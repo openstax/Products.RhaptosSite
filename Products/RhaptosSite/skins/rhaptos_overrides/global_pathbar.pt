@@ -9,10 +9,19 @@
 
 <!-- THE PATHBAR (breadcrumbs) DEFINITION -->
 <div metal:define-macro="path_bar"
-     id="portal-breadcrumbs"
-     tal:define="breadcrumbs here/@@breadcrumbs_view/breadcrumbs">
-
-    <span id="breadcrumbs-you-are-here" i18n:translate="you_are_here">You
+     tal:define="breadcrumbs here/@@breadcrumbs_view/breadcrumbs"
+     id="portal-breadcrumbs">
+    <tal:hide-in-authoring
+          tal:define="under_content python:(here==here.content.aq_parent) or 
+                                           (here==here.content) or 
+                                           (here.aq_parent and 
+                                             (here.aq_parent==here.content or 
+                                               (here.aq_parent.aq_parent and here.aq_parent.aq_parent==here.content)));"
+          tal:condition="under_content"
+    >
+    <span id="breadcrumbs-you-are-here" i18n:translate="you_are_here"
+>You
+ 
 are here:</span>
     <a i18n:translate="tabs_home" tal:attributes="href navigation_root_url">Home</a>
     <span tal:condition="breadcrumbs" class="breadcrumbSeparator">
@@ -21,8 +30,7 @@ are here:</span>
     </span>
     <span tal:repeat="crumb breadcrumbs"
           tal:attributes="dir python:test(isRTL, 'rtl', 'ltr')">
-        <tal:last tal:define="is_last repeat/crumb/end; title crumb/Title">
-          <tal:not-members tal:condition="python: title != 'MyCNX' and title != 'Personal Workspace' and title != 'Workgroups'">
+        <tal:last tal:define="is_last repeat/crumb/end">
             <a href="#"
                tal:omit-tag="not: crumb/absolute_url"
                tal:define="title crumb/Title"
@@ -35,12 +43,11 @@ are here:</span>
                 <tal:ltr condition="not: isRTL">&raquo;</tal:ltr>
                 <tal:rtl condition="isRTL">&raquo;</tal:rtl>
             </span>
-          </tal:not-members>
             <span tal:condition="is_last"
                   tal:content="crumb/Title">crumb</span>
          </tal:last>
     </span>
-
+    </tal:hide-in-authoring>
 </div>
 </body>
 </html>
