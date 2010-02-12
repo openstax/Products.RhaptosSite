@@ -9,19 +9,10 @@
 
 <!-- THE PATHBAR (breadcrumbs) DEFINITION -->
 <div metal:define-macro="path_bar"
-     tal:define="breadcrumbs here/@@breadcrumbs_view/breadcrumbs"
-     id="portal-breadcrumbs">
-    <tal:hide-in-authoring
-          tal:define="under_content python:(here==here.content.aq_parent) or 
-                                           (here==here.content) or 
-                                           (here.aq_parent and 
-                                             (here.aq_parent==here.content or 
-                                               (here.aq_parent.aq_parent and here.aq_parent.aq_parent==here.content)));"
-          tal:condition="under_content"
-    >
-    <span id="breadcrumbs-you-are-here" i18n:translate="you_are_here"
->You
- 
+     id="portal-breadcrumbs"
+     tal:define="breadcrumbs here/@@breadcrumbs_view/breadcrumbs">
+
+    <span id="breadcrumbs-you-are-here" i18n:translate="you_are_here">You
 are here:</span>
     <a i18n:translate="tabs_home" tal:attributes="href navigation_root_url">Home</a>
     <span tal:condition="breadcrumbs" class="breadcrumbSeparator">
@@ -49,8 +40,7 @@ are here:</span>
                   tal:content="title">crumb</span>
          </tal:last>
     </span>
-    </tal:hide-in-authoring>
+
 </div>
 </body>
 </html>
-
