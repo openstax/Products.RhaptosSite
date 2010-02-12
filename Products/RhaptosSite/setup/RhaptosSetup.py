@@ -508,7 +508,6 @@ col_regx = re.compile(r'"(/content/col\d+.*?)"')
 mod_regx = re.compile(r'"(/content/m\d+.*?)"')
 email_regx = re.compile(r'((cnx)|(techsupport))@cnx.org')
 cnxorg_regx = re.compile(r'"http://cnx.org(/.*?)"')
-cnx_regx = re.compile(r'Connexions')
 mycnx_regx = re.compile(r'MyCNX')
 
 def createHelpSection(self, portal):
@@ -531,9 +530,6 @@ def createHelpSection(self, portal):
             cnxorg_match = cnxorg_regx.search(text)
             if cnxorg_match:
                 text = cnxorg_regx.sub('"\g<1>"', text)
-            cnx_match = cnx_regx.search(text)
-            if cnx_match:
-                text = cnx_regx.sub('Rhaptos', text)
             mycnx_match = mycnx_regx.search(text)
             if mycnx_match:
                 text = mycnx_regx.sub('MyRhaptos', text)
@@ -548,6 +544,11 @@ def createHelpSection(self, portal):
                 text = email_regx.sub('changeme@example.org', text)
             if mod_match or col_match or email_match or cnxorg_match or cnx_match or mycnx_match:
                 doc.setText(text, mimetype=doc.getContentType())
+                
+def modifyEIPHelp(self):
+    ''' remove Google Analytics code for Connexions from EIP help files'''
+    eipHelp = portal.portal_skins['RhaptosModuleEditor']['eip-help']
+    
 
 def createCollectionPrinter(self, portal):
     if 'RCPrinter' not in portal.objectIds():
