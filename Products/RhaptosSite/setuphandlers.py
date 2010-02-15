@@ -36,48 +36,48 @@ def install(context):
     wf_tool = getToolByName(portal,'portal_workflow')
     wf_tool.setChainForPortalTypes(['UnifiedFile'],'')
     
-    ## create 'mycnx' folder, mostly just to get it in the path
+    ## create 'mydashboard' folder, mostly just to get it in the path
     # its default vew is 'author_home'
-    mycnx = getattr(portal, 'mycnx', None)
-    if not mycnx:
-        logger.info("...creating 'mycnx' folder")
-        portal.invokeFactory('Folder', id="mycnx", title="MyCNX")
-        mycnx = getattr(portal, 'mycnx', None)
-    mycnx.layout = "author_home"
+    mydashboard = getattr(portal, 'mydashboard', None)
+    if not mydashboard:
+        logger.info("...creating 'mydashboard' folder")
+        portal.invokeFactory('Folder', id="mydashboard", title="MyCNX")
+        mydashboard = getattr(portal, 'mydashboard', None)
+    mydashboard.layout = "author_home"
     
     cachetool = getToolByName(portal,'portal_cache_settings', None)
     # GenericSetup has a cache policy, but we've backported and it doesn't quite work with our versions
     # when we upgrade, this should probably be replaced with a 'cachesettings.xml' (though it'll be)
     # a little less flexible (no getActivePolicy), and we'll still need to do ordering probably
     if cachetool:
-        mycnxruleid = 'mycnx-rule'
+        mydashboardruleid = 'mydashboard-rule'
         policy = cachetool[cachetool.getActivePolicyId()]
         rulesfolder = policy.rules
-        mycnxrule = getattr(rulesfolder, mycnxruleid, None)
-        if not mycnxrule:
-            rulesfolder.invokeFactory('ContentCacheRule', id=mycnxruleid, title='MyCNX no-cache')
-            mycnxrule = getattr(rulesfolder, mycnxruleid)
-        mycnxrule.setDescription("The '/mycnx' object shows dynamic data and should not be cached.")
-        mycnxrule.setContentTypes(['Folder'])
-        mycnxrule.setDefaultView(True)
-        mycnxrule.setPredicateExpression("python:object.getId()=='mycnx'")
-        mycnxrule.setHeaderSetIdAnon('no-cache')
-        mycnxrule.setHeaderSetIdAuth('no-cache')
-        rulesfolder.moveObject(mycnxruleid, 0)
+        mydashboardrule = getattr(rulesfolder, mydashboardruleid, None)
+        if not mydashboardrule:
+            rulesfolder.invokeFactory('ContentCacheRule', id=mydashboardruleid, title='mydashboard no-cache')
+            mydashboardrule = getattr(rulesfolder, mydashboardruleid)
+        mydashboardrule.setDescription("The '/mydashboard' object shows dynamic data and should not be cached.")
+        mydashboardrule.setContentTypes(['Folder'])
+        mydashboardrule.setDefaultView(True)
+        mydashboardrule.setPredicateExpression("python:object.getId()=='mydashboard'")
+        mydashboardrule.setHeaderSetIdAnon('no-cache')
+        mydashboardrule.setHeaderSetIdAuth('no-cache')
+        rulesfolder.moveObject(mydashboardruleid, 0)
         
     left_slots = ['context/workspaces_slot/macros/portlet',]
     try:
-        mycnx.manage_addProperty('left_slots', left_slots, type='lines')
+        mydashboard.manage_addProperty('left_slots', left_slots, type='lines')
     except BadRequest:
-        mycnx.manage_changeProperties(left_slots=left_slots)
+        mydashboard.manage_changeProperties(left_slots=left_slots)
 
     right_slots = ['context/portlet_login/macros/portlet',
                    'context/portlet_loggedin/macros/portlet',
                    'context/portlet_recentview/macros/portlet']
     try:
-        mycnx.manage_addProperty('right_slots', right_slots, type='lines')
+        mydashboard.manage_addProperty('right_slots', right_slots, type='lines')
     except BadRequest:
-        mycnx.manage_changeProperties(right_slots=right_slots)
+        mydashboard.manage_changeProperties(right_slots=right_slots)
 
     ## set slot properties
     logger.info("...setting slot properties")

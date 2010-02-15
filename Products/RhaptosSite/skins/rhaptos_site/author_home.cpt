@@ -13,15 +13,15 @@
          tal:define="url request/ACTUAL_URL;
                      path python:url.split('/');
                      oldlocation python:path[-1]=='author_home';
-                     redir python:oldlocation and request.RESPONSE.redirect('/mycnx')"
+                     redir python:oldlocation and request.RESPONSE.redirect('/mydashboard')"
          tal:replace="nothing">
-        author_home replaced by 'mycnx' folder, so redirect there.
+        author_home replaced by 'mydashboard' folder, so redirect there.
         this should probably be removed after some reasonable deprecation time.
         (put in place May 2009)
       </tal:redirecthack>
 
     <div tal:condition="isAnon" i18n:translate="text_log_in_for_work_areas">
-      <tal:nasty tal:define="dummy python:request.RESPONSE.redirect('login_form?came_from=mycnx')"/>
+      <tal:nasty tal:define="dummy python:request.RESPONSE.redirect('login_form?came_from=mydashboard')"/>
       <p>You must 
         <span i18n:name="log_in">
           <a href="/login_form" i18n:translate="label_log_in">Log in</a>
@@ -38,10 +38,10 @@
             <metal:macro metal:define-macro="newmodule">
               <p class="createlink">
                 <a href="cc_license?type_name=Module"
-                  tal:attributes="href string:$portal_url/mycnx/cc_license?type_name=Module">
+                  tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Module">
                   Create a new module</a>
                 <a href="cc_license?type_name=Module"
-                  tal:attributes="href string:$portal_url/mycnx/cc_license?type_name=Module">
+                  tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Module">
                   <img src="/module_icon.gif" alt=""
                       tal:attributes="src string:$portal_url/module_icon.gif">
                 </a>
@@ -50,10 +50,10 @@
             <metal:macro metal:define-macro="newcollection">
               <p class="createlink">
                 <a href="cc_license?type_name=Collection"
-                  tal:attributes="href string:$portal_url/mycnx/cc_license?type_name=Collection">
+                  tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Collection">
                   Create a new collection</a>
                 <a href="cc_license?type_name=Collection"
-                  tal:attributes="href string:$portal_url/mycnx/cc_license?type_name=Collection">
+                  tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Collection">
                   <img src="/repository_icon.gif" alt=""
                       tal:attributes="src string:$portal_url/repository_icon.gif">
                 </a>

@@ -53,5 +53,5 @@ RhaptosSite
     - RhaptosWorkgroup
     - ZPsycopgDA
 
-  The 'mycnx' folder should not be cached. We attempt to change the default cache rule from Cache-Fu that
+  The 'mydashboard' folder should not be cached. We attempt to change the default cache rule from Cache-Fu that
   would catch it, but if you have a significantly different setup you must handle this yourself.

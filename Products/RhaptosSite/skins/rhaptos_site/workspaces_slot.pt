@@ -28,7 +28,7 @@ mostly different names for macros and styles.
     <ul id="portlet-navigation-tree"
         tal:define="home context/portal_membership/getHomeFolder;
                     homeurl home/absolute_url | nothing;
-                    mycnx string:$portal_url/mycnx;
+                    mydashboard string:$portal_url/mydashboard;
                     rhaptosobj context/nearestRhaptosObject | nothing;
                     lensfolder python:context.lens_tool.getIndividualFolder(create=False);
                     lensfolder_url lensfolder/absolute_url | nothing;
@@ -41,7 +41,7 @@ mostly different names for macros and styles.
                     thistemplate nocall:context/workspaces_slot">
       <li tal:define="highlighthome python:highlightsection == 'home'"
           tal:attributes="class python:highlighthome and 'currentNavItem' or None">
-        <a href="mycnx" tal:attributes="href string:$portal_url/mycnx">
+        <a href="mydashboard" tal:attributes="href mydashboard">
           <span i18n:translate="box_text_mycnx" tal:omit-tag="">MyRhaptos Home</span>
         </a>
       </li>
@@ -75,14 +75,14 @@ mostly different names for macros and styles.
                         collectionhighlight python:insection and 'collection' in highlightelt">
           <li tal:condition="python:showOnlyCurrent or modulehighlight"
               tal:attributes="class python:modulehighlight and 'currentNavItem' or None">
-            <a href="/mycnx/listcontent?type:list=Module"
-               tal:attributes="href string:$mycnx/listcontent?type:list=Module"
+            <a href="/mydashboard/listcontent?type:list=Module"
+               tal:attributes="href string:$mydashboard/listcontent?type:list=Module"
                i18n:translate="box_text_modules">Modules</a>
           </li>
           <li tal:condition="python:showOnlyCurrent or collectionhighlight"
               tal:attributes="class python:collectionhighlight and 'currentNavItem' or None">
-            <a href="/mycnx/listcontent?type:list=Collection"
-               tal:attributes="href string:$mycnx/listcontent?type:list=Collection"
+            <a href="/mydashboard/listcontent?type:list=Collection"
+               tal:attributes="href string:$mydashboard/listcontent?type:list=Collection"
                i18n:translate="box_text_collections">Collections</a>
           </li>
           <li tal:define="lenshighlight python:insection and 'lens' in highlightelt"
@@ -165,13 +165,13 @@ mostly different names for macros and styles.
               tal:condition="python:showOnlyCurrent or actionhighlight"
               tal:attributes="class python:actionhighlight and 'currentNavItem' or None">
             <a href="/create_workgroup" i18n:translate="box_label_create_a_workgroup"
-               tal:attributes="href string:$mycnx/create_workgroup"><strong>Create a Workgroup</strong></a>
+               tal:attributes="href string:$mydashboard/create_workgroup"><strong>Create a Workgroup</strong></a>
           </li>
           <li tal:define="actionhighlight python:onaction and highlightelt=='manageworkgroups'"
               tal:condition="python:len(groups) > 1 and showOnlyCurrent or actionhighlight"
               tal:attributes="class python:actionhighlight and 'currentNavItem' or None">
             <a href="/manageworkgroups" i18n:translate="box_label_manage_workgroups"
-               tal:attributes="href string:$mycnx/manageworkgroups"><strong>Manage Workgroups</strong></a>
+               tal:attributes="href string:$mydashboard/manageworkgroups"><strong>Manage Workgroups</strong></a>
           </li>
           </tal:groups>
           </metal:macro>

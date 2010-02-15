@@ -13,7 +13,7 @@
 ##   custom form controller (.metadata) change
 ##   custom welcome message (includes portal name)
 ##   return immediately on redirect so that FormController redirect doesn't swallow portal status messages
-##   for logins from home and only home, we ignore REQUEST.came_from and forward to MyCNX (action.success)
+##   for logins from home and only home, we ignore REQUEST.came_from and forward to mydashboard (action.success)
 
 from Products.CMFPlone import PloneMessageFactory as _
 from DateTime import DateTime
@@ -46,7 +46,7 @@ if came_from is not None:
                        'mail_password', 'mail_password_form', 'join_form',
                        'require_login', 'member_search_results']:
         came_from = ''
-    # when we login from the home page, we want to go to the author home, aka mycnx
+    # when we login from the home page, we want to go to the author_home, aka mydashboard
     bCameFromHome = ( path == '/' or path == '/index_html' )
     if bCameFromHome:
         came_from = ''
