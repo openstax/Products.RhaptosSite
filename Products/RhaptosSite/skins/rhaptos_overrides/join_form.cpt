@@ -272,7 +272,7 @@ Plone 2.5 notes:
             <span i18n:translate="label_license_agree">
               I have read the
               <a href="/sitelicense" id="sitelicense_link"
-                tal:attributes="hreagreef string:$portal_url/sitelicense">Connexions Site License</a>
+                tal:attributes="href string:$portal_url/sitelicense"><span tal:content="portal/title"/> Site License</a>
               and I agree to be bound by its terms 
             </span>
         </div>
