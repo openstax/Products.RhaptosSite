@@ -517,6 +517,7 @@ def createHelpSection(self, portal):
             verify=False,
             set_owner=True)
         help = portal.help
+        help.manage_delObjects('faq')
         if 'AvailableFeeds' in help.objectIds():
             help.manage_delObjects('AvailableFeeds')
         help.invokeFactory('Document', 'AvailableFeeds')
