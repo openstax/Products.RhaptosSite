@@ -509,6 +509,7 @@ mod_regx = re.compile(r'"(/content/m\d+.*?)"')
 email_regx = re.compile(r'((cnx)|(techsupport))@cnx.org')
 cnxorg_regx = re.compile(r'"http://cnx.org(/.*?)"')
 mycnx_regx = re.compile(r'MyCNX')
+helpfaq_regx = re.compile(r'<li><a href="/help/faq">Frequently asked questions</a></li>')
 
 def createHelpSection(self, portal):
     if 'help' not in portal.objectIds():
@@ -517,7 +518,13 @@ def createHelpSection(self, portal):
             verify=False,
             set_owner=True)
         help = portal.help
+        # Delete the FAQ
         help.manage_delObjects('faq')
+        text = help.index_html.getRawText()
+        helpfaq_match = helpfaq_regx.search(text)
+        if helpfaq_match:
+            text = mycnx_regx.sub('', text)
+            help.index_html.edit('html', text)
         if 'AvailableFeeds' in help.objectIds():
             help.manage_delObjects('AvailableFeeds')
         help.invokeFactory('Document', 'AvailableFeeds')
