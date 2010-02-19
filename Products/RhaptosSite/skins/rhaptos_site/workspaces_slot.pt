@@ -195,14 +195,6 @@ mostly different names for macros and styles.
           </a>
        </li>
 
-       <li tal:define="inXMLTemplates python:getattr(context, 'portal_type', '') == 'XMLTemplateFolder'"
-           tal:attributes="class python:inXMLTemplates and 'currentNavItem' or None"
-           tal:condition="context/@@siyavula-account|nothing">
-          <a tal:attributes="href string:${portal_url}/templates/@@xmltemplatemaker.folder">
-            <span i18n:translate="box_text_my_xml_templates" tal:omit-tag="">My Templates</span>
-          </a>
-       </li>
-
        <li tal:condition="context/@@siyavula-account|nothing"
             tal:define="lensorganizers context/@@lensorganizers|nothing" >
         <span i18n:translate="box_text_lens_organizer" class="textNavItem">My Lens Organizers</span>

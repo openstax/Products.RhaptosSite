@@ -66,7 +66,6 @@ setup(name='Products.RhaptosSite',
           'Products.RhaptosSimilarityTool',
           'Products.RhaptosWorkgroup',
           'Products.UniFile',
-          'Products.XMLTemplateMaker',
           'Products.ZAnnot',
           'Products.Lineup',
 

@@ -99,9 +99,6 @@ def installProducts(self, portal):
 
     # siyavula products...
     #portal_setup.setImportContext(
-    #        'profile-Products.XMLTemplateMaker:default')
-    #portal_setup.runAllImportSteps()
-    #portal_setup.setImportContext(
     #        'profile-Products.LensOrganizer:default')
     #portal_setup.runAllImportSteps()
     #portal_setup.setImportContext(
