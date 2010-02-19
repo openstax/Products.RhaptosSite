@@ -46,7 +46,7 @@ if came_from is not None:
                        'mail_password', 'mail_password_form', 'join_form',
                        'require_login', 'member_search_results']:
         came_from = ''
-    # when we login from the home page, we want to go to the author_home, aka mydashboard
+    # when we login from the home page, we want to go to the mydashboard
     bCameFromHome = ( path == '/' or path == '/index_html' )
     if bCameFromHome:
         came_from = ''
