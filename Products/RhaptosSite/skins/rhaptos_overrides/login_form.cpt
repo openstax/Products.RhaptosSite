@@ -6,7 +6,7 @@
     Rhaptos Note:
       Overridden to not hide the side slots
       Change to two-column, right hand side get account pitch
-        (this is the logged-out view of MyCNX)
+        (this is the logged-out view of mydashboard)
       simplified login form:
         remove form help text
         remove fieldset

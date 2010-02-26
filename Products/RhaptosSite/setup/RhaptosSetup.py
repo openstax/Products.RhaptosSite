@@ -99,9 +99,6 @@ def installProducts(self, portal):
 
     # siyavula products...
     #portal_setup.setImportContext(
-    #        'profile-Products.XMLTemplateMaker:default')
-    #portal_setup.runAllImportSteps()
-    #portal_setup.setImportContext(
     #        'profile-Products.LensOrganizer:default')
     #portal_setup.runAllImportSteps()
     #portal_setup.setImportContext(
@@ -508,6 +505,8 @@ col_regx = re.compile(r'"(/content/col\d+.*?)"')
 mod_regx = re.compile(r'"(/content/m\d+.*?)"')
 email_regx = re.compile(r'((cnx)|(techsupport))@cnx.org')
 cnxorg_regx = re.compile(r'"http://cnx.org(/.*?)"')
+mycnx_regx = re.compile(r'MyCNX')
+helpfaq_regx = re.compile(r'<li>\s*<a href="/help/faq">Frequently asked questions</a>\s*</li>')
 
 def createHelpSection(self, portal):
     if 'help' not in portal.objectIds():
@@ -516,6 +515,13 @@ def createHelpSection(self, portal):
             verify=False,
             set_owner=True)
         help = portal.help
+        # Delete the FAQ
+        help.manage_delObjects('faq')
+        text = help.index_html.getRawText()
+        helpfaq_match = helpfaq_regx.search(text)
+        if helpfaq_match:
+            text = helpfaq_regx.sub('', text)
+            help.index_html.edit('html', text)
         if 'AvailableFeeds' in help.objectIds():
             help.manage_delObjects('AvailableFeeds')
         help.invokeFactory('Document', 'AvailableFeeds')
@@ -529,6 +535,9 @@ def createHelpSection(self, portal):
             cnxorg_match = cnxorg_regx.search(text)
             if cnxorg_match:
                 text = cnxorg_regx.sub('"\g<1>"', text)
+            mycnx_match = mycnx_regx.search(text)
+            if mycnx_match:
+                text = mycnx_regx.sub('MyRhaptos', text)
             col_match = col_regx.search(text)
             if col_match:
                 text = col_regx.sub('"http://cnx.org\g<1>"', text)
@@ -538,8 +547,13 @@ def createHelpSection(self, portal):
             email_match = email_regx.search(text)
             if email_match:
                 text = email_regx.sub('changeme@example.org', text)
-            if mod_match or col_match or email_match or cnxorg_match:
+            if mod_match or col_match or email_match or cnxorg_match or mycnx_match:
                 doc.setText(text, mimetype=doc.getContentType())
+                
+def modifyEIPHelp(self):
+    ''' remove Google Analytics code for Connexions from EIP help files'''
+    eipHelp = portal.portal_skins['RhaptosModuleEditor']['eip-help']
+    
 
 def createCollectionPrinter(self, portal):
     if 'RCPrinter' not in portal.objectIds():

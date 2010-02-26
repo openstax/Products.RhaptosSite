@@ -31,7 +31,7 @@ Rhaptos Notes:
         <dd class="portletItem even">
           <ul>
             <li>
-              <a tal:attributes="href string:$portal_url/mycnx"
+              <a tal:attributes="href string:$portal_url/mydashboard"
                  i18n:translate="label_mycnx">
                 MyRhaptos Home
               </a>

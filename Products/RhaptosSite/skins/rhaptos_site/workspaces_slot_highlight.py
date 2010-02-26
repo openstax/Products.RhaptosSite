@@ -18,7 +18,7 @@ orig_template = request.get('orig_template', None)
 
 # note: order matters in some places, here.
 # 'editobj' for example, should stop any location highlights, and does so by coming before them.
-# 'listcontent' is called in context of 'mycnx', so it comes before that.
+# 'listcontent' is called in context of 'mydashboard', so it comes before that.
 # and a few other. In other words, tread carefully.
 
 if templateid == 'listcontent' or orig_template and orig_template.startswith('listcontent'):
@@ -33,8 +33,8 @@ if templateid == 'listcontent' or orig_template and orig_template.startswith('li
 elif templateid in ('manageworkgroups', 'create_workgroup'):
     # by location: special action
     return 'bylocationaction', templateid
-elif templateid == 'author_home' or 'mycnx' in ppath or '/mycnx/' in current_url:
-    # mycnx/home (anything in mycnx not already found above, incl. context-less creation)
+elif templateid == 'author_home' or 'mydashboard' in ppath or '/mydashboard/' in current_url:
+    # mydashboard/home (anything in mydashboard not already found above, incl. context-less creation)
     return 'home', None
 elif current_url.startswith(lensfolder_url.split('?')[0]) or templateid == 'lens_edit':  #template check for creation
     # by type: lenses
