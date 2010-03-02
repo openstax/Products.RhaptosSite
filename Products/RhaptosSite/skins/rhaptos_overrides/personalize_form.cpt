@@ -583,7 +583,7 @@ Rhaptos notes:
 		 <textarea
                        id="interests"
                        name="interests:lines"
-		       wrap="physical"
+		       wrap="off"
                        style="width: 50%"
 		       rows="3"
                        tabindex=""
