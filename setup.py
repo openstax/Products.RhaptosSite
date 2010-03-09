@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.31.1'
+version = '1.31.2'
 
 setup(name='Products.RhaptosSite',
       version=version,
