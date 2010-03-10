@@ -73,12 +73,14 @@ Rhaptos Notes:
                   Role Request(s)
                 </a>
                 </div>
+                <tal:no-longer-supported>
                 <div tal:condition="patches" class="portletContent odd linkdata">
                   <a href="/patches" i18n:translate="box_pending_suggested_edits">
                     <span tal:replace="python:len(patches)">1</span>
                     Suggested Edit(s)
                   </a>
                 </div>
+                </tal:no-longer-supported>
                 <div tal:condition="nothing" class="portletContent even linkdata">
                   <a href="/management/pending_accounts" i18n:translate="box_pending_org_accounts">
                     <span tal:replace="python:len(org_accounts)">1</span>
