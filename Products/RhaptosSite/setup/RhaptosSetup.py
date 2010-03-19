@@ -97,7 +97,12 @@ def installProducts(self, portal):
             'profile-Products.CatalogMemberDataTool:default')
     portal_setup.runAllImportSteps()
 
-    # siyavula products...
+    qi.installProduct('RhaptosSword')
+    portal_setup.setImportContext(
+            'profile-Products.CatalogMemberDataTool:default')
+    portal_setup.runAllImportSteps()
+    
+# siyavula products...
     #portal_setup.setImportContext(
     #        'profile-Products.LensOrganizer:default')
     #portal_setup.runAllImportSteps()
