@@ -1,0 +1,9 @@
+[default]
+title=New content: License agreement
+
+[validators]
+validators=validate_license
+
+[actions]
+action.success=traverse_to:string:cc_license_prepub_accept
+action.failure=traverse_to:string:cc_license_prepub
