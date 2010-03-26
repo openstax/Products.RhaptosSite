@@ -24,8 +24,8 @@
                                                   (typeName and typeName == 'Collection');
                         isModule           python:context.portal_type == 'Module' or
                                                   (typeName and typeName == 'Module');
-                        newCollectionTitle python:'New collection: License agreement';
-                        newModuleTitle     python:'New module: License agreement';
+                        newCollectionTitle newCollectionTitle | string:New collection: License agreement;
+                        newModuleTitle     newModuleTitle | string:New module: License agreement;
                         license_url request/license_url | context/getDefaultLicense;
                         license_data python:context.getLicenseData(license_url);
                         license_name license_data/name">

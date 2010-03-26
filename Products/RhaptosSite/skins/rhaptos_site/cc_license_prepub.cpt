@@ -10,7 +10,11 @@
   <body>
 
     <div metal:fill-slot="main">
+      <tal:license tal:define="newCollectionTitle python:'License agreement';
+                               newModuleTitle     python:'License agreement';">
+        <!--<p>meaningful text describing before publication the license must be agreed to</p>-->
         <div metal:use-macro="container/cc_license/macros/license" />
+      </tal:license>
     </div>
 
   </body>
