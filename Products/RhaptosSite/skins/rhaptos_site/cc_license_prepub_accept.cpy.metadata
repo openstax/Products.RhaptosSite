@@ -6,5 +6,4 @@ validators=validate_license
 
 [actions]
 #action.success = traverse_to_action:string:publish
-#action.success = redirect_to:string:${request/onSuccess}
 action.failure = traverse_to:string:cc_license_prepub

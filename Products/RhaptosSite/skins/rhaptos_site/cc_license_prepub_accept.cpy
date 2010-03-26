@@ -13,6 +13,8 @@
 
 request = context.REQUEST
 
+# this works for modules but may not for collections ...
 context.manage_changeProperties({'license': license})
 
+# where we go next could be parameterized ...
 return state.set(status='success', next_action='traverse_to_action:string:publish')
