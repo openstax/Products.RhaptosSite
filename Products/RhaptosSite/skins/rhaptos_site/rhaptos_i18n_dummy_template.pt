@@ -157,6 +157,8 @@ Rhaptos note: This file exists as a way to store all the extra i18n
       <!--Possible Content Actions-->
       <li i18n:translate="">Publish</li>
       
+      <li i18n:translate="">Suggest Edits</li>
+      
       <li i18n:translate="">Derive Copy</li>
       
       <li i18n:translate="">Discard</li>
