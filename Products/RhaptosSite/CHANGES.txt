@@ -1,5 +1,7 @@
+RhaptosSite-1.32
+  - De-Connexions-ing various templates for Rhaptos installs
+
 RhaptosSite-1.31.1
-  - generic setup refactor. Rhaptos 2.0 release
   - Changed textarea/@wrap to "soft" instead of "on" for WebKit support.
 
 RhaptosSite-1.31
