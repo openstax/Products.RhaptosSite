@@ -1,3 +1,9 @@
+RhaptosSite-1.34
+  - add override for user_preferences_overview so ploneish usermanagement works
+
+RhaptosSite-1.33
+  - change disabled link color
+
 RhaptosSite-1.32
   - De-Connexions-ing various templates for Rhaptos installs
 
