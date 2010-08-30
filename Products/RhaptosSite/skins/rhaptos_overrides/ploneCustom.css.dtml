@@ -399,4 +399,9 @@ td.orderingCell{
   font-weight: normal\9
 }
 
+
+.disabled{
+  color: #888; 
+}
+
 /* </dtml-with> */

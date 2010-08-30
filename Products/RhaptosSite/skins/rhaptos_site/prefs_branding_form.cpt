@@ -144,11 +144,11 @@
                 </tal:rows>
               </tal:search>
               <tal:orgaccounts tal:condition="bShowAll">
-                <tal:rows tal:define="orgs python:[member_data_brain.getObject().getId() for member_data_brain in mtool.searchForMembers(name='*') if hasattr(member_data_brain.getObject(), 'getId') and hasattr(mtool.getMemberById(member_data_brain.getObject().getId()), 'getProperty') and mtool.getMemberById(member_data_brain.getObject().getId()).getProperty('account_type') == 'org'] or None"
+                <tal:rows tal:define="orgs context/all_org_accounts"
                           tal:condition="orgs"
                           tal:repeat="org orgs">
                   <tr tal:attributes="class python:repeat['org'].even() and 'even' or 'odd';"
-                      tal:define="member_id     org;
+                      tal:define="member_id     org/getUserName;
                                   acl_user      python:mtool.getMemberById(member_id);
                                   fullname      python:acl_user.fullname or '';
                                   roles         python:acl_user.getRoles() or ();
