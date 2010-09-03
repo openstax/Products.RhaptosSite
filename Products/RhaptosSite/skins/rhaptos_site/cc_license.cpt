@@ -115,7 +115,7 @@
         </div>
 	<input type="submit" 
           class="context" 
-          name="next" 
+          name="form.button.next" 
           value="Next >>" 
           tal:attributes="tabindex tabindex/next;" 
           i18n:attributes="value value_next_with_arrows" />
