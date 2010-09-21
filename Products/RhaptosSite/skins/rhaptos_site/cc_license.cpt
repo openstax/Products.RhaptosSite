@@ -1,13 +1,6 @@
 <tal:block
   xmlns:tal="http://xml.zope.org/namespaces/tal"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  tal:define="typeName           request/type_name | nothing;
-              isCollection       python:context.portal_type == 'Collection' or
-                                        (typeName and typeName == 'Collection');
-              isModule           python:context.portal_type == 'Module' or
-                                        (typeName and typeName == 'Module');
-              newCollectionTitle python:'New collection: License agreement';
-              newModuleTitle     python:'New module: License agreement';">
+  xmlns:metal="http://xml.zope.org/namespaces/metal">
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -23,10 +16,19 @@
 
     <metal:block fill-slot="top_slot" tal:define="dummy python:request.set('disable_border', 1)" />
 
-    <div metal:fill-slot="main"
-         tal:define="license_url request/license_url | context/getDefaultLicense;
-                     license_data python:context.getLicenseData(license_url);
-                     license_name license_data/name">
+    <div metal:fill-slot="main">
+      <metal:macro metal:define-macro="license">
+        <tal:main
+            tal:define="typeName           request/type_name | nothing;
+                        isCollection       python:context.portal_type == 'Collection' or
+                                                  (typeName and typeName == 'Collection');
+                        isModule           python:context.portal_type == 'Module' or
+                                                  (typeName and typeName == 'Module');
+                        newCollectionTitle newCollectionTitle | string:New collection: License agreement;
+                        newModuleTitle     newModuleTitle | string:New module: License agreement;
+                        license_url request/license_url | context/getDefaultLicense;
+                        license_data python:context.getLicenseData(license_url);
+                        license_name license_data/name">
 
       <tal:block tal:condition="isCollection">
         <h1 class="topheading"
@@ -113,7 +115,7 @@
         </div>
 	<input type="submit" 
           class="context" 
-          name="next" 
+          name="form.button.next" 
           value="Next >>" 
           tal:attributes="tabindex tabindex/next;" 
           i18n:attributes="value value_next_with_arrows" />
@@ -124,6 +126,9 @@
                tal:attributes="value request/type_name" />
         <input type="hidden" name="form.submitted" value="1" />       
       </form>
+
+       </tal:main>
+     </metal:macro>
     </div>
   </body>
 </html>

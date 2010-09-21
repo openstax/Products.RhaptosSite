@@ -1,0 +1,9 @@
+[default]
+title=Set the license proprty on the content object.
+
+[validators]
+validators=validate_license
+
+[actions]
+#action.success = traverse_to_action:string:publish
+action.failure = traverse_to:string:cc_license_prepub

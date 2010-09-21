@@ -667,11 +667,6 @@ msgstr ""
 msgid "Submitted"
 msgstr ""
 
-#. Default: "Suggest Edits"
-#: ./RhaptosSite/skins/rhaptos_site/rhaptos_i18n_dummy_template.pt:160
-msgid "Suggest Edits"
-msgstr ""
-
 #. Default: "Suggested Edits"
 #: ./RhaptosSite/skins/rhaptos_site/rhaptos_i18n_dummy_template.pt:279
 msgid "Suggested Edits"

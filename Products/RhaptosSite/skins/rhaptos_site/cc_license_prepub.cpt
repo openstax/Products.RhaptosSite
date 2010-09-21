@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<tal:block tal:define="default_tab string:publish">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      metal:use-macro="here/main_template/macros/master"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="rhaptos">
+  <body>
+
+    <div metal:fill-slot="main">
+      <tal:license tal:define="newCollectionTitle python:'License agreement';
+                               newModuleTitle     python:'License agreement';">
+        <!--<p>meaningful text describing before publication the license must be agreed to</p>-->
+        <div metal:use-macro="container/cc_license/macros/license" />
+      </tal:license>
+    </div>
+
+  </body>
+</html>
+
+</tal:block>
