@@ -19,7 +19,7 @@ A few i18n fixes
 
     <!-- The log action box -->
     <div metal:define-macro="portlet" tal:define="o here/nearestRhaptosObject | nothing" 
-                                      tal:condition="python:o">
+                                      tal:condition="python:o and not here.portal_factory.isTemporary(o)">
 
       <dl class="portlet"
           tal:define="type o/aq_explicit/archetype_name | o/aq_explicit/portal_type | string:Content;
