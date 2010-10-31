@@ -1,4 +1,9 @@
+import os, sys, re
 from __future__ import nested_scopes
+
+from zope.interface import implements
+
+import Globals
 from ComputedAttribute import ComputedAttribute
 from Products.CMFPlone import cmfplone_globals
 from Products.CMFPlone import custom_policies
@@ -16,8 +21,6 @@ from Products.CMFDefault.Portal import manage_addCMFSite
 #from Products.CMFPlone.Portal import manage_addSite   # jcc TODO breaks install!
 from Products.CMFPlone.factory import addPloneSite
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-import Globals
-import os, sys, re
 
 from AccessControl import ClassSecurityInfo
 

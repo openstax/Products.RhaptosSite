@@ -8,6 +8,8 @@ This software is subject to the provisions of the GNU General
 Public License Version 2 (GPL).  See LICENSE.txt for details.
 """
 
+from zope.interface import implements
+
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.Portal import addPolicy
 from Products.CMFPlone.interfaces.CustomizationPolicy import ICustomizationPolicy
@@ -16,7 +18,7 @@ from Products.RhaptosSite.RhaptosSite import RhaptosGenerator
 
 class RhaptosSitePolicy(DefaultCustomizationPolicy):
     """Customizes a fresh Plone site """
-    __implements__ = ICustomizationPolicy
+    implements(ICustomizationPolicy)
 
     availableAtConstruction=1
 
