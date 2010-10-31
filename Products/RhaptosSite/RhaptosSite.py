@@ -6,7 +6,7 @@ from Products.CMFPlone import ToolNames
 from Products.CMFDefault.Portal import CMFSite
 from Products.CMFPlone.Portal import PloneSite
 from Products.CMFPlone.setuphandlers import PloneGenerator
-from Products.CMFCore import CMFCorePermissions
+from Products.CMFCore import permissions
 from Products.CMFCore.TypesTool import FactoryTypeInformation
 from Products.CMFCore.DirectoryView import addDirectoryViews
 from Products.CMFCore.utils import getToolByName

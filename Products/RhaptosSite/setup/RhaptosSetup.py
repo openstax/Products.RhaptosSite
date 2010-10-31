@@ -256,7 +256,7 @@ def customizeActions(self, portal):
 
 
 def customizeControlPanel(self, portal):
-    from Products.CMFCore.CMFCorePermissions import SetOwnProperties
+    from Products.CMFCore.permissions import SetOwnProperties
     groups = ['site|Plone|Plone Configuration',
               'site|Products|Add-on Product Configuration',
               'member|Member|Account Maintenance',

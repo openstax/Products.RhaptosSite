@@ -112,7 +112,7 @@ class MembershipTool( BaseTool ):
 ##                 if notify_script is not None:
 ##                     notify_script()
 
-    #security.declareProtected(CMFCorePermissions.ManagePortal, 'setMemberProperties')
+    #security.declareProtected(permissions.ManagePortal, 'setMemberProperties')
     def setMemberProperties(self, member, **properties):
         if hasattr(member, 'getId'):
             member=member.getId()
