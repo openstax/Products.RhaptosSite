@@ -19,7 +19,7 @@ import AccessControl
 from Globals import InitializeClass
 from Products.CatalogMemberDataTool import MemberDataTool as CatalogMemberDataTool
 from Products.CMFCore.utils import getToolByName
-from Products.CMFCore.interfaces.portal_memberdata import MemberData as IMemberData
+from Products.CMFCore.interfaces import IMemberData
 from Products.CMFPlone.MemberDataTool import MemberDataTool
 
 DB_FIELDS = ['honorific', 'firstname', 'othername', 'surname', 'fullname', 'lineage', 'email', 'homepage', 'comment']
