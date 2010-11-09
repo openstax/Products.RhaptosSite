@@ -23,8 +23,7 @@ Old customizations:
 
 </tal:comment>
 
-<body tal:define="Iterator python:modules['Products.CMFPlone'].IndexIterator;
-                  tabindex python:Iterator(mainSlot=False)">
+<body>
 <div metal:define-macro="portlet"
      tal:define="pageloc python: request.URL.split('/')[-1];
                  okToShowHere python: not pageloc in ('login_form');
@@ -77,8 +76,7 @@ Old customizations:
                        alt="Login Name"
                        onclick="showCookieMessage('cookies_message')"
                        tal:attributes="name ac_name; id ac_name;
-                                       value python:request.get(ac_name, '');
-                                       tabindex tabindex/next"
+                                       value python:request.get(ac_name, '')"
                        i18n:attributes="alt label_login_name;"/>
                     </td>
                 </tr>
@@ -96,8 +94,7 @@ Old customizations:
                        size="10"
                        alt="Password"
                        onclick="showCookieMessage('cookies_message')"
-                       tal:attributes="name ac_password; id ac_password;
-                                       tabindex tabindex/next;"
+                       tal:attributes="name ac_password; id ac_password"
                        i18n:attributes="alt label_password;"/>
 
                     </td>
@@ -112,8 +109,7 @@ Old customizations:
                        name="submit"
                        value="Log in"
                        alt="Log in"
-                       tal:attributes="tabindex tabindex/next;
-                                  onclick string:javascript:return setLoginVars('$ac_name','login_name','$ac_password','pwd_empty','js_enabled','cookies_enabled');"
+                       tal:attributes="onclick string:javascript:return setLoginVars('$ac_name','login_name','$ac_password','pwd_empty','js_enabled','cookies_enabled');"
                        i18n:attributes="value label_log_in; alt label_log_in;"/>
 
                     </td>
