@@ -21,11 +21,13 @@ from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 
 import RhaptosSite
 
-import monkeypatch
+# TODO: review monkey patches - they might not be necessary for Plone4
+# import monkeypatch
 import managercatalog  # mostly to test syntax
 import security
 
-from setup import RhaptosSitePolicy
+# XXX: refactor
+# from setup import RhaptosSitePolicy
 
 this_module = sys.modules[ __name__ ]
 
@@ -46,7 +48,7 @@ registerMultiPlugin(AHA.AltHashAuth.meta_type)
 registerDirectory('skins', globals())
 
 def initialize(context):
-    RhaptosSitePolicy.register(context, product_globals)
+    # RhaptosSitePolicy.register(context, product_globals)
     RhaptosSite.register(context, product_globals)
     
     profile_registry.registerProfile('rhaptos-default',
