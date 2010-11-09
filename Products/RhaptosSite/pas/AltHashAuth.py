@@ -11,6 +11,8 @@ Public License Version 2.1 (LGPL).  See LICENSE.txt for details.
 """
 import crypt
 
+from zope.interface import Interface
+
 from AccessControl import ClassSecurityInfo, AuthEncoding
 from AccessControl.SecurityManagement import getSecurityManager
 
@@ -23,7 +25,6 @@ from Products.PluggableAuthService.interfaces.plugins import IAuthenticationPlug
 from Products.PluggableAuthService.plugins.BasePlugin import BasePlugin
 from Products.PluggableAuthService.permissions import ManageUsers
 from Products.PluggableAuthService.utils import classImplements
-from Products.PluggableAuthService.utils import Interface
 
 manage_addAltHashAuthForm = PageTemplateFile(
     'www/addAltAuth', globals(), __name__='manage_addAltHashAuthForm' )
