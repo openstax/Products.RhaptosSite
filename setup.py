@@ -35,7 +35,7 @@ setup(name='Products.RhaptosSite',
           'Products.Ploneboard',
           'Products.References==0.10-rhaptosdev-r30378',
           'Products.SimpleAttachment==3.5',
-          'Products.ZPsycopgDA==2.0.13-enfold',
+          'Products.ZPsycopgDA',
           'Products.ExternalStorage',
 
           # Rhaptos core dependencies
