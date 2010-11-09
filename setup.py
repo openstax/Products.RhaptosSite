@@ -30,15 +30,11 @@ setup(name='Products.RhaptosSite',
 
           # 3rd party dependencies : those eggs are insidedist.rhaptos.org
           'Products.AdvancedQuery==2.2-rhaptosdev-r30378',
-          'Products.Five==1.4.5-rhaptosdev-r32037',
-          'Products.LocalFS==1.7-rhaptosdev-r30378',
-          'Products.ManagableIndex==1.7.3-rhaptosdev-r30378',
-          'Products.MasterSelectWidget==0.2.3-rhaptosdev-r30378',
+          'Products.MasterSelectWidget',
           'Products.NoHeaderFieldContinuation==0.1-rhaptosdev-r30378',
-          'Products.OFolder==1.0-rhaptosdev-r30378',
-          'Products.Ploneboard==1.1-rhaptosdev-r30378',
+          'Products.Ploneboard',
           'Products.References==0.10-rhaptosdev-r30378',
-          'Products.SimpleAttachment==3.0.1-rhaptosdev-r30378',
+          'Products.SimpleAttachment==3.5',
           'Products.ZPsycopgDA==2.0.13-enfold',
           'Products.ExternalStorage',
 
