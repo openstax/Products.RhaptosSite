@@ -1,4 +1,5 @@
 from Products.CMFPlone import MigrationTool
-from RhaptosSetup import RhaptosSetup
+# XXX: refactor
+# from RhaptosSetup import RhaptosSetup
 
-MigrationTool.registerSetupWidget(RhaptosSetup)
+# MigrationTool.registerSetupWidget(RhaptosSetup)

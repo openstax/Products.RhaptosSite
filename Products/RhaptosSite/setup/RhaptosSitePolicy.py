@@ -11,7 +11,6 @@ Public License Version 2 (GPL).  See LICENSE.txt for details.
 from zope.interface import implements
 
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.Portal import addPolicy
 from Products.CMFPlone.interfaces.CustomizationPolicy import ICustomizationPolicy
 from Products.CMFPlone.CustomizationPolicy import DefaultCustomizationPolicy
 from Products.RhaptosSite.RhaptosSite import RhaptosGenerator
@@ -32,5 +31,6 @@ class RhaptosSitePolicy(DefaultCustomizationPolicy):
         setup = mi_tool._getWidget('Rhaptos Setup')
         setup.addItems(setup.available())
 
-def register(context, app_state):
-    addPolicy('Rhaptos Site', RhaptosSitePolicy())
+# XXX: refactor
+#def register(context, app_state):
+#    addPolicy('Rhaptos Site', RhaptosSitePolicy())
