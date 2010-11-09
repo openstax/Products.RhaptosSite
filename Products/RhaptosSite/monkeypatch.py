@@ -12,17 +12,6 @@ Public License Version 2 (GPL).  See LICENSE.txt for details.
 import logging
 logger = logging.getLogger('RhaptosSite')
 
-
-## Monkey patch MemberData deprecation warnings out of existence, since they are too common
-from Products.CMFPlone import MemberDataTool
-
-if not hasattr(MemberDataTool, 'RhaptosSite_noMDdeprecated_patch'):
-    logger.info("Patching Products.CMFPlone.MemberDataTool.log_deprecated")
-
-    MemberDataTool.RhaptosSite_noMDdeprecated_patch = 1
-    
-    MemberDataTool.log_deprecated = lambda *args,**kw:None
-
 ## Monkeypatch MemberDataTool to write member properties to the database; used to be in custom tool
 
 from Products.PlonePAS.tools.memberdata import MemberData
@@ -144,11 +133,7 @@ if not hasattr(MembershipTool, 'RhaptosSite_searchForMembers_patch'):
 ## site property 'use_folder_tabs'
 ## There might be a better way to override this is a Zope 3 mechanism, but we'll just monkeypatch it for now
 
-# Adding IndexIterator to the correct path that it is expected inside CMFPlone.browser.plone,
-# since we don't seem to have access to it otherwise from this context.
 from Products import CMFPlone
-from Products.CMFPlone.utils import IndexIterator
-CMFPlone.IndexIterator = IndexIterator
 from Products.CMFPlone.browser.plone import cache_decorator
 from Products.CMFPlone.browser.plone import Plone
 from Products.CMFCore.utils import _checkPermission
