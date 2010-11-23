@@ -27,7 +27,7 @@ Plone 2.5 notes:
         tal:define="skinrequest python:request.get(here.portal_skins.getRequestVarname(), '');">
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"
           tal:define="charset site_properties/default_charset|string:utf-8"
-          tal:attributes="content string:text/html;;charset=${charset}" />
+          tal:attributes="content string:application/xhtml-xml;;charset=${charset}" />
 
     <title tal:define="overTitle overTitle | nothing"
            tal:content="python:here.renderTitle(template.title, overTitle)">[title]</title>
