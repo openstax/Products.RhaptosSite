@@ -195,8 +195,8 @@ mostly different names for macros and styles.
           </a>
        </li>
 
-       <li tal:condition="context/@@siyavula-account|nothing"
-            tal:define="lensorganizers context/@@lensorganizers|nothing" >
+       <li tal:condition="context/@@siyavula-account|nothing">
+       <tal:div tal:define="lensorganizers context/@@lensorganizers|nothing" >
         <span i18n:translate="box_text_lens_organizer" class="textNavItem">My Lens Organizers</span>
         <ul>
           <tal:block tal:condition="lensorganizers" tal:repeat="l lensorganizers">
@@ -226,6 +226,7 @@ mostly different names for macros and styles.
             <a href="/lenses/create_lens_organizer" i18n:translate="box_label_create_a_lensorganizer"><strong>Create a Lens Organizer</strong></a>
           </li>
        </ul>
+       </tal:div>
        </li>
 
     </ul>
