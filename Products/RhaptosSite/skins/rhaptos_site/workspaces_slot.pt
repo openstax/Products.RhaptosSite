@@ -54,10 +54,10 @@ mostly different names for macros and styles.
            i18n:attributes="title">
           <span class="arrows">
             <img id="cnx_by_type_collapse" alt=""
-                 tal:attributes="src string:$portal_url/stylesheets/plone/arrow-up.png;
+                 tal:attributes="src string:$portal_url/stylesheets/plone/arrow-open.png;
                                  style python:test(twist and not collapsed, 'display: inline;;', 'display: none;;');" />
             <img id="cnx_by_type_expand" alt=""
-                 tal:attributes="src string:$portal_url/stylesheets/plone/arrow-down.png;
+                 tal:attributes="src string:$portal_url/stylesheets/plone/arrow-closed.png;
                                  style python:test(twist and collapsed, 'display: inline;;', 'display: none;;');" />
           </span>
           <span i18n:translate="box_text_by_type" class="textNavItem">By Type</span>
@@ -113,10 +113,10 @@ mostly different names for macros and styles.
            i18n:attributes="title">
           <span class="arrows">
             <img id="cnx_by_location_collapse" alt=""
-                 tal:attributes="src string:$portal_url/stylesheets/plone/arrow-up.png;
+                 tal:attributes="src string:$portal_url/stylesheets/plone/arrow-open.png;
                                  style python:test(twist and not collapsed, 'display: inline;;', 'display: none;;');" />
             <img id="cnx_by_location_expand" alt=""
-                 tal:attributes="src string:$portal_url/stylesheets/plone/arrow-down.png;
+                 tal:attributes="src string:$portal_url/stylesheets/plone/arrow-closed.png;
                                  style python:test(twist and collapsed, 'display: inline;;', 'display: none;;');" />
           </span>
           <span i18n:translate="box_text_by_location" class="textNavItem">By Location</span>
