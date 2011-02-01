@@ -1,3 +1,9 @@
+RhaptosSite-1.37
+  - Bugfix 2010: navigation arrows
+
+RhaptosSite-1.36.1
+  - conditionalize openlenses
+
 RhaptosSite-1.36
   - prefs_user_overview to work w/ CatalogMemberDataTool
   - hide logactions portlet for not-yet-completely-created content
