@@ -119,11 +119,11 @@ def installProducts(self, portal):
 
 
 def customizeTools(self, portal):
-
     # FIXME: these should be in products of their own and done via an Install
     portal.manage_addProduct['RhaptosCollaborationTool'].manage_addTool('Collaboration Tool', None)
 
-    portal.portal_patch.manage_changeProperties(title='Suggested Edits')
+    # FIXME <cnxconf sprint> Commentting out for the moment
+    ##portal.portal_patch.manage_changeProperties(title='Suggested Edits')
 
     # Don't import text files as Page but as File since that's what modules expect
     registry = portal.content_type_registry
@@ -426,18 +426,7 @@ def customizeNavTree(self, portal):
     navtree._updateProperty('metaTypesNotToList', tuple(mt))
 
 def customizeWorkspaceFolders(self, portal):
-    gt = getToolByName(portal, 'portal_groups')
-    tt = getToolByName(portal, 'portal_types')
-    gt.setGroupWorkspaceContainerType('Large Plone Folder')
-
-    groups = gt.getGroupWorkspacesFolder()
-    if groups is None:
-        # Can't use invokeFactory here because Large Plone Folder isn't allowed; constructContent bypasses permissions
-        tt.constructContent(gt.getGroupWorkspaceContainerType(), portal, gt.getGroupWorkspacesFolderId())
-        groups = gt.getGroupWorkspacesFolder()
-
-    groups._updateProperty('title', 'Workgroups')
-    groups._setProperty('nextID', 0, type='int')
+    portal.invokeFactory(type_name='Folder', id='groups', title='Workgroups')
 
 def customizePortal(self, portal):
     props_tool=getToolByName(portal,'portal_properties')
@@ -588,98 +577,32 @@ def addPDFsFolder(self, portal):
         portal.invokeFactory('Large Plone Folder', 'pdfs')
     large_folder.manage_changeProperties(global_allow=False)
 
-functions = {
-    'Install Products': installProducts,
-    'Customize Tools': customizeTools,
-    'Customize Member Data': customizeMemberdata,
-    'Customize Membership Tool': customizeMembershipTool,
-    'Customize Workspaces': customizeWorkspaceFolders,
-    'Customize Actions': customizeActions,
-    'Customize Portlets': customizeSlots,
-    'Customize Skins': customizeSkins,
-    'Customize Types': customizeTypes,
-    'Customize Workflow': customizeWorkflow,
-    'Customize Permissions': customizePermissions,
-    'Customize NavTree': customizeNavTree,
-    'Customize Portal': customizePortal,
-#    'Customize Portal Catalog': customizePortalCatalog,
-    'Customize Front Page': customizeFrontPage,
-    'Customize Member Catalog':customizeMemberCatalog,
-    'Customize Control Panel':customizeControlPanel,
-    'Customize Factory Tool':customizeFactoryTool,
-    'Customize Diff Tool':customizeDiffTool,
-    'Customize Object Descriptions':customizeObjectDescriptions,
-    'Set PAS Plugins':setPASPlugins,
-    'Create Help Section': createHelpSection,
-#    'Create Collection Printer': createCollectionPrinter,
-    'Create About Us Section': creataAboutUSSection,
-    'Create PDFs Folder': addPDFsFolder,
-    }
-
-class RhaptosSetup:
-    type = 'Rhaptos Setup'
-
-    description = "Site customizations for <a href='http://software.cnx.rice.edu/'>Rhaptos</a>"
-
-    functions = functions
-
-    ## This line and below may not be necessary at some point
-    ## in the future. A future version of Plone may provide a
-    ## superclass for a basic SetupWidget that will safely
-    ## obviate the need for these methods.
-     
-    single = 0
-  
-    def __init__(self, portal):
-        self.portal = portal
-  
-    def setup(self):
-        pass
- 
-    def delItems(self, fns):
-        out = []
-        out.append(('Currently there is no way to remove a function', INFO))
-        return out
- 
-    def addItems(self, fns):
-        out = []
-        for fn in fns:
-            self.functions[fn](self, self.portal)
-            out.append(('Function %s has been applied' % fn, INFO))
-        return out
- 
-    def active(self):
-        return 1
-                                                                                 
-    def installed(self):
-        return []
- 
-    def available(self):
-        """ Go get the functions """
-        # We return an explicit list here instead of just functions.keys() since order matters
-        return [
-            'Install Products',
-            'Customize Tools',
-            'Customize Member Data',
-            'Customize Member Catalog',
-            'Customize Membership Tool',
-            'Customize Workspaces',
-            'Customize Actions',
-            'Customize Portlets',
-            'Customize Skins',
-            'Customize Types',
-            'Customize Workflow',
-            'Customize Permissions',
-            'Customize NavTree',
-            'Customize Portal',
-#            'Customize Portal Catalog',
-            'Customize Front Page',
-            'Customize Control Panel',
-            'Customize Diff Tool',
-            'Customize Object Descriptions',
-            'Set PAS Plugins',
-            'Create Help Section',
-#            'Create Collection Printer',
-            'Create About Us Section',
-            'Create PDFs Folder',
-            ]
+# XXX Determine if the Human titles are necessary for this process, if not
+#     please remove them...
+functions = [
+    ('Install Products', installProducts),
+    ('Customize Tools', customizeTools),
+    ('Customize Member Data', customizeMemberdata),
+    ('Customize Member Catalog', customizeMemberCatalog),
+    ('Customize Membership Tool', customizeMembershipTool),
+    ('Customize Workspaces', customizeWorkspaceFolders),
+    ('Customize Actions', customizeActions),
+    ('Customize Portlets', customizeSlots),
+    ('Customize Skins', customizeSkins),
+    ('Customize Types', customizeTypes),
+    ('Customize Workflow', customizeWorkflow),
+    ('Customize Permissions', customizePermissions),
+    ('Customize NavTree', customizeNavTree),
+    ('Customize Portal', customizePortal),
+##    ('Customize Portal Catalog', customizePortalCatalog),
+    ('Customize Front Page', customizeFrontPage),
+    ('Customize Control Panel', customizeControlPanel),
+##    ('Customize Factory Tool', customizeFactoryTool),
+    ('Customize Diff Tool', customizeDiffTool),
+    ('Customize Object Descriptions', customizeObjectDescriptions),
+    ('Set PAS Plugins', setPASPlugins),
+    ('Create Help Section', createHelpSection),
+#    ('Create Collection Printer', createCollectionPrinter),
+    ('Create About Us Section', creataAboutUSSection),
+    ('Create PDFs Folder', addPDFsFolder),
+    ]
