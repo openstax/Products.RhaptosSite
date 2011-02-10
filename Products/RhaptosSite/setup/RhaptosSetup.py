@@ -338,9 +338,6 @@ def customizeNavTree(self, portal):
     mt.append('Change Set')        
     navtree._updateProperty('metaTypesNotToList', tuple(mt))
 
-def customizeWorkspaceFolders(self, portal):
-    portal.invokeFactory(type_name='Folder', id='groups', title='Workgroups')
-
 def customizePortal(self, portal):
     props_tool=getToolByName(portal,'portal_properties')
     props_tool.site_properties._updateProperty('ext_editor', 1)
@@ -497,7 +494,6 @@ functions = [
     ('Customize Member Data', customizeMemberdata),
     ('Customize Member Catalog', customizeMemberCatalog),
     ('Customize Membership Tool', customizeMembershipTool),
-    ('Customize Workspaces', customizeWorkspaceFolders),
     ('Customize Actions', customizeActions),
     ('Customize Portlets', customizeSlots),
     ('Customize Skins', customizeSkins),
