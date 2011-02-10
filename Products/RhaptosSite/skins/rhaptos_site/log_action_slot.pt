@@ -73,11 +73,13 @@ A few i18n fixes
         <dd class="portletItem odd">
           <strong i18n:translate="text_view_action">View</strong>
           <ul>
-            <li tal:repeat="action o/getViewActions">
-              <a tal:attributes="href action/url"
-                 tal:content="action/name"
-                 i18n:translate="">[action]</a>
-            </li>
+            <tal:actions tal:repeat="action o/getViewActions">
+              <li tal:condition="python:action['id']!='source' or state!='published'">
+                <a tal:attributes="href action/url"
+                   tal:content="action/name"
+                   i18n:translate="">[action]</a>
+              </li>
+            </tal:actions>
           </ul>
         </dd>
       </dl>
