@@ -23,99 +23,12 @@ from Products.CMFCore.DirectoryView import addDirectoryViews
 
 from Products.RhaptosSite import product_globals
 
-def installProducts(self, portal):
-    """Add any necessary portal tools"""
-    qi = getToolByName(portal, 'portal_quickinstaller')
-    portal_setup = getToolByName(portal, 'portal_setup')
-    import_context = portal_setup.getImportContextID()
-    qi.installProduct('Archetypes')
-    portal_setup.setImportContext(
-            'profile-Products.CMFDiffTool:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.FSImportTool:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.LinkMapTool:default')
-    portal_setup.runAllImportSteps()
-
-    qi.installProduct('PasswordResetTool')
-    qi.installProduct('PloneLanguageTool')
-    qi.installProduct('MasterSelectWidget')
-    portal_setup.setImportContext(
-            'profile-Products.UniFile:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.CNXMLDocument:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.CNXMLTransforms:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.RhaptosPatchTool:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.RhaptosWorkgroup:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.RhaptosCollection:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.RhaptosRepository:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.RhaptosHitCountTool:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.RhaptosModuleEditor:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.RhaptosModuleStorage:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.RhaptosPDFLatexTool:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.RhaptosSimilarityTool:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.RhaptosContent:default')
-    portal_setup.runAllImportSteps()
-
-    portal_setup.setImportContext(
-            'profile-Products.Lensmaker:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.RhaptosPrint:default')
-    portal_setup.runAllImportSteps()
-    portal_setup.setImportContext(
-            'profile-Products.MathEditor:default')
-    portal_setup.runAllImportSteps()
-
-    qi.installProduct('Lineup')
-    portal_setup.setImportContext(
-            'profile-Products.CatalogMemberDataTool:default')
-    portal_setup.runAllImportSteps()
-
-    qi.installProduct('RhaptosSword')
-    portal_setup.setImportContext(
-            'profile-Products.CatalogMemberDataTool:default')
-    portal_setup.runAllImportSteps()
     
-# siyavula products...
-    #portal_setup.setImportContext(
-    #        'profile-Products.LensOrganizer:default')
-    #portal_setup.runAllImportSteps()
-    #portal_setup.setImportContext(
-    #        'profile-Products.RhaptosForums:default')
-    #portal_setup.runAllImportSteps()
-    
-    # Disable LiveSearch
-    jstool=getToolByName(portal, 'portal_javascripts')
-    jstool.getResource('livesearch.js').setEnabled(False)
-    jstool.cookResources()
-
-    portal_setup.setImportContext(import_context)
+# XXX: move into setup handler if still needed
+# Disable LiveSearch
+# jstool=getToolByName(portal, 'portal_javascripts')
+# jstool.getResource('livesearch.js').setEnabled(False)
+# jstool.cookResources()
 
 
 def customizeTools(self, portal):
@@ -580,7 +493,6 @@ def addPDFsFolder(self, portal):
 # XXX Determine if the Human titles are necessary for this process, if not
 #     please remove them...
 functions = [
-    ('Install Products', installProducts),
     ('Customize Tools', customizeTools),
     ('Customize Member Data', customizeMemberdata),
     ('Customize Member Catalog', customizeMemberCatalog),

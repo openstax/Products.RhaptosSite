@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<metadata>
+  <version>1.35</version>
+  <description>Rhaptos Site</description>
+  <dependencies>
+    <dependency>profile-Products.CMFDiffTool:CMFDiffTool</dependency>
+    <dependency>profile-Products.FSImportTool:default</dependency>
+    <dependency>profile-Products.LinkMapTool:default</dependency>
+    <dependency>profile-Products.PasswordResetTool:PasswordResetTool</dependency>
+    <dependency>profile-Products.PloneLanguageTool:PloneLanguageTool</dependency>
+    <dependency>profile-Products.MasterSelectWidget:default</dependency>
+    <dependency>profile-Products.UniFile:default</dependency>
+    <dependency>profile-Products.CNXMLDocument:default</dependency>
+    <dependency>profile-Products.CNXMLTransforms:default</dependency>
+    <dependency>profile-Products.RhaptosPatchTool:default</dependency>
+    <dependency>profile-Products.RhaptosWorkgroup:default</dependency>
+    <dependency>profile-Products.RhaptosCollection:default</dependency>
+    <dependency>profile-Products.RhaptosRepository:default</dependency>
+    <dependency>profile-Products.RhaptosHitCountTool:default</dependency>
+    <dependency>profile-Products.RhaptosModuleEditor:default</dependency>
+    <dependency>profile-Products.RhaptosModuleStorage:default</dependency>
+    <dependency>profile-Products.RhaptosPDFLatexTool:default</dependency>
+    <dependency>profile-Products.RhaptosSimilarityTool:default</dependency>
+    <dependency>profile-Products.RhaptosContent:default</dependency>
+    <dependency>profile-Products.Lensmaker:default</dependency>
+    <dependency>profile-Products.RhaptosPrint:default</dependency>
+    <dependency>profile-Products.MathEditor:default</dependency>
+    <dependency>profile-Products.Lineup:default</dependency>
+    <dependency>profile-Products.CatalogMemberDataTool:default</dependency>
+    <dependency>profile-Products.RhaptosSword:default</dependency>
+    <dependency>profile-Products.CatalogMemberDataTool:default</dependency>
+  </dependencies>
+</metadata>
