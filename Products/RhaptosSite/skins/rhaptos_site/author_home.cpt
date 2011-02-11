@@ -9,244 +9,246 @@
   <body>
 
     <div metal:fill-slot="main">
-      <tal:redirecthack
-         tal:define="url request/ACTUAL_URL;
-                     path python:url.split('/');
-                     oldlocation python:path[-1]=='author_home';
-                     redir python:oldlocation and request.RESPONSE.redirect('/mydashboard')"
-         tal:replace="nothing">
-        author_home replaced by 'mydashboard' folder, so redirect there.
-        this should probably be removed after some reasonable deprecation time.
-        (put in place May 2009)
-      </tal:redirecthack>
-
-    <div tal:condition="isAnon" i18n:translate="text_log_in_for_work_areas">
-      <tal:nasty tal:define="dummy python:request.RESPONSE.redirect('login_form?came_from=mydashboard')"/>
-      <p>You must 
-        <span i18n:name="log_in">
-          <a href="/login_form" i18n:translate="label_log_in">Log in</a>
-        </span> to view your work areas.
-      </p>
-    </div>
-
-    <table border="0" tal:condition="not:isAnon">
-      <tbody>
-        <tr>
-          <td valign="top" style="padding-right: 30px; width: 55%;">
-            <h1 i18n:translate="heading_create_edit">Create and edit content</h1>
-
-            <metal:macro metal:define-macro="newmodule">
-              <p class="createlink">
-                <a href="cc_license?type_name=Module"
-                  tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Module">
-                  Create a new module</a>
-                <a href="cc_license?type_name=Module"
-                  tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Module">
-                  <img src="/module_icon.gif" alt=""
-                      tal:attributes="src string:$portal_url/module_icon.gif">
+      <tal:defs tal:define="isAnon context/@@plone_portal_state/anonymous">
+        <tal:redirecthack
+           tal:define="url request/ACTUAL_URL;
+                       path python:url.split('/');
+                       oldlocation python:path[-1]=='author_home';
+                       redir python:oldlocation and request.RESPONSE.redirect('/mydashboard')"
+           tal:replace="nothing">
+          author_home replaced by 'mydashboard' folder, so redirect there.
+          this should probably be removed after some reasonable deprecation time.
+          (put in place May 2009)
+        </tal:redirecthack>
+  
+      <div tal:condition="isAnon" i18n:translate="text_log_in_for_work_areas">
+        <tal:nasty tal:define="dummy python:request.RESPONSE.redirect('login_form?came_from=mydashboard')"/>
+        <p>You must 
+          <span i18n:name="log_in">
+            <a href="/login_form" i18n:translate="label_log_in">Log in</a>
+          </span> to view your work areas.
+        </p>
+      </div>
+  
+      <table border="0" tal:condition="not:isAnon">
+        <tbody>
+          <tr>
+            <td valign="top" style="padding-right: 30px; width: 55%;">
+              <h1 i18n:translate="heading_create_edit">Create and edit content</h1>
+  
+              <metal:macro metal:define-macro="newmodule">
+                <p class="createlink">
+                  <a href="cc_license?type_name=Module"
+                    tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Module">
+                    Create a new module</a>
+                  <a href="cc_license?type_name=Module"
+                    tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Module">
+                    <img src="/module_icon.gif" alt=""
+                        tal:attributes="src string:$portal_url/module_icon.gif">
+                  </a>
+                </p>
+              </metal:macro>
+              <metal:macro metal:define-macro="newcollection">
+                <p class="createlink">
+                  <a href="cc_license?type_name=Collection"
+                    tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Collection">
+                    Create a new collection</a>
+                  <a href="cc_license?type_name=Collection"
+                    tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Collection">
+                    <img src="/repository_icon.gif" alt=""
+                        tal:attributes="src string:$portal_url/repository_icon.gif">
+                  </a>
+                </p>
+              </metal:macro>
+              <p>
+                <a href="/content" i18n:translate="text_search_to_edit"
+                   tal:attributes="href string:$portal_url/content">Search to edit published content</a>
+                <a href="/content" i18n:translate="text_search_to_edit"
+                   tal:attributes="href string:$portal_url/content">
+                  <img src="/images/magnify-glass-cnx.png" alt="search icon"
+                       tal:attributes="src string:$portal_url/images/magnify-glass-cnx.png"
+                       i18n:attributes="alt; src" />
                 </a>
               </p>
-            </metal:macro>
-            <metal:macro metal:define-macro="newcollection">
-              <p class="createlink">
-                <a href="cc_license?type_name=Collection"
-                  tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Collection">
-                  Create a new collection</a>
-                <a href="cc_license?type_name=Collection"
-                  tal:attributes="href string:$portal_url/mydashboard/cc_license?type_name=Collection">
-                  <img src="/repository_icon.gif" alt=""
-                      tal:attributes="src string:$portal_url/repository_icon.gif">
-                </a>
+  
+              <div tal:define="raw_fieldList python:here.all_editable_content(limit=6, sort='modified');
+                               fieldListDict python:raw_fieldList[:5]"
+                   tal:condition="raw_fieldList"
+                   id="lastmodified">
+                <h5>Last modified:</h5>
+                <ul class="latest">
+                  <tal:div tal:repeat="fieldList fieldListDict">
+                    <li tal:define="isModule python:fieldList['content_portal_type'] == 'Module'"
+                        tal:attributes="class python:isModule and 'module' or 'collection'">
+                      <a tal:attributes="href python:fieldList['content_url']"
+                         tal:content="python:fieldList['content_title']">title</a>
+                      in
+                      <tal:span tal:condition="python:fieldList['work_portal_type'] != 'Workspace'">
+                        Workgroup:
+                      </tal:span>
+                      <tal:span tal:content="python:fieldList['work_title']">parent title</tal:span>
+                    </li>
+                  </tal:div>
+                  <li class="more" tal:condition="python:len(raw_fieldList) > 5">
+                    <a href="listcontent?type:list=Collection&amp;type:list=Module&amp;sort=modified&amp;sort_order=descending">
+                      More &#187;
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+            <td valign="top">
+              <h1>
+                <span i18n:translate="heading_access_lenses">Access lenses</span>
+                <span class="normal-text-in-header" tal:define="help nocall:portal/help/viewing/lenses | nothing" tal:condition="nocall:help">
+                  (<a href="/help/viewing/lenses" i18n:translate="link_question_mark"
+                      tal:attributes="href help/absolute_url">?</a>)
+                </span>
+              </h1>
+              <p tal:define="newlensmacro context/lens_folder_view/macros/newlens | nothing"
+                 tal:condition="newlensmacro">
+                <metal:macro metal:use-macro="newlensmacro">
+                  Create a new lens
+                </metal:macro>
               </p>
-            </metal:macro>
-            <p>
-              <a href="/content" i18n:translate="text_search_to_edit"
-                 tal:attributes="href string:$portal_url/content">Search to edit published content</a>
-              <a href="/content" i18n:translate="text_search_to_edit"
-                 tal:attributes="href string:$portal_url/content">
-                <img src="/images/magnify-glass-cnx.png" alt="search icon"
-                     tal:attributes="src string:$portal_url/images/magnify-glass-cnx.png"
-                     i18n:attributes="alt; src" />
-              </a>
-            </p>
-
-            <div tal:define="raw_fieldList python:here.all_editable_content(limit=6, sort='modified');
-                             fieldListDict python:raw_fieldList[:5]"
-                 tal:condition="raw_fieldList"
-                 id="lastmodified">
-              <h5>Last modified:</h5>
-              <ul class="latest">
-                <tal:div tal:repeat="fieldList fieldListDict">
-                  <li tal:define="isModule python:fieldList['content_portal_type'] == 'Module'"
-                      tal:attributes="class python:isModule and 'module' or 'collection'">
-                    <a tal:attributes="href python:fieldList['content_url']"
-                       tal:content="python:fieldList['content_title']">title</a>
-                    in
-                    <tal:span tal:condition="python:fieldList['work_portal_type'] != 'Workspace'">
-                      Workgroup:
-                    </tal:span>
-                    <tal:span tal:content="python:fieldList['work_title']">parent title</tal:span>
+              <ul class="lenses"
+                  tal:define="l_tool context/lens_tool;
+                              lenses_raw l_tool/getRecentlyModifiedListsOwned | python:[];
+                              lenses python:lenses_raw[:5];
+                              lenses_count python:len(lenses_raw)">
+                <li class="favorites">
+                  <a href="#" i18n:translate="link_my_favorites"
+                     tal:attributes="href string:$portal_url/go_favorites/view">My Favorites</a>
+                  (<a href="#" i18n:translate="link_edit"
+                     tal:attributes="href string:$portal_url/go_favorites/contents">edit</a>)
+                </li>
+                <tal:div tal:condition="lenses" tal:repeat="lens lenses">
+                  <li class="lens"
+                      tal:define="lname lens/getDisplayName | nothing;
+                                  url lens/getURL">
+                    <a tal:attributes="href string:${url}">
+                       <span tal:define="displayName lname | nothing"
+                            tal:replace="python:displayName">lens name</span>
+                    </a>
+                    <img src="/private.gif"
+                         tal:condition="python:lens.review_state=='private'"
+                         tal:replace="structure context/private.gif">
+                    (<a tal:attributes="href string:${url}/contents">edit</a>)
                   </li>
                 </tal:div>
-                <li class="more" tal:condition="python:len(raw_fieldList) > 5">
-                  <a href="listcontent?type:list=Collection&amp;type:list=Module&amp;sort=modified&amp;sort_order=descending">
-                    More &#187;
+                <li class="more" tal:condition="python:len(lenses_raw) > 5">
+                  <a href="#"
+                     i18n:translate="more"
+                     tal:define="ltool context/lens_tool;
+                                 lenses ltool/getListsOwned;
+                                 lensfolder python:ltool.getIndividualFolder(create=False)"
+                     tal:omit-tag="not:lenses"
+                     tal:attributes="href lensfolder/absolute_url | string:#">More &#187;</a>
+                </li>
+              </ul>
+              <ul 
+              tal:define="lensorganizers context/@@lensorganizers|nothing;
+                          isSiyavulaMember context/@@siyavula-account|nothing;
+                          member python:here.portal_membership.getAuthenticatedMember().getId();
+                          isTestMember python:member.lower().startswith('siyavulatest')" 
+              tal:condition="python:isSiyavulaMember or isTestMember">
+                <li>
+                  <a href="/lenses/create_lensorganizer" i18n:translate="link_create_lensorganizer"
+                     tal:attributes="href string:$portal_url/lenses/create_lens_organizer">Create a new lens organizer</a>
+                   </li>
+                 <tal:comment tal:condition="nothing">Only show list item if member's lensfolder exists</tal:comment>
+                <li  tal:define="ltool context/lens_tool;
+                                 lenses ltool/getListsOwned;
+                                 lensfolder python:ltool.getIndividualFolder(create=False);
+                                 organizers python:context.restrictedTraverse('@@lensorganizers')(member_only=True) or None;
+                                 lensorganizers python:organizers and [b.getObject() for b in organizers] or [];"
+                                 tal:condition="python:lensfolder is not None and len(lensorganizers) > 0">
+                   <tal:comment tal:condition="nothing">Only show "View all my lens organizers" link if member has any lens organizers</tal:comment>
+                   <a tal:attributes="href string:${lensfolder/absolute_url}/lensorganizer_listing" 
+                      tal:condition="nocall:lensorganizers" href="#">
+                    <span style="color:grey; text-decoration:underline;"
+                          tal:attributes="style python:not lenses and default or None"
+                          i18n:translate="link_view_lens_organizers">
+                      View all my lens organizers</span>
                   </a>
                 </li>
               </ul>
-            </div>
-          </td>
-          <td valign="top">
-            <h1>
-              <span i18n:translate="heading_access_lenses">Access lenses</span>
-              <span class="normal-text-in-header" tal:define="help nocall:portal/help/viewing/lenses | nothing" tal:condition="nocall:help">
-                (<a href="/help/viewing/lenses" i18n:translate="link_question_mark"
-                    tal:attributes="href help/absolute_url">?</a>)
-              </span>
-            </h1>
-            <p tal:define="newlensmacro context/lens_folder_view/macros/newlens | nothing"
-               tal:condition="newlensmacro">
-              <metal:macro metal:use-macro="newlensmacro">
-                Create a new lens
-              </metal:macro>
-            </p>
-            <ul class="lenses"
-                tal:define="l_tool context/lens_tool;
-                            lenses_raw l_tool/getRecentlyModifiedListsOwned | python:[];
-                            lenses python:lenses_raw[:5];
-                            lenses_count python:len(lenses_raw)">
-              <li class="favorites">
-                <a href="#" i18n:translate="link_my_favorites"
-                   tal:attributes="href string:$portal_url/go_favorites/view">My Favorites</a>
-                (<a href="#" i18n:translate="link_edit"
-                   tal:attributes="href string:$portal_url/go_favorites/contents">edit</a>)
-              </li>
-              <tal:div tal:condition="lenses" tal:repeat="lens lenses">
-                <li class="lens"
-                    tal:define="lname lens/getDisplayName | nothing;
-                                url lens/getURL">
-                  <a tal:attributes="href string:${url}">
-                     <span tal:define="displayName lname | nothing"
-                          tal:replace="python:displayName">lens name</span>
+            </td>
+           </tr>
+           <tr>
+            <td colspan="2" valign="top" style="padding-top: 1.5em;">
+               <h1 i18n:translate="heading_guide_tutorials">Guides and Tutorials</h1>
+            </td>
+           </tr>
+           <tr>
+            <td style="padding-right: 30px;" valign="top">
+              <ul>
+                <li tal:define="help nocall:portal/help/authoring/createmodule | nothing" tal:condition="nocall:help">
+                  <a href="/help/authoring/createmodule" i18n:translate="text_module_minutes"
+                     tal:attributes="href help/absolute_url">
+                    How to create a module in minutes
                   </a>
-                  <img src="/private.gif"
-                       tal:condition="python:lens.review_state=='private'"
-                       tal:replace="structure context/private.gif">
-                  (<a tal:attributes="href string:${url}/contents">edit</a>)
                 </li>
-              </tal:div>
-              <li class="more" tal:condition="python:len(lenses_raw) > 5">
-                <a href="#"
-                   i18n:translate="more"
-                   tal:define="ltool context/lens_tool;
-                               lenses ltool/getListsOwned;
-                               lensfolder python:ltool.getIndividualFolder(create=False)"
-                   tal:omit-tag="not:lenses"
-                   tal:attributes="href lensfolder/absolute_url | string:#">More &#187;</a>
-              </li>
-            </ul>
-            <ul 
-            tal:define="lensorganizers context/@@lensorganizers|nothing;
-                        isSiyavulaMember context/@@siyavula-account|nothing;
-                        member python:here.portal_membership.getAuthenticatedMember().getId();
-                        isTestMember python:member.lower().startswith('siyavulatest')" 
-            tal:condition="python:isSiyavulaMember or isTestMember">
-              <li>
-                <a href="/lenses/create_lensorganizer" i18n:translate="link_create_lensorganizer"
-                   tal:attributes="href string:$portal_url/lenses/create_lens_organizer">Create a new lens organizer</a>
-                 </li>
-               <tal:comment tal:condition="nothing">Only show list item if member's lensfolder exists</tal:comment>
-              <li  tal:define="ltool context/lens_tool;
-                               lenses ltool/getListsOwned;
-                               lensfolder python:ltool.getIndividualFolder(create=False);
-                               organizers python:context.restrictedTraverse('@@lensorganizers')(member_only=True) or None;
-                               lensorganizers python:organizers and [b.getObject() for b in organizers] or [];"
-                               tal:condition="python:lensfolder is not None and len(lensorganizers) > 0">
-                 <tal:comment tal:condition="nothing">Only show "View all my lens organizers" link if member has any lens organizers</tal:comment>
-                 <a tal:attributes="href string:${lensfolder/absolute_url}/lensorganizer_listing" 
-                    tal:condition="nocall:lensorganizers" href="#">
-                  <span style="color:grey; text-decoration:underline;"
-                        tal:attributes="style python:not lenses and default or None"
-                        i18n:translate="link_view_lens_organizers">
-                    View all my lens organizers</span>
-                </a>
-              </li>
-            </ul>
-          </td>
-         </tr>
-         <tr>
-          <td colspan="2" valign="top" style="padding-top: 1.5em;">
-             <h1 i18n:translate="heading_guide_tutorials">Guides and Tutorials</h1>
-          </td>
-         </tr>
-         <tr>
-          <td style="padding-right: 30px;" valign="top">
-            <ul>
-              <li tal:define="help nocall:portal/help/authoring/createmodule | nothing" tal:condition="nocall:help">
-                <a href="/help/authoring/createmodule" i18n:translate="text_module_minutes"
-                   tal:attributes="href help/absolute_url">
-                  How to create a module in minutes
-                </a>
-              </li>
-              <li tal:define="help nocall:portal/help/authoring/createcollection | nothing" tal:condition="nocall:help">
-                <a href="/help/authoring/createcollection" i18n:translate="text_create_coll"
-                   tal:attributes="href help/absolute_url">
-                  How to create a collection with existing modules</a>
-              </li>
-              <li tal:define="help nocall:portal/help/authoring/authorguide | nothing" tal:condition="nocall:help">
-                <a href="/help/authoring/authorguide" i18n:translate="text_author_guide"
-                   tal:attributes="href help/absolute_url">
-                  New author guide
-                </a>
-              </li>
-              <li tal:define="tutorial nocall:portal/content/col10151/latest|nothing;">
-                <a tal:condition="not:tutorial" href="http://cnx.org/content/col10151/latest/" i18n:translate="text_tut_ref" target="_blank">
-                  Connexions Tutorial and Reference
-                </a>
-                <a tal:condition="tutorial" href="http://cnx.org/content/col10151/latest/"
-                   tal:attributes="href string:$portal_url/content/col10151/latest/;"
-                   i18n:translate="text_tut_ref">
-                  Connexions Tutorial and Reference
-                </a>
-              </li>
-            </ul>
-          </td>
-          <td valign="top">
-            <ul>
-              <li tal:define="help nocall:portal/help/accounts/myfavorites | nothing" tal:condition="nocall:help">
-                <a href="/help/accounts/myfavorites" i18n:translate="text_use_favorites"
-                   tal:attributes="href help/absolute_url">
-                  How to use "My Favorites"</a> 
-              </li>
-              <li tal:define="help nocall:portal/help/accounts/trackprogress | nothing" tal:condition="nocall:help">
-                <a href="/help/accounts/trackprogress" i18n:translate="text_track_reading"
-                   tal:attributes="href help/absolute_url">
-                  How to track your reading with "My Favorites"</a>
-              </li>
-              <li tal:define="help nocall:portal/help/authoring/createlens | nothing" tal:condition="nocall:help">
-                <a href="/help/authoring/createlens" i18n:translate="text_create_lens"
-                   tal:attributes="href help/absolute_url">
-                  How to create a lens of content</a>
-              </li>
-            </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p i18n:translate="text_if_problems">
-      If you have any problems click the
-      <span i18n:name="help">
-        <a href="/help" 
-            i18n:translate="label_help" 
-            tal:attributes="href string:$portal_url/help">Help</a>
-      </span> tab, or send us an
-      <span i18n:name="email">
-        <a href="mailto:cnx@cnx.org" 
-            i18n:translate="label_email"
-            tal:attributes="href string:mailto:${portal/email_from_address}">e-mail</a></span>.
-    </p>
-
+                <li tal:define="help nocall:portal/help/authoring/createcollection | nothing" tal:condition="nocall:help">
+                  <a href="/help/authoring/createcollection" i18n:translate="text_create_coll"
+                     tal:attributes="href help/absolute_url">
+                    How to create a collection with existing modules</a>
+                </li>
+                <li tal:define="help nocall:portal/help/authoring/authorguide | nothing" tal:condition="nocall:help">
+                  <a href="/help/authoring/authorguide" i18n:translate="text_author_guide"
+                     tal:attributes="href help/absolute_url">
+                    New author guide
+                  </a>
+                </li>
+                <li tal:define="tutorial nocall:portal/content/col10151/latest|nothing;">
+                  <a tal:condition="not:tutorial" href="http://cnx.org/content/col10151/latest/" i18n:translate="text_tut_ref" target="_blank">
+                    Connexions Tutorial and Reference
+                  </a>
+                  <a tal:condition="tutorial" href="http://cnx.org/content/col10151/latest/"
+                     tal:attributes="href string:$portal_url/content/col10151/latest/;"
+                     i18n:translate="text_tut_ref">
+                    Connexions Tutorial and Reference
+                  </a>
+                </li>
+              </ul>
+            </td>
+            <td valign="top">
+              <ul>
+                <li tal:define="help nocall:portal/help/accounts/myfavorites | nothing" tal:condition="nocall:help">
+                  <a href="/help/accounts/myfavorites" i18n:translate="text_use_favorites"
+                     tal:attributes="href help/absolute_url">
+                    How to use "My Favorites"</a> 
+                </li>
+                <li tal:define="help nocall:portal/help/accounts/trackprogress | nothing" tal:condition="nocall:help">
+                  <a href="/help/accounts/trackprogress" i18n:translate="text_track_reading"
+                     tal:attributes="href help/absolute_url">
+                    How to track your reading with "My Favorites"</a>
+                </li>
+                <li tal:define="help nocall:portal/help/authoring/createlens | nothing" tal:condition="nocall:help">
+                  <a href="/help/authoring/createlens" i18n:translate="text_create_lens"
+                     tal:attributes="href help/absolute_url">
+                    How to create a lens of content</a>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <p i18n:translate="text_if_problems">
+        If you have any problems click the
+        <span i18n:name="help">
+          <a href="/help" 
+              i18n:translate="label_help" 
+              tal:attributes="href string:$portal_url/help">Help</a>
+        </span> tab, or send us an
+        <span i18n:name="email">
+          <a href="mailto:cnx@cnx.org" 
+              i18n:translate="label_email"
+              tal:attributes="href string:mailto:${portal/email_from_address}">e-mail</a></span>.
+      </p>
+  
+      </tal:defs>
     </div>
   </body>
 

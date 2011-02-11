@@ -33,7 +33,7 @@ gtool = getToolByName(context, 'portal_groups')
 portalurl = urltool()
 portalpath = urltool.getPortalPath()       # /plone
 lenportalpath = len(portalpath)
-gpath = "%s/%s" % (portalpath, gtool.groupworkspaces_id)
+gpath = "%s/workgroups" % (portalpath)
 
 member = mtool.getAuthenticatedMember()
 wglist = gtool.getGroupsForPrincipal(member)

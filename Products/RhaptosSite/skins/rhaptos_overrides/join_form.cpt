@@ -42,7 +42,9 @@ Plone 2.5 notes:
 <div metal:fill-slot="column_two_slot" />
 
 <div metal:fill-slot="main"
-     tal:define="errors options/state/getErrors;">
+     tal:define="errors options/state/getErrors;
+                 portal context/@@plone_portal_state/portal;
+                 portal_title portal/title">
 
       <h1 i18n:translate="heading_request_portal_account">Request a 
         <span tal:replace="portal_title"
@@ -280,8 +282,7 @@ Plone 2.5 notes:
 
         <!-- create the dialog box from this -->
         <div id="sitelicense_dlg" class="" style="display:none">
-          <div class="x-dlg-hd" i18n:translate="header_add_lens"
-               tal:content="context/sitelicense/Title">Service and Repository User Agreement</div>
+          <div class="x-dlg-hd" tal:content="context/sitelicense/Title">Service and Repository User Agreement</div>
           <div class="x-dlg-bd" id="license_dlg_inner" style="background-color:white; padding:1em"
                tal:content="structure context/sitelicense/CookedBody | nothing">
             ...
