@@ -12,4 +12,10 @@
     visible="True">
   <permission>Set own properties</permission>
  </configlet>
+ <configlet title="Role Requests" action_id="RoleRequests"
+    appId="Collaborations" category="Collaboration" condition_expr=""
+    url_expr="string:${portal_url}/collaborations"
+    visible="True">
+  <permission>Set own properties</permission>
+ </configlet>
 </object>
