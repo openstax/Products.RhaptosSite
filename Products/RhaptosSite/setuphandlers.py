@@ -79,28 +79,6 @@ def install(context):
     except BadRequest:
         mydashboard.manage_changeProperties(right_slots=right_slots)
 
-    ## set slot properties
-    logger.info("...setting slot properties")
-    # set the right slots for member workspace and the workgroups
-    # log_action_slot portlet is only seen in the module/collection context
-    # portlet_recentview is only seen in the workspace/workgroup context
-
-    right_slots = ['context/portlet_login/macros/portlet',
-                   'context/portlet_loggedin/macros/portlet',
-                   'context/log_action_slot/macros/portlet',]
-
-    members = portal.Members
-    try:
-        members.manage_addProperty('right_slots', right_slots, type='lines')
-    except BadRequest:
-        members.manage_changeProperties(right_slots=right_slots)
-
-    workgroups = groups_tool.getGroupWorkspacesFolder()
-    try:
-        workgroups.manage_addProperty('right_slots', right_slots, type='lines')
-    except BadRequest:
-        workgroups.manage_changeProperties(right_slots=right_slots)
-
     # delete unwanted actions
     # FIXME: when GenericSetup actions handler allows remove="True", do this in the profile
     pa_tool = getToolByName(portal, 'portal_actions')
@@ -115,31 +93,3 @@ def install(context):
         logger.info("Removing action 'author_home'")
         pa_tool.deleteActions([actindex])
 
-    ## upgrades
-    logger.info("...upgrades (if necessary)")
-    
-    # check for members folder rename
-    m_tool = getToolByName(portal, 'portal_membership')
-    membersfolder = m_tool.getMembersFolder()
-    members = None
-    sample = getattr(membersfolder, 'jccooper', None)
-    if not sample:
-        members = membersfolder.objectValues()
-        if members:
-            sample = members[0]
-    if sample:  # else we have no members: new site
-        newtitle = memberfoldertitle(sample)
-        if sample.Title() != newtitle:
-            logger.info("- upgrading personal workspace titles")
-            oldpatterntitle = "%s's Workspace"  # can't actually get this, so hard-code it
-            members = members or membersfolder.objectValues()
-            for f in members:
-                oldtitle = f.Title()
-                newtitle = memberfoldertitle(f)
-                f.setTitle(newtitle)
-                #logger.info(f.getId())
-                if oldtitle != oldpatterntitle % f.getId():  # prepend old custom title to description
-                    desc = f.Description()
-                    f.setDescription(oldtitle + ": " + desc)
-            logger.info("< done")
-    logger.info("Successfully installed %s." % 'RhaptosSite')
