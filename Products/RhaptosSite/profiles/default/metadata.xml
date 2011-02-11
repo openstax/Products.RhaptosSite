@@ -26,5 +26,6 @@
     <dependency>profile-Products.MathEditor:default</dependency>
     <dependency>profile-Products.Lineup:default</dependency>
     <dependency>profile-Products.RhaptosSword:default</dependency>
+    <dependency>profile-plonetheme.sunburst:default</dependency>
   </dependencies>
 </metadata>

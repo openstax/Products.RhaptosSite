@@ -179,26 +179,6 @@ def customizeSlots(self, portal):
             folder._setProperty('left_slots', list(), type='lines')
 
 
-def customizeSkins(self, portal):
-    st = getToolByName(portal, 'portal_skins')
-
-    # We need to add Filesystem Directory Views for any directories in
-    # our skins/ directory.  These directories should already be
-    # configured.
-    addDirectoryViews(st, 'skins', product_globals)
-
-    # FIXME: we need a better way of constructing this
-    pathlist= [p.strip() for p in st.getSkinPath('Plone Default').split(',')]
-    pathlist.insert(1, 'rhaptos_site')
-    pathlist.insert(1, 'rhaptos_overrides')
-    path = ','.join(pathlist)
-
-    # Create a new 'Rhaptos' skin
-    st.addSkinSelection('Rhaptos', path, make_default=1)
-
-    # disallow changing of skins (skin flexibility)
-    st.allow_any = 0
-
 def customizeWorkflow(self, portal):
     wf_tool=getToolByName(portal,'portal_workflow')
     wf_tool.setChainForPortalTypes(['Workspace'],'')
@@ -414,7 +394,6 @@ functions = [
     ('Customize Membership Tool', customizeMembershipTool),
     ('Customize Actions', customizeActions),
     # XXX: ('Customize Portlets', customizeSlots),
-    ('Customize Skins', customizeSkins),
     ('Customize Workflow', customizeWorkflow),
     ('Customize Permissions', customizePermissions),
     ('Customize NavTree', customizeNavTree),
