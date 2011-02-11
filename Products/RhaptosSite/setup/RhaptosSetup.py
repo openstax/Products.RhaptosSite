@@ -165,7 +165,7 @@ def customizeSlots(self, portal):
             )
 
     portal.Members._updateProperty('right_slots', right_slots)
-    wsfolder = portal.groups
+    wsfolder = portal.workgroups
     for folder in (portal.Members, wsfolder):
         for slot_attr, slot_value in slots.items():
             if folder.hasProperty(slot_attr):
@@ -206,7 +206,7 @@ def customizePermissions(self, portal):
     portal.Members.manage_permission('Use external editor', ('Maintainer', 'Owner',), acquire=1)        
     portal.Members.manage_permission('View', ('Manager', 'Owner',), acquire=0)
 
-    groups = portal.groups
+    groups = portal.workgroups
     groups.manage_permission('Add Annotation Servers', ('Manager', 'Owner',), acquire=1)
     groups.manage_permission('Add portal content', ('Member',), acquire=1)
     groups.manage_permission('Delete objects', ('Maintainer', 'Owner',), acquire=1)
