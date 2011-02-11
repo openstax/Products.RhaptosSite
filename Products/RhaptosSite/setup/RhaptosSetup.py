@@ -83,30 +83,6 @@ def customizeMemberdata(self, portal):
     mdtool._updateProperty('visible_ids', 0)        
 
 
-def customizeMemberCatalog(self, portal):
-
-    from Products.ManagableIndex.FieldIndex import FieldIndex
-
-    # Customize the member_catalog indexes
-    catalog = getToolByName(portal, 'member_catalog')
-    catalog.addIndex('firstname', 'FieldIndex')
-    catalog.addIndex('approved_time', 'DateIndex')
-    catalog.addColumn('approved_time')
-
-    # Replace email index with Managable FieldIndex
-    catalog.delIndex('email')
-    index = FieldIndex('email')
-    catalog._catalog.addIndex('email', index)
-    index._updateProperty('TermType', 'string')
-
-    # New Managable FieldIndex for surname so we can sort on it
-    index = FieldIndex('surname')
-    catalog._catalog.addIndex('surname', index)
-    index._updateProperty('TermType', 'string')
-    index._updateProperty('PrenormalizeTerm', 'python: value.lower()')
-
-    
-
 def customizeMembershipTool(self, portal):
 
     mt = getToolByName(portal, 'portal_membership')
@@ -135,6 +111,13 @@ def customizeActions(self, portal):
                 'change_state', 'addtofavorites', 'sitemap', 'accessibility', 
                 'full_screen'):
             a.visible = 0
+        elif a.id == 'mystuff':
+            a.title = 'My Workspace'
+            a.action = Expression('string:${portal/portal_membership/getHomeUrl}/workspace_contents')
+        elif a.id == 'preferences':
+            a.title = 'My Account'
+        elif a.id == 'undo':
+            a.visible = 0
         if a.title == 'Contact':
             a.title = 'Contact Us'
         if a.title in order:
@@ -151,50 +134,6 @@ def customizeActions(self, portal):
 
     #pa_tool.addAction('courses', 'Courses', 'string:$portal_url/content/browse_course_titles','', 'View', 'site_actions')
 
-    m_tool=getToolByName(portal,'portal_membership')
-    for a in m_tool._actions:
-        if a.id == 'mystuff':
-            a.title = 'My Workspace'
-            a.action = Expression('string:${portal/portal_membership/getHomeUrl}/workspace_contents')
-        elif a.id == 'preferences':
-            a.title = 'My Account'
-    m_tool._p_changed = 1
-
-    u_tool=getToolByName(portal,'portal_undo')
-    actions=u_tool._cloneActions()
-    for a in actions:
-        if a.id == 'undo':
-            a.visible = 0
-    u_tool._actions=actions
-
-
-def customizeControlPanel(self, portal):
-    from Products.CMFCore.permissions import SetOwnProperties
-    groups = ['site|Plone|Plone Configuration',
-              'site|Products|Add-on Product Configuration',
-              'member|Member|Account Maintenance',
-              'member|Collaboration|Collaboration Requests',
-              ]
-
-    configlets = (
-        {'id':'Collaborations',
-         'appId':'Collaborations',
-         'name':'Role Requests',
-         'action':'string:${portal_url}/collaborations',
-         'permission': SetOwnProperties,
-         'category':'Collaboration',
-         },
-        {'id':'Patches',
-         'appId':'Patches',
-         'name':'Suggested Edits',
-         'action':'string:${portal_url}/patches',
-         'permission': SetOwnProperties,
-         'category':'Collaboration',
-         },
-        )
-    cp_tool = getToolByName(portal, 'portal_controlpanel')
-    cp_tool._updateProperty('groups', groups)
-    cp_tool.registerConfiglets(configlets)
 
 def customizeObjectDescriptions(self, portal):
     tt = getToolByName(portal, 'portal_types')
@@ -226,7 +165,7 @@ def customizeSlots(self, portal):
             )
 
     portal.Members._updateProperty('right_slots', right_slots)
-    wsfolder = portal.portal_groups.getGroupWorkspacesFolder()
+    wsfolder = portal.groups
     for folder in (portal.Members, wsfolder):
         for slot_attr, slot_value in slots.items():
             if folder.hasProperty(slot_attr):
@@ -260,24 +199,6 @@ def customizeSkins(self, portal):
     # disallow changing of skins (skin flexibility)
     st.allow_any = 0
 
-def customizeTypes(self, portal):
-    types_tool=getToolByName(portal,'portal_types')
-
-    actions=types_tool.ChangeSet._cloneActions()
-    for a in actions:
-        if a.id == 'edit':
-            a.visible = 0
-    types_tool.ChangeSet._actions=actions
-
-    # Customize Workgroup type
-    # XXX this breaks the workspace_contents template which expects
-    # allowed_content_types to be set to ('Collection', 'Module',
-    # "UnifiedFile')
-    #wg = getattr(types_tool, 'Workgroup')
-    #wg.manage_changeProperties(immediate_view='folder_contents',
-    #                           filter_content_types=1,
-    #                           allowed_content_types=('File', 'Image', 'Module', 'Collection'))
-
 def customizeWorkflow(self, portal):
     wf_tool=getToolByName(portal,'portal_workflow')
     wf_tool.setChainForPortalTypes(['Workspace'],'')
@@ -305,7 +226,7 @@ def customizePermissions(self, portal):
     portal.Members.manage_permission('Use external editor', ('Maintainer', 'Owner',), acquire=1)        
     portal.Members.manage_permission('View', ('Manager', 'Owner',), acquire=0)
 
-    groups = portal.portal_groups.getGroupWorkspacesFolder()
+    groups = portal.groups
     groups.manage_permission('Add Annotation Servers', ('Manager', 'Owner',), acquire=1)
     groups.manage_permission('Add portal content', ('Member',), acquire=1)
     groups.manage_permission('Delete objects', ('Maintainer', 'Owner',), acquire=1)
@@ -420,7 +341,7 @@ def createHelpSection(self, portal):
             set_owner=True)
         help = portal.help
         # Delete the FAQ
-        help.manage_delObjects('faq')
+        # XXX: not there? help.manage_delObjects('faq')
         text = help.index_html.getRawText()
         helpfaq_match = helpfaq_regx.search(text)
         if helpfaq_match:
@@ -428,7 +349,7 @@ def createHelpSection(self, portal):
             help.index_html.edit('html', text)
         if 'AvailableFeeds' in help.objectIds():
             help.manage_delObjects('AvailableFeeds')
-        help.invokeFactory('Document', 'AvailableFeeds')
+        help.invokeFactory(type_name='Document', id='AvailableFeeds')
         ifile = open(os.path.join(os.path.dirname(__file__), 
                 'data', 'AvailableFeeds.html'), 'rb')
         text = ifile.read()
@@ -481,10 +402,10 @@ def creataAboutUSSection(self, portal):
 
 def addPDFsFolder(self, portal):
     portal_types = getToolByName(portal, 'portal_types')
-    large_folder = portal_types['Large Plone Folder']
+    large_folder = portal_types['Folder']
     large_folder.manage_changeProperties(global_allow=True)
     if 'pdfs' not in portal.objectIds():
-        portal.invokeFactory('Large Plone Folder', 'pdfs')
+        portal.invokeFactory('Folder', 'pdfs')
     large_folder.manage_changeProperties(global_allow=False)
 
 # XXX Determine if the Human titles are necessary for this process, if not
@@ -492,24 +413,21 @@ def addPDFsFolder(self, portal):
 functions = [
     ('Customize Tools', customizeTools),
     ('Customize Member Data', customizeMemberdata),
-    ('Customize Member Catalog', customizeMemberCatalog),
     ('Customize Membership Tool', customizeMembershipTool),
     ('Customize Actions', customizeActions),
-    ('Customize Portlets', customizeSlots),
+    # XXX: ('Customize Portlets', customizeSlots),
     ('Customize Skins', customizeSkins),
-    ('Customize Types', customizeTypes),
     ('Customize Workflow', customizeWorkflow),
     ('Customize Permissions', customizePermissions),
     ('Customize NavTree', customizeNavTree),
     ('Customize Portal', customizePortal),
 ##    ('Customize Portal Catalog', customizePortalCatalog),
     ('Customize Front Page', customizeFrontPage),
-    ('Customize Control Panel', customizeControlPanel),
 ##    ('Customize Factory Tool', customizeFactoryTool),
     ('Customize Diff Tool', customizeDiffTool),
     ('Customize Object Descriptions', customizeObjectDescriptions),
     ('Set PAS Plugins', setPASPlugins),
-    ('Create Help Section', createHelpSection),
+    # XXX: fix ('Create Help Section', createHelpSection),
 #    ('Create Collection Printer', createCollectionPrinter),
     ('Create About Us Section', creataAboutUSSection),
     ('Create PDFs Folder', addPDFsFolder),
