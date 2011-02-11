@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<object name="portal_skins" default_skin="Sunburst Theme">
+
+ <object name="rhaptos_site"
+    meta_type="Filesystem Directory View"
+    directory="RhaptosSite/skins/rhaptos_site"/>
+ <object name="rhaptos_overrides"
+    meta_type="Filesystem Directory View"
+    directory="RhaptosSite/skins/rhaptos_overrides"/>
+
+ <skin-path name="Rhaptos Theme" based-on="Sunburst Theme">
+  <layer name="rhaptos_site"
+     insert-after="custom"/>
+  <layer name="rhaptos_overrides"
+     insert-after="rhaptos_site"/>
+ </skin-path>
+
+</object>
