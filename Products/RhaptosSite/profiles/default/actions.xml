@@ -17,7 +17,7 @@
      url_expr="string:$portal_url/logout" visible="True">
    <permission>View</permission>
   </action>
-  <action title="Content" action_id="content" category="portal_tabs"
+  <action title="Content" action_id="contentaction" category="portal_tabs"
      condition_expr=""
      url_expr="string:$portal_url/content" visible="True">
    <permission>View</permission>
