@@ -35,7 +35,6 @@
   <!-- show MyRhaptos tab generally for auth users; highlights when in 'mydashboard' object .
        goes away on objects that have their own actions, or else we duplicate tabs -->
   <action title="MyRhaptos" action_id="mydashboard" category="portal_tabs"
-     condition_expr="python:member and not portal.listInList(['Members', 'GroupWorkspaces', 'lenses'], folder.getPhysicalPath())"
      url_expr="string:$portal_url/mydashboard" visible="True">
    <permission>View</permission>
   </action>
@@ -53,7 +52,6 @@
   </action>
   <!-- show MyRhaptos tab generally for unauth users; highlights on login_form -->
   <action title="MyRhaptos" action_id="login_form" category="portal_tabs"
-     condition_expr="python:not member and not portal.listInList(['Members', 'GroupWorkspaces', 'lenses'], folder.getPhysicalPath())"
      url_expr="string:$portal_url/mydashboard" visible="True">
    <permission>View</permission>
   </action>
