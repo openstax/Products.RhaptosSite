@@ -403,10 +403,8 @@ def creataAboutUSSection(self, portal):
 def addPDFsFolder(self, portal):
     portal_types = getToolByName(portal, 'portal_types')
     large_folder = portal_types['Folder']
-    large_folder.manage_changeProperties(global_allow=True)
     if 'pdfs' not in portal.objectIds():
         portal.invokeFactory('Folder', 'pdfs')
-    large_folder.manage_changeProperties(global_allow=False)
 
 # XXX Determine if the Human titles are necessary for this process, if not
 #     please remove them...
