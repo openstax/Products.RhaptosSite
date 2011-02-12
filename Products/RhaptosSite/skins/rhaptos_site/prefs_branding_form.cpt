@@ -37,20 +37,16 @@
               style="display:inline"
               name="accountsearch"
               tal:attributes="action template/getId">
-          <input tabindex=""
-                 type="text"
+          <input type="text"
                  name="searchstring"
                  value=""
-                 tal:attributes="tabindex tabindex/next;
-                                 value request/searchstring | default" />
+                 tal:attributes="value request/searchstring | default" />
 
           <input class="context searchButton"
-                 tabindex=""
                  type="submit"
                  name="form.button.search"
                  value="Search"
-                 i18n:attributes="value value_search"
-                 tal:attributes="tabindex tabindex/next;" />
+                 i18n:attributes="value value_search"/>
           <input type="hidden" name="form.submitted" value="1" />
         </form>
         <span>OR</span>
@@ -59,12 +55,10 @@
               name="orgaccountsearch"
               tal:attributes="action template/getId">
           <input class="context searchButton"
-                 tabindex=""
                  type="submit"
                  name="form.button.showallorg"
                  value="Show all organizational accounts"
-                 i18n:attributes="value value_showallorg"
-                 tal:attributes="tabindex tabindex/next;" />
+                 i18n:attributes="value value_showallorg"/>
           <input type="hidden" name="form.submitted" value="1" />
         </form>
       </p>
@@ -182,12 +176,10 @@
         </tal:table>
         <tal:input tal:condition="python:bSearch or bShowAll">
           <input class="context searchButton"
-                 tabindex=""
                  type="submit"
                  name="form.button.change"
                  value="Save Changes"
-                 i18n:attributes="value value_save"
-                 tal:attributes="tabindex tabindex/next;" />
+                 i18n:attributes="value value_save"/>
           <input type="hidden" name="form.submitted" value="1" />
         </tal:input>
       </form>

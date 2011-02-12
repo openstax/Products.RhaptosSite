@@ -107,8 +107,6 @@ Rhaptos notes:
                          id="file"
                          name="file"
                          size="30"
-                         tabindex=""
-                         tal:attributes="tabindex tabindex/next"
                          />
 
                   <br />
@@ -137,9 +135,7 @@ Rhaptos notes:
                       id="file_data"
                       cols="80"
                       rows="20"
-                      tabindex=""
-                      tal:content="here/data"
-                      tal:attributes="tabindex tabindex/next"></textarea>
+                      tal:content="here/data"></textarea>
           </div>
 
           <div class="formControls"
@@ -154,19 +150,15 @@ Rhaptos notes:
 
             <input class="context"
                    type="submit"
-                   tabindex=""
                    name="form.button.Save"
                    value="Save"
                    i18n:attributes="value"
-                   tal:attributes="tabindex tabindex/next;
-                                   disabled python:test(isLocked, 'disabled', None);" />
+                   tal:attributes="disabled python:test(isLocked, 'disabled', None);" />
             <input class="standalone"
                    type="submit"
-                   tabindex=""
                    name="form.button.Cancel"
                    value="Cancel"
                    i18n:attributes="value"
-                   tal:attributes="tabindex tabindex/next"
                    />
           </div>
 

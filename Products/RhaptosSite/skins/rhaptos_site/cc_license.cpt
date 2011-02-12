@@ -117,7 +117,6 @@
           class="context" 
           name="form.button.next" 
           value="Next >>" 
-          tal:attributes="tabindex tabindex/next;" 
           i18n:attributes="value value_next_with_arrows" />
         <input type="hidden" name="license" value="by"
                tal:attributes="value license_url;" />

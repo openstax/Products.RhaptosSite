@@ -74,7 +74,6 @@ Rhaptos notes:
                     <input class="standalone"
                          type="submit"
                          value="Add"
-                         tabindex=""
                          i18n:attributes="value"
                          tal:define="ttitle python: here.utranslate(Title)"
                          tal:attributes="id python:normalizeString(Id);

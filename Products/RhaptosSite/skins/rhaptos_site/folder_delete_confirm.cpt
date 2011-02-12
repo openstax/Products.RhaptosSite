@@ -142,16 +142,12 @@
                name="form.button.delete"
                value="Yes, Remove content"
                type="submit"
-               tabindex=""
-               i18n:attributes="value"
-               tal:attributes="tabindex tabindex/next;" />
+               i18n:attributes="value"/>
         <input class="standalone"
                name="form.button.cancel"
                value="No, Cancel"
                type="submit"
-               tabindex=""
-               i18n:attributes="value"
-               tal:attributes="tabindex tabindex/next;" />
+               i18n:attributes="value"/>
 
         <input type="hidden" name="form.submitted" value="1" />
       </form>

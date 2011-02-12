@@ -107,8 +107,6 @@ This is based off of the Plone2.0.5 template which has been dropped
                          id="file"
                          name="file"
                          size="30"
-                         tabindex=""
-                         tal:attributes="tabindex tabindex/next;"
                          />
 
                   <div i18n:translate="no_image_uploaded"
@@ -129,22 +127,18 @@ This is based off of the Plone2.0.5 template which has been dropped
                    i18n:attributes="alt"/>
 
             <input class="context"
-                   tabindex=""
                    type="submit"
                    name="form.button.Save"
                    value="Save"
                    i18n:attributes="value"
-                   tal:attributes="tabindex tabindex/next;
-                                   disabled python:test(isLocked, 'disabled', None);" />
+                   tal:attributes="disabled python:test(isLocked, 'disabled', None);" />
 
 
             <input class="standalone"
-                   tabindex=""
                    type="submit"
                    name="form.button.Cancel"
                    value="Cancel"
-                   i18n:attributes="value"
-                   tal:attributes="tabindex tabindex/next;" />
+                   i18n:attributes="value"/>
           </div>
         </fieldset>
 

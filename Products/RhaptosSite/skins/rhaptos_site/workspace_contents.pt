@@ -118,9 +118,7 @@ Yet to do:
         <input class="standalone"
                type="submit"
                value="Search for Published Content"
-               tabindex=""
-               i18n:attributes="value value_workspace_search_for_content"
-               tal:attributes="tabindex tabindex/next|nothing" />
+               i18n:attributes="value value_workspace_search_for_content"/>
         <input type="hidden" name="target" tal:attributes="value context/getId" />
       </form>
 

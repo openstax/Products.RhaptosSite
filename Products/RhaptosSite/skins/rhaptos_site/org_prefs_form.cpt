@@ -67,10 +67,8 @@ Org account version
                        id="fullname"
                        name="fullname"
                        size="30"
-                       tabindex=""
                        value="member.fullname html_quote"
-                       tal:attributes="value fullname;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value fullname"
                        />
     
             </div>
@@ -96,10 +94,8 @@ Org account version
                        id="shortname"
                        name="shortname"
                        size="30"
-                       tabindex=""
                        value="member.shortname html_quote"
-                       tal:attributes="value shortname;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value shortname"
                        />
     
             </div>
@@ -125,10 +121,8 @@ Org account version
                        id="email"
                        name="email"
                        size="25"
-                       tabindex=""
                        value="member.email html_quote"
-                       tal:attributes="value email;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value email"
                        />
     
             </div>
@@ -150,10 +144,8 @@ Enter the address of your Web page <i>e.g.</i> http://works.example.com/good
                        id="homepage"
                        name="homepage"
                        size="50"
-                       tabindex=""
                        value="member.homepage html_quote"
-                       tal:attributes="value homepage;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value homepage"
                        />
             
             </div>
@@ -187,22 +179,19 @@ Enter the address of your Web page <i>e.g.</i> http://works.example.com/good
 		<div tal:content="error" i18n:translate="">Validation error
 			output</div>
     
-		<input type="file" name="logo" id="logo" size="20" tabindex=""
+		<input type="file" name="logo" id="logo" size="20" 
 		tal:attributes="value python:errors and
-		getattr(request.logo,'filename') or (logo and logo.id or ''); tabindex
-		tabindex/next;"/>
+		getattr(request.logo,'filename') or (logo and logo.id or '')"/>
 
 
                 <br />
 
                 <input class="noborder"
-                    tabindex=""
                     type="checkbox"
             	    id="pdelete"
                     value="Delete Logo"
                     name="delete_logo"
-                    tal:attributes="tabindex tabindex/next;
-	            checked delete_checked"
+                    tal:attributes="checked delete_checked"
                     />
                 <label for="pdelete" i18n:translate="label_delete_logo">Delete Logo</label>
 		 
@@ -226,10 +215,8 @@ Enter the address of your Web page <i>e.g.</i> http://works.example.com/good
                        name="biography:lines"
                        cols="50"
 		       rows="5"
-                       tabindex=""
                        value="member/biography html_quote"
-                       tal:attributes="value biography;
-                                       tabindex tabindex/next;">
+                       tal:attributes="value biography">
 <span tal:repeat="para biography"
                        tal:replace="string:${para}">[paragraph]</span></textarea>            
             </div>
@@ -253,10 +240,8 @@ Enter the address of your Web page <i>e.g.</i> http://works.example.com/good
                        id="location"
                        name="location"
                        size="30"
-                       tabindex=""
                        value="member.location html_quote"
-                       tal:attributes="value location;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value location"
                        />
             
             </div> 
@@ -265,20 +250,16 @@ Enter the address of your Web page <i>e.g.</i> http://works.example.com/good
     
             <div class="formControls">
                 <input class="context"
-                       tabindex=""
                        type="submit"
                        value="Save"
                        name="form.button.Save"
                        i18n:attributes="value value_save"
-                       tal:attributes="tabindex tabindex/next;"
                        />
                 <input class="standalone"
-                       tabindex=""
                        type="submit"
                        value="Cancel"
                        name="form.button.Cancel"
                        i18n:attributes="value value_cancel"
-                       tal:attributes="tabindex tabindex/next;"
                        />
             </div>
     

@@ -99,9 +99,7 @@ Translation mainly use of new form style
                          name="fullname"
                          size="30"
                          value="fullname"
-                         tabindex=""
-                         tal:attributes="value fullname;
-                                         tabindex tabindex/next;"
+                         tal:attributes="value fullname"
                          />
           </div>
 
@@ -128,9 +126,7 @@ Translation mainly use of new form style
                          name="shortname"
                          size="30"
                          value="shortname"
-                         tabindex=""
-                         tal:attributes="value shortname;
-                                         tabindex tabindex/next;"
+                         tal:attributes="value shortname"
                          />
           </div>
 
@@ -142,11 +138,9 @@ Translation mainly use of new form style
           <div class="formControls">
             <input class="context"
                    type="submit"
-                   tabindex=""
                    name="form.button.Register"
                    value="Request Organizational Account"
-                   i18n:attributes="value value_register_account"
-                   tal:attributes="tabindex tabindex/next;" />
+                   i18n:attributes="value value_register_account"/>
           </div>
         </fieldset>
 

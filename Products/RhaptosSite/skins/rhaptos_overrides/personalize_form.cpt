@@ -112,10 +112,8 @@ Rhaptos notes:
                        id="honorific"
                        name="honorific"
                        size="8"
-                       tabindex=""
                        value="member.honorific html_quote"
-                       tal:attributes="value honorific;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value honorific"
                        />
     
             </div>
@@ -143,10 +141,8 @@ Rhaptos notes:
                        id="firstname"
                        name="firstname"
                        size="15"
-                       tabindex=""
                        value="member.firstname html_quote"
-                       tal:attributes="value firstname;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value firstname"
                        />
     
             </div>
@@ -169,10 +165,8 @@ Rhaptos notes:
                        id="othername"
                        name="othername"
                        size="15"
-                       tabindex=""
                        value="member.othername html_quote"
-                       tal:attributes="value othername;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value othername"
                        />
     
             </div>
@@ -199,10 +193,8 @@ Rhaptos notes:
                        id="surname"
                        name="surname"
                        size="15"
-                       tabindex=""
                        value="member.surname html_quote"
-                       tal:attributes="value surname;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value surname"
                        />
     
             </div>
@@ -227,10 +219,8 @@ Rhaptos notes:
                        id="lineage"
                        name="lineage"
                        size="8"
-                       tabindex=""
                        value="member.lineage html_quote"
-                       tal:attributes="value lineage;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value lineage"
                        />
             </div>
 
@@ -256,10 +246,8 @@ Rhaptos notes:
                        id="fullname"
                        name="fullname"
                        size="30"
-                       tabindex=""
                        value="member.fullname html_quote"
-                       tal:attributes="value fullname;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value fullname"
                        />
     
             </div>
@@ -288,10 +276,8 @@ Rhaptos notes:
                        id="email"
                        name="email"
                        size="25"
-                       tabindex=""
                        value="member.email html_quote"
-                       tal:attributes="value email;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value email"
                        />
     
             </div>
@@ -313,10 +299,8 @@ Rhaptos notes:
                        id="homepage"
                        name="homepage"
                        size="50"
-                       tabindex=""
                        value="member.homepage html_quote"
-                       tal:attributes="value homepage;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value homepage"
                        />
             
             </div>
@@ -338,9 +322,7 @@ Rhaptos notes:
                 </div>
     
                 <select name="wysiwyg_editor"
-                        id="wysiwyg_editor"
-                        tabindex=""
-                        tal:attributes="tabindex tabindex/next;">
+                        id="wysiwyg_editor">
                     <tal:block tal:repeat="editor site_properties/available_editors">
                     <option tal:condition="python:editor != 'None'"
                             value="None"
@@ -369,8 +351,7 @@ Rhaptos notes:
                        class="noborder"
                        name="listed"
                        id="cb_listed"
-                       tal:attributes="tabindex tabindex/next;
-                                       checked python:test(listed, 'checked', None);"
+                       tal:attributes="checked python:test(listed, 'checked', None);"
                        />
 
                 <label for="cb_listed" i18n:translate="label_listed_status">Listed in searches</label>
@@ -388,8 +369,7 @@ Rhaptos notes:
                        class="noborder"
                        name="visible_ids"
                        id="cb_invisible_ids"
-                       tal:attributes="tabindex tabindex/next;
-                                       checked python:test(visible_ids, 'checked', None);"
+                       tal:attributes="checked python:test(visible_ids, 'checked', None);"
                        />
     
                 <label for="cb_invisible_ids" 
@@ -418,8 +398,6 @@ Rhaptos notes:
     
                 <select name="portal_skin"
                         id="portal_skin"
-                        tabindex=""
-                        tal:attributes="tabindex tabindex/next;"
                         >
                 <option value="#"
                         i18n:translate=""
@@ -451,10 +429,8 @@ Rhaptos notes:
 	      id="affiliation"
 	      name="affiliation"
 	      size="30"
-                       tabindex=""
                        value="member.affiliation html_quote"
-                       tal:attributes="value affiliation;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value affiliation"
                        />
             
             </div>
@@ -478,10 +454,8 @@ Rhaptos notes:
                        id="affiliation_url"
                        name="affiliation_url"
                        size="50"
-                       tabindex=""
                        value="member.affiliation_url html_quote"
-                       tal:attributes="value affiliation_url;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value affiliation_url"
                        />
             
             </div> 
@@ -504,10 +478,8 @@ Rhaptos notes:
                        id="preferred_language"
                        name="preferred_language"
                        size="30"
-                       tabindex=""
                        value="member.preferred_language html_quote"
-                       tal:attributes="value preferred_language;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value preferred_language"
                        />
             
             </div> 
@@ -532,10 +504,8 @@ Rhaptos notes:
                        name="alternative_languages:lines"
                        style="width: 50%"
 		       rows="3"
-                       tabindex=""
                        value="member/alternative_languages html_quote"
-                       tal:attributes="value alternative_languages;
-                                       tabindex tabindex/next;">
+                       tal:attributes="value alternative_languages">
 <span tal:repeat="language alternative_languages" tal:replace="string:${language}">[language]</span></textarea>
             </div> 
 
@@ -557,10 +527,8 @@ Rhaptos notes:
                        id="location"
                        name="location"
                        size="30"
-                       tabindex=""
                        value="member.location html_quote"
-                       tal:attributes="value location;
-                                       tabindex tabindex/next;"
+                       tal:attributes="value location"
                        />
             
             </div> 
@@ -585,9 +553,7 @@ Rhaptos notes:
                        name="interests:lines"
 		       wrap="off"
                        style="width: 50%"
-		       rows="3"
-                       tabindex=""
-                       tal:attributes="tabindex tabindex/next;">
+		       rows="3">
 <span tal:repeat="interest interests" tal:replace="string:${interest}">[interest]</span></textarea>
             </div>  
 
@@ -611,10 +577,8 @@ Rhaptos notes:
                        name="recommended_content:lines"
                        style="width: 50%"
 		       rows="3"
-                       tabindex=""
                        value="member/recommended_content html_quote"
-                       tal:attributes="value recommended_content;
-                                       tabindex tabindex/next;">
+                       tal:attributes="value recommended_content">
 <span tal:repeat="content_item recommended_content"
                        tal:replace="string:${content_item}">[Content Item]</span></textarea>
 
@@ -640,10 +604,8 @@ Rhaptos notes:
                        name="biography:lines"
                        cols="50"
 		       rows="5"
-                       tabindex=""
                        value="member/biography html_quote"
-                       tal:attributes="value biography;
-                                       tabindex tabindex/next;">
+                       tal:attributes="value biography">
 <span tal:repeat="para biography"
                        tal:replace="string:${para}">[paragraph]</span></textarea>            
             </div>
@@ -677,21 +639,17 @@ Rhaptos notes:
                        name="portrait"
                        id="portrait"
                        size="20"
-                       tabindex=""
-                       tal:attributes="value python:errors and getattr(request.portrait,'filename') or portrait.id; 
-		       tabindex tabindex/next;"/>
+                       tal:attributes="value python:errors and getattr(request.portrait,'filename') or portrait.id"/>
 
 
                 <br />
 
                 <input class="noborder"
-                    tabindex=""
                     type="checkbox"
             	    id="pdelete"
                     value="Delete Portrait"
                     name="delete_portrait"
-                    tal:attributes="tabindex tabindex/next;
-	            checked delete_checked"
+                    tal:attributes="checked delete_checked"
                     />
                 <label for="pdelete" i18n:translate="label_delete_portrait">Delete Portrait</label>
 		 
@@ -704,20 +662,16 @@ Rhaptos notes:
     
             <div class="formControls">
                 <input class="context"
-                       tabindex=""
                        type="submit"
                        value="Save"
                        name="form.button.Save"
                        i18n:attributes="value value_save"
-                       tal:attributes="tabindex tabindex/next;"
                        />
                 <input class="standalone"
-                       tabindex=""
                        type="submit"
                        value="Cancel"
                        name="form.button.Cancel"
                        i18n:attributes="value value_cancel"
-                       tal:attributes="tabindex tabindex/next;"
                        />
             </div>
     

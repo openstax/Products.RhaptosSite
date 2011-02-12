@@ -205,11 +205,9 @@ Old customizations no longer included:
                                id=""
                                value=""
                                size="40"
-                               tabindex=""
                                tal:define="new_id python:new_ids and new_ids[item_idx] or item"
                                tal:attributes="value    new_id;
-                                               id       string:${item}_id;
-                                               tabindex tabindex/next;" />
+                                               id       string:${item}_id"/>
                       </td>
                     </tr>
                   </tal:block>
@@ -247,12 +245,10 @@ Old customizations no longer included:
                                name="new_titles:list"
                                value="title"
                                size="40"
-                               tabindex=""
                                tal:define="defaultTitle obj/Title;
                                            new_title    python:new_titles and new_titles[item_idx] or defaultTitle"
                                tal:attributes="value    new_title;
-                                               id       string:${item}_title;
-                                               tabindex tabindex/next;" />
+                                               id       string:${item}_title" />
                       </td>
                     </tr>
                   </tal:block>
@@ -279,17 +275,13 @@ Old customizations no longer included:
                  type="submit"
                  value="Rename"
                  name="form.button.RenameAll"
-                 tabindex=""
                  i18n:attributes="value label_rename_all;"
-                 tal:attributes="tabindex tabindex/next;"
                  />
           <input class="standalone"
                  type="submit"
                  value="Cancel"
                  name="form.button.Cancel"
-                 tabindex=""
                  i18n:attributes="value label_cancel;"
-                 tal:attributes="tabindex tabindex/next;"
                  />
         </div>
 

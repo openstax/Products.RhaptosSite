@@ -110,9 +110,7 @@ Plone 2.5 notes:
                          name="firstname"
                          size="30"
                          value="firstname"
-                         tabindex=""
-                         tal:attributes="value firstname;
-                                         tabindex tabindex/next;"
+                         tal:attributes="value firstname"
                          />
           </div>
 
@@ -138,9 +136,7 @@ Plone 2.5 notes:
                          name="surname"
                          size="30"
                          value="surname"
-                         tabindex=""
-                         tal:attributes="value surname;
-                                         tabindex tabindex/next;"
+                         tal:attributes="value surname"
                          />
           </div>
 
@@ -165,9 +161,7 @@ Plone 2.5 notes:
                   <input type="text"
                          name="email"
                          size="30"
-                         tabindex=""
-                         tal:attributes="value email;
-                                         tabindex tabindex/next;"
+                         tal:attributes="value email"
                          />
           </div>
 
@@ -189,9 +183,7 @@ Plone 2.5 notes:
                    name="homepage"
                    size="30"
                    value="homepage"
-                   tabindex=""
-                   tal:attributes="value homepage;
-                                   tabindex tabindex/next;"
+                   tal:attributes="value homepage"
                    />
 
           </div>
@@ -223,9 +215,7 @@ Plone 2.5 notes:
                     id="username"
                     size="30"
                     value="username"
-                    tabindex=""
-                    tal:attributes="value username;
-                                    tabindex tabindex/next;"
+                    tal:attributes="value username"
                     />
 
             <tal:suggest tal:condition="python:error">
@@ -266,9 +256,7 @@ Plone 2.5 notes:
                     id="licenseagree"
                     class="noborder"
                     checked=""
-                    tabindex=""
-                    tal:attributes="checked licenseagree | nothing;
-                                    tabindex tabindex/next;"
+                    tal:attributes="checked licenseagree | nothing"
                     />
 
             <span i18n:translate="label_license_agree">
@@ -294,11 +282,9 @@ Plone 2.5 notes:
       <div class="formControls">
         <input class="context"
                type="submit"
-               tabindex=""
                name="form.button.Register"
                value="Request Account"
-               i18n:attributes="value label_register;"
-               tal:attributes="tabindex tabindex/next;" />
+               i18n:attributes="value label_register;" />
       </div>
 
     </fieldset>

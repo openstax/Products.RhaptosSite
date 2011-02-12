@@ -52,18 +52,14 @@ minor field style changes in conversion.
           <div class="formControls">
             <input class="context"
                    type="submit"
-                   tabindex=""
                    name="form.button.submit"
                    value="Request Account"
-                   i18n:attributes="value value_request_account"
-                   tal:attributes="tabindex tabindex/next;" />
+                   i18n:attributes="value value_request_account"/>
             <input class="context"
                    type="submit"
-                   tabindex=""
                    name="form.button.change"
                    value="Change Values"
-                   i18n:attributes="value value_change_request"
-                   tal:attributes="tabindex tabindex/next;" />
+                   i18n:attributes="value value_change_request"/>
           </div>
 
         <span tal:replace="nothing">

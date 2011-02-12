@@ -34,7 +34,6 @@ Rhaptos notes:
 
         <div class="LSBox">
         <input id="searchGadget"
-               tabindex=""
                name="words"
                type="text"
                size="20"
@@ -42,8 +41,7 @@ Rhaptos notes:
                title="Search Site"
                accesskey="4"
                i18n:attributes="title title_search_site;"
-               tal:attributes="value request/words|nothing;
-                               tabindex tabindex/next"
+               tal:attributes="value request/words|nothing"
                class="visibility:visible" />
 
         <input name="allterms"
@@ -53,10 +51,8 @@ Rhaptos notes:
         <input class="searchButton"
                type="submit"
                name="search"
-               tabindex=""
                value="Search"
                accesskey="accesskeys-search"
-               tal:attributes="tabindex tabindex/next"
                i18n:attributes="value label_search;" />
 
         <input type="hidden"
