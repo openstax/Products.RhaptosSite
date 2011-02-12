@@ -32,30 +32,10 @@
      url_expr="string:$portal_url/help" visible="True">
    <permission>View</permission>
   </action>
-  <!-- show MyRhaptos tab generally for auth users; highlights when in 'mydashboard' object .
-       goes away on objects that have their own actions, or else we duplicate tabs -->
-  <action title="MyRhaptos" action_id="mydashboard" category="portal_tabs"
+  <action title="MyRhaptos" action_id="myrhaptos" category="portal_tabs"
      url_expr="string:$portal_url/mydashboard" visible="True">
    <permission>View</permission>
   </action>
-  <!-- show MyRhaptos tab only on Members folders, where it's highlighted -->
-  <action title="MyRhaptos" action_id="Members" category="portal_tabs"
-     condition_expr="python:'Members' in folder.getPhysicalPath()"
-     url_expr="string:$portal_url/mydashboard" visible="True">
-   <permission>View</permission>
-  </action>
-  <!-- show MyRhaptos tab only on Group folders, where it's highlighted -->
-  <action title="MyRhaptos" action_id="GroupWorkspaces" category="portal_tabs"
-     condition_expr="python:'GroupWorkspaces' in folder.getPhysicalPath()"
-     url_expr="string:$portal_url/mydashboard" visible="True">
-   <permission>View</permission>
-  </action>
-  <!-- show MyRhaptos tab generally for unauth users; highlights on login_form -->
-  <action title="MyRhaptos" action_id="login_form" category="portal_tabs"
-     url_expr="string:$portal_url/mydashboard" visible="True">
-   <permission>View</permission>
-  </action>
-  
   
   <!-- delete button named "remove" and uses confirmation -->
   <action title="Remove" action_id="delete" category="folder_buttons"
