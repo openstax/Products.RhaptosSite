@@ -1,3 +1,6 @@
+RhaptosSite-1.38
+  - Sprint-2011 bugfixes
+
 RhaptosSite-1.37
   - Bugfix 2010: navigation arrows
 
