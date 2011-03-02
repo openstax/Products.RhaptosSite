@@ -22,7 +22,7 @@ from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 import RhaptosSite
 
 # TODO: review monkey patches - they might not be necessary for Plone4
-# import monkeypatch
+import monkeypatch
 import managercatalog  # mostly to test syntax
 import security
 
