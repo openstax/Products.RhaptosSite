@@ -17,8 +17,16 @@ from Products.RhaptosSite import RhaptosMessageFactory as _
 class IRhaptosRegistrationSchema(Interface):
     """See the base registration for the inherited schema fields"""
 
-    ##homepage
-    ##fullname
+    # TODO: Do we want to keep the fullname (provided by default) or enable
+    #       two separate fields: first name and last name? 
+    ##first_name = 
+    ##last_name = 
+    home_page = schema.ASCIILine(
+        title=_(u'lable_user_home_page', default=u'Home Page'),
+        description=_(u'help_user_home_page',
+                      default=u"Enter the address of your personal Web "
+                               "page e.g. http://www.jdoe.com/~jdoe/"),
+        required=False,)
     site_license_agreement = schema.Bool(
         title=_(u'site_license_agreement',
                 # TODO: Link to the Connexions Site License
@@ -37,7 +45,6 @@ class RegistrationForm(register.RegistrationForm):
         form_fields = super(RegistrationForm, self).form_fields
         #: Add our fields to the mix.
         form_fields += form.Fields(IRhaptosRegistrationSchema)
-        #: Combined and return the form fields.
         return form_fields
 
 
