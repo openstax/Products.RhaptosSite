@@ -1,0 +1,48 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="RhaptosSite">
+
+    <!-- start plone.app.user.browser overrides -->
+    <browser:page
+      name="register"
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
+      class=".register.RhaptosRegistrationForm"
+      permission="cmf.AddPortalMember"
+      />
+
+    <browser:page
+      name="new-user"
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
+      class=".register.RhaptosAddUserForm"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      />
+
+    <!-- Does this need overridden?
+    <browser:page
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
+      name="change-password"
+      class=".personalpreferences.PasswordAccountPanel"
+      permission="cmf.SetOwnPassword"
+      />
+    -->
+
+    <!-- Not overriding these views:
+        * name="account-macro"
+        * name="personal-preferences"
+        * name="user-preferences"
+        * name="personal-information"
+        * name="user-information"
+    -->
+
+    <!-- Probably need to override this...
+    <adapter 
+      provides="..userdataschema.IUserDataSchema"
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
+      factory=".personalpreferences.UserDataPanelAdapter"
+      />
+    -->
+
+    <!-- end plone.app.user.browser overrides -->
+
+</configure>
