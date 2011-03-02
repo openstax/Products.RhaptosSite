@@ -16,6 +16,12 @@ if type_name:
         id=context.generateUniqueId(type_name)
 
     defaultcontext = context.portal_membership.getHomeFolder()  # we have to have permissions
+
+    # try create the module in the current context if we don't have a
+    # homefolder (eg. admin user doesn't have a homefolder)
+    if defaultcontext is None:
+        defaultcontext = context
+
     new_context = defaultcontext.restrictedTraverse('portal_factory/' + type_name + '/' + id)
     return state.set(context=new_context)
 
