@@ -7,14 +7,14 @@
     <browser:page
       name="register"
       for="plone.app.layout.navigation.interfaces.INavigationRoot"
-      class=".register.RhaptosRegistrationForm"
+      class=".register.RegistrationForm"
       permission="cmf.AddPortalMember"
       />
 
     <browser:page
       name="new-user"
       for="plone.app.layout.navigation.interfaces.INavigationRoot"
-      class=".register.RhaptosAddUserForm"
+      class=".register.AddUserForm"
       permission="plone.app.controlpanel.UsersAndGroups"
       />
 
@@ -27,7 +27,7 @@
       />
     -->
 
-    <!-- Not overriding these views:
+    <!-- Not overriding these views (yet):
         * name="account-macro"
         * name="personal-preferences"
         * name="user-preferences"
