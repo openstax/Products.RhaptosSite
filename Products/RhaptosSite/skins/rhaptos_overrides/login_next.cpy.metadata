@@ -1,3 +1,0 @@
-[actions]
-action.success=redirect_to:string:mydashboard
-action.failure=traverse_to:string:login_failed
