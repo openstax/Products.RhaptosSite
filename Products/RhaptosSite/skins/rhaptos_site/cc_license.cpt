@@ -9,8 +9,6 @@
       metal:use-macro="container/main_template/macros/master"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       i18n:domain="rhaptos">
-  <metal:head metal:fill-slot="head_slot"
-              tal:define="global sl python:[x for x in sl if 'portlet_lastmod' not in x[0]]" />
 
   <body>
 
@@ -20,6 +18,7 @@
       <metal:macro metal:define-macro="license">
         <tal:main
             tal:define="typeName           request/type_name | nothing;
+                        portal context/@@plone_portal_state/portal;
                         isCollection       python:context.portal_type == 'Collection' or
                                                   (typeName and typeName == 'Collection');
                         isModule           python:context.portal_type == 'Module' or
@@ -31,14 +30,10 @@
                         license_name license_data/name">
 
       <tal:block tal:condition="isCollection">
-        <h1 class="topheading"
-            i18n:translate="heading_new_collection_licensing"
-            tal:content='newCollectionTitle' />
+        <h1 class="topheading" tal:content="newCollectionTitle"/>
       </tal:block>
       <tal:block tal:condition="isModule">
-        <h1 class="topheading"
-            i18n:translate="heading_new_module_licensing"
-            tal:content='newModuleTitle' />
+        <h1 class="topheading" tal:content="newModuleTitle" />
       </tal:block>
 
       <p i18n:translate="text_license_requirements">
