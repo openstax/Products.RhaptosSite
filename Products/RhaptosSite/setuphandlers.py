@@ -6,6 +6,8 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import Expression
 from zExceptions import BadRequest
 
+from plone.app.controlpanel.security import ISecuritySchema
+
 
 def memberfoldertitle(folder):
     """Get the current system default title for a member folder (workspace).
@@ -20,10 +22,9 @@ def memberfoldertitle(folder):
                                           mapping={'member': umember_id},  context=folder, target_language='en')
 
 
-def setup_security(site):
+def set_up_security(site):
     """Enable/disable security controlpanel (a.k.a. @@security-controlpanel)
     settings."""
-    from plone.app.controlpanel.security import ISecuritySchema
     security = ISecuritySchema(site)
     #: Enable self registration (member join process).
     security.enable_self_reg = True
@@ -40,7 +41,7 @@ def install(context):
     logger.info("Starting RhaptosSite install")
     groups_tool = getToolByName(portal, 'portal_groups')
 
-    setup_security(portal)
+    set_up_security(portal)
 
     # Make workflow go away
     logger.info("...making workflow empty")
