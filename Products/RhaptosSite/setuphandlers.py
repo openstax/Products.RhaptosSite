@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+"""GenericSetup setup handlers for RhaptosSite."""
 from Products.Archetypes.Extensions.utils import install_subskin
 from Products.RhaptosSite import product_globals as GLOBALS
 from Products.CMFCore.utils import getToolByName
@@ -18,6 +20,15 @@ def memberfoldertitle(folder):
                                           mapping={'member': umember_id},  context=folder, target_language='en')
 
 
+def setup_security(site):
+    """Enable/disable security controlpanel (a.k.a. @@security-controlpanel)
+    settings."""
+    from plone.app.controlpanel.security import ISecuritySchema
+    security = ISecuritySchema(site)
+    #: Enable self registration (member join process).
+    security.enable_self_reg = True
+
+
 def install(context):
     """Set up RhaptosSite: register with the necessary tools, etc.
     """
@@ -28,14 +39,14 @@ def install(context):
     portal = context.getSite()
     logger.info("Starting RhaptosSite install")
     groups_tool = getToolByName(portal, 'portal_groups')
-    
-    
-    
+
+    setup_security(portal)
+
     # Make workflow go away
     logger.info("...making workflow empty")
     wf_tool = getToolByName(portal,'portal_workflow')
     wf_tool.setChainForPortalTypes(['UnifiedFile'],'')
-    
+
     ## create 'mydashboard' folder, mostly just to get it in the path
     # its default vew is 'author_home'
     mydashboard = getattr(portal, 'mydashboard', None)
@@ -44,7 +55,7 @@ def install(context):
         portal.invokeFactory('Folder', id="mydashboard", title="MyCNX")
         mydashboard = getattr(portal, 'mydashboard', None)
     mydashboard.layout = "author_home"
-    
+
     cachetool = getToolByName(portal,'portal_cache_settings', None)
     # GenericSetup has a cache policy, but we've backported and it doesn't quite work with our versions
     # when we upgrade, this should probably be replaced with a 'cachesettings.xml' (though it'll be)
@@ -64,7 +75,7 @@ def install(context):
         mydashboardrule.setHeaderSetIdAnon('no-cache')
         mydashboardrule.setHeaderSetIdAuth('no-cache')
         rulesfolder.moveObject(mydashboardruleid, 0)
-        
+
     left_slots = ['context/workspaces_slot/macros/portlet',]
     try:
         mydashboard.manage_addProperty('left_slots', left_slots, type='lines')
@@ -92,4 +103,3 @@ def install(context):
     if actfound:
         logger.info("Removing action 'author_home'")
         pa_tool.deleteActions([actindex])
-
