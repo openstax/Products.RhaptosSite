@@ -1,0 +1,23 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="RhaptosSite">
+
+    <browser:page
+        for="OFS.interfaces.IApplication"
+        name="rhaptos-addsite"
+        class=".admin.AddRhaptosSite"
+        permission="zope2.ViewManagementScreens"
+        template="templates/rhaptos-addsite.pt"
+        />
+
+    <browser:page
+        for="OFS.Folder.Folder"
+        name="rhaptos-addsite"
+        class=".admin.AddRhaptosSite"
+        permission="zope2.ViewManagementScreens"
+        template="templates/rhaptos-addsite.pt"
+        />
+
+</configure>

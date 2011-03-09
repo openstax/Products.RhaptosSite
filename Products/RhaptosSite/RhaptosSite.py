@@ -3,9 +3,6 @@ from Products.CMFPlone.factory import addPloneSite
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 
-__version__='1.1'
-
-
 manage_addSiteForm = PageTemplateFile('www/addRhaptosSite', globals())
 manage_addSiteForm.__name__ = 'addRhaptosSite'
 def manage_addRhaptosSite(self, id, title='', description='',
