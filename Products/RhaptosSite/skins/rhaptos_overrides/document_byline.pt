@@ -4,8 +4,9 @@
      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
      metal:define-macro="byline"
      i18n:domain="plone"
-     tal:condition="python: site_properties.allowAnonymousViewAbout or not isAnon"
-     tal:define="creator here/Creator;">
+     tal:define="isAnon context/@@plone_portal_state/anonymous;
+                 creator here/Creator;"
+     tal:condition="python: site_properties.allowAnonymousViewAbout or not isAnon">
 
 <tal:comment tal:replace="nothing">
 This template based on version from Plone 2.5.2-1
