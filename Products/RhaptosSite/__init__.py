@@ -25,9 +25,6 @@ from Products.RhaptosSite import monkeypatch
 from Products.RhaptosSite import managercatalog  # mostly to test syntax
 from Products.RhaptosSite import security
 
-# XXX: refactor
-# from setup import RhaptosSitePolicy
-
 this_module = sys.modules[ __name__ ]
 
 
@@ -47,9 +44,7 @@ registerMultiPlugin(AHA.AltHashAuth.meta_type)
 registerDirectory('skins', globals())
 
 def initialize(context):
-    # RhaptosSitePolicy.register(context, product_globals)
     RhaptosSite.register(context, product_globals)
-
 
     context.registerClass( AHA.AltHashAuth
                          , permission=ManageUsers
@@ -71,4 +66,3 @@ except ImportError:
     from messagefactory_ import RhaptosMessageFactory
 else:
     RhaptosMessageFactory = MessageFactory('rhaptos')
-
