@@ -40,10 +40,9 @@ from AccessControl import allow_module
 
 registerMultiPlugin(AHA.AltHashAuth.meta_type)
 
-# Make the skins available as DirectoryViews
-registerDirectory('skins', globals())
 
 def initialize(context):
+    # BBB: Keep for ZMI add drop-down support. (2011-03-09)
     RhaptosSite.register(context, product_globals)
 
     context.registerClass( AHA.AltHashAuth
