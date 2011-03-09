@@ -19,12 +19,11 @@ from Products.GenericSetup import BASE, EXTENSION
 from Products.GenericSetup import profile_registry
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 
-import RhaptosSite
-
-# TODO: review monkey patches - they might not be necessary for Plone4
-import monkeypatch
-import managercatalog  # mostly to test syntax
-import security
+# TODO: Review the following imports - they are likely not necessary
+from Products.RhaptosSite import RhaptosSite
+from Products.RhaptosSite import monkeypatch
+from Products.RhaptosSite import managercatalog  # mostly to test syntax
+from Products.RhaptosSite import security
 
 # XXX: refactor
 # from setup import RhaptosSitePolicy
@@ -50,14 +49,7 @@ registerDirectory('skins', globals())
 def initialize(context):
     # RhaptosSitePolicy.register(context, product_globals)
     RhaptosSite.register(context, product_globals)
-    
-    profile_registry.registerProfile('rhaptos-default',
-                                     'RhaptosSite',
-                                     'Extension profile for a RhaptosSite',
-                                     'profiles/default',
-                                     'RhaptosSite',
-                                     EXTENSION,
-                                     for_=IPloneSiteRoot)
+
 
     context.registerClass( AHA.AltHashAuth
                          , permission=ManageUsers
