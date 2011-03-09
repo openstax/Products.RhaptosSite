@@ -61,7 +61,9 @@ def manage_addRhaptosSite(self, id, title='', description='',
     root._dbopts['port']=dbport
 
     #manage_addSite(self, id, title, description, create_userfolder, email_from_address, email_from_name, validate_email, custom_policy='Rhaptos Site', RESPONSE=RESPONSE)
-    site = addPloneSite(self, id, title, description, create_userfolder, email_from_address, email_from_name, validate_email, extension_ids=('RhaptosSite:rhaptos-default',))
+    site = addPloneSite(self, id, title, description, create_userfolder,
+                        email_from_address, email_from_name, validate_email,
+                        extension_ids=('Products.RhaptosSite:default',))
 
     RESPONSE.redirect('%s/manage_main' % site.absolute_url())
 
