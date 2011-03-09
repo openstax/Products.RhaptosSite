@@ -4,6 +4,13 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     i18n_domain="RhaptosSite">
 
+    <!-- 'Rhaptos Theme' Zope 3 browser layer -->
+    <interface
+        interface=".interfaces.IThemeSpecific"
+        type="zope.publisher.interfaces.browser.IBrowserSkinType"
+        name="Rhaptos Theme"
+        />
+
     <browser:page
         for="OFS.interfaces.IApplication"
         name="rhaptos-addsite"

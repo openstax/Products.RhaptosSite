@@ -6,11 +6,9 @@ class AddRhaptosSite(AddPloneSite):
     """Browser view used to add a Rhaptos Site similiar to how a Plone 4.x
     site is added."""
 
-    def __init__(self, context, request):
-        super(AddRhaptosSite, self).__init__(context, request)
-        extension_profiles = list(self.default_extension_profiles)
-        extension_profiles.append('Products.RhaptosSite:default')
-        self.default_extension_profiles = tuple(extension_profiles)
+    default_extension_profiles = (
+        'Products.RhaptosSite:default',
+        )
 
     def __call__(self):
         temp_id = 'DB_OPTS_TEMP'

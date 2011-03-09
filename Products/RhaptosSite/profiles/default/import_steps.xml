@@ -5,7 +5,7 @@
     version="20110309-1"
     handler="Products.RhaptosSite.setuphandlers.install"
     title="Rhaptos install">
-    Rhaptos programmatic install methods
+    Rhaptos programmatic install logic
   </import-step>
 
  <import-step id="rhaptos_cmfformcontroller" version="20090410-1"
