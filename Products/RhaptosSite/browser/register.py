@@ -5,6 +5,11 @@ Rhaptos notes
 
 - Custom registration schema (IRhaptosRegistrationSchema)
 
+We should look into doing the registration fields as a single override of
+the UserDataSchema. Then modifying the membership registration fields
+(visable at /@@member-registration). I believe these pieces could be done
+using GenericSetup. [pumazi]
+
 """
 from zope.interface import Interface
 from zope import schema
