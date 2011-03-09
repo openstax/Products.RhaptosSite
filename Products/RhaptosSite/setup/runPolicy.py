@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
 from Products.RhaptosSite.setup.RhaptosSetup import functions
 
@@ -11,4 +12,5 @@ def runPolicy(context):
     # XXX Directly calling the setup functions. There is likely a better
     #     way to do this.
     for title, func in functions:
+        logger.info("Running setup function for %s." % title)
         func(context, portal)

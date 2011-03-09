@@ -3,6 +3,7 @@
   <version>1.35</version>
   <description>Rhaptos Site</description>
   <dependencies>
+    <dependency>profile-Products.RhaptosCollaborationTool:default</dependency>
     <dependency>profile-Products.FSImportTool:default</dependency>
     <dependency>profile-Products.LinkMapTool:default</dependency>
     <dependency>profile-Products.PasswordResetTool:PasswordResetTool</dependency>

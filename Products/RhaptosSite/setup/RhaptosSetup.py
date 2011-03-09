@@ -32,17 +32,16 @@ from Products.RhaptosSite import product_globals
 
 
 def customizeTools(self, portal):
-    # FIXME: these should be in products of their own and done via an Install
-    portal.manage_addProduct['RhaptosCollaborationTool'].manage_addTool('Collaboration Tool', None)
-
-    # FIXME <cnxconf sprint> Commentting out for the moment
+    # FIXME: <cnxconf sprint> Commentting out for the moment
+    # The following fails because of an order in dependency
+    # installation.
     ##portal.portal_patch.manage_changeProperties(title='Suggested Edits')
 
     # Don't import text files as Page but as File since that's what modules expect
     registry = portal.content_type_registry
     registry.assignTypeName('text', 'File')
 
-        
+
 def customizeMemberdata(self, portal):
     from DateTime import DateTime
 
