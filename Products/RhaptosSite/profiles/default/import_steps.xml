@@ -1,18 +1,13 @@
 <?xml version="1.0"?>
 <import-steps>
- <import-step id="rhaptos_install" version="20070809-1"
-              handler="Products.RhaptosSite.setup.runPolicy.runPolicy"
-              title="Rhaptos Customization Policy">
-   Run the old Rhaptos Customization Policy
-  <dependency step="actions"/>
- </import-step>
- <import-step id="rhaptos_extra" version="20070809-1"
-              handler="Products.RhaptosSite.setuphandlers.install"
-              title="Rhaptos install">
-  Run the old Rhaptos install method
-  <dependency step="rhaptos_install"/>
- </import-step>
- 
+  <import-step
+    id="rhaptos_setuphandler"
+    version="20110309-1"
+    handler="Products.RhaptosSite.setuphandlers.install"
+    title="Rhaptos install">
+    Rhaptos programmatic install methods
+  </import-step>
+
  <import-step id="rhaptos_cmfformcontroller" version="20090410-1"
               handler="Products.CMFFormController.exportimport.formcontroller.importCMFFormController"
               title="Rhaptos-based CMFFormController policy">

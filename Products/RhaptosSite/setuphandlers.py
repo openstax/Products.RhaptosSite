@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """GenericSetup setup handlers for RhaptosSite."""
-from Products.Archetypes.Extensions.utils import install_subskin
-from Products.RhaptosSite import product_globals as GLOBALS
+from zExceptions import BadRequest
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import Expression
-from zExceptions import BadRequest
-
+from Products.Archetypes.Extensions.utils import install_subskin
 from plone.app.controlpanel.security import ISecuritySchema
+
+from Products.RhaptosSite import product_globals as GLOBALS
+from Products.RhaptosSite.setup.RhaptosSetup import functions
 
 
 def memberfoldertitle(folder):
@@ -38,6 +39,13 @@ def install(context):
         logger.info('Nothing to import')
         return
     portal = context.getSite()
+
+    # XXX Directly calling the setup functions. There is likely a better
+    #     way to do this; and it's called GenericSetup export/import adapters.
+    for title, func in functions:
+        logger.info("Running setup function for %s." % title)
+        func(context, portal)
+
     logger.info("Starting RhaptosSite install")
     groups_tool = getToolByName(portal, 'portal_groups')
 
