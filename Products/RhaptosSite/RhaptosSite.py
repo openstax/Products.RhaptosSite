@@ -1,35 +1,10 @@
-import os, sys, re
-
-from zope.interface import implements
-
-import Globals
-from ComputedAttribute import ComputedAttribute
-from Products.CMFPlone import cmfplone_globals
-from Products.CMFDefault.Portal import CMFSite
-from Products.CMFPlone.Portal import PloneSite
-from Products.CMFCore import permissions
-from Products.CMFCore.TypesTool import FactoryTypeInformation
-from Products.CMFCore.DirectoryView import addDirectoryViews
-from Products.CMFCore.utils import getToolByName
-from Products.CMFDefault import Portal, DublinCore
-from Products.CMFPlone.PloneFolder import OrderedContainer
-#from Products.CMFPlone.Portal import manage_addSite   # jcc TODO breaks install!
+# -*- coding: utf-8 -*-
 from Products.CMFPlone.factory import addPloneSite
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
-from AccessControl import ClassSecurityInfo
 
 __version__='1.1'
 
-class RhaptosSite(PloneSite, CMFSite, OrderedContainer):
-    """
-    RhaptosSite is a PloneSite which uses the Rhaptos Site
-    customization policy and database
-    """
-    security=ClassSecurityInfo()
-    meta_type = portal_type = 'Rhaptos Site'
-
-Globals.InitializeClass(RhaptosSite)
 
 manage_addSiteForm = PageTemplateFile('www/addRhaptosSite', globals())
 manage_addSiteForm.__name__ = 'addRhaptosSite'
@@ -60,9 +35,6 @@ def manage_addRhaptosSite(self, id, title='', description='',
     root._dbopts['server']=dbserver
     root._dbopts['port']=dbport
 
-    ##manage_addSite(self, id, title, description, create_userfolder,
-    ##               email_from_address, email_from_name, validate_email,
-    ##               custom_policy='Rhaptos Site', RESPONSE=RESPONSE)
     site = addPloneSite(self, id, title, description, create_userfolder,
                         email_from_address, email_from_name, validate_email,
                         extension_ids=('Products.RhaptosSite:default',))
