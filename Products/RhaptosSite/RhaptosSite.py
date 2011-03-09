@@ -60,26 +60,18 @@ def manage_addRhaptosSite(self, id, title='', description='',
     root._dbopts['server']=dbserver
     root._dbopts['port']=dbport
 
-    #manage_addSite(self, id, title, description, create_userfolder, email_from_address, email_from_name, validate_email, custom_policy='Rhaptos Site', RESPONSE=RESPONSE)
+    ##manage_addSite(self, id, title, description, create_userfolder,
+    ##               email_from_address, email_from_name, validate_email,
+    ##               custom_policy='Rhaptos Site', RESPONSE=RESPONSE)
     site = addPloneSite(self, id, title, description, create_userfolder,
                         email_from_address, email_from_name, validate_email,
                         extension_ids=('Products.RhaptosSite:default',))
 
     RESPONSE.redirect('%s/manage_main' % site.absolute_url())
 
-    
+
 def register(context, globals):
     context.registerClass(meta_type='Rhaptos Site',
                           permission='Add CMF Sites',
                           constructors=(manage_addSiteForm,
                                         manage_addRhaptosSite,) )
-
-class RhaptosGenerator():
-
-    def create(self, parent, id, create_userfolder):
-        plone = PloneGenerator().create(parent, id, create_userfolder)
-
-        #Attach DB parameters to the portal
-        plone._dbopts=parent._dbopts
-        
-        return plone
