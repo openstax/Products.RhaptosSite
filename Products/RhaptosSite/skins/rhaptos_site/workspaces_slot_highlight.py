@@ -47,7 +47,7 @@ else:
     if homepath and ppath[:len(homepath)]==homepath:
         # by location: workspace
         return 'bylocationpersonal', None
-    gwpath = context.portal_groups.getGroupWorkspacesFolder().getPhysicalPath()
+    gwpath = context.portal_url.workgroups.getPhysicalPath()
     if ppath[:len(gwpath)]==gwpath:
         # by location: workgroup
         return 'bylocationgroup', None  # cannot know group name here; template will check as it loops
