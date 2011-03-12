@@ -51,11 +51,6 @@ def install(context):
 
     set_up_security(portal)
 
-    # Make workflow go away
-    logger.info("...making workflow empty")
-    wf_tool = getToolByName(portal,'portal_workflow')
-    wf_tool.setChainForPortalTypes(['UnifiedFile'],'')
-
     ## create 'mydashboard' folder, mostly just to get it in the path
     # its default vew is 'author_home'
     mydashboard = getattr(portal, 'mydashboard', None)
