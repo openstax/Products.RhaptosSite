@@ -12,6 +12,7 @@
 <ul metal:define-macro="site_actions"
     id="portal-siteactions"
     tal:define="site_actions actions/site_actions|nothing;
+                putils context/plone_utils;
                 getIconFor nocall:putils/getIconFor;
                 accesskeys python: {'sitemap' : '3', 'accessibility' : '0', 'contact' : '9'};"
     tal:condition="site_actions">
