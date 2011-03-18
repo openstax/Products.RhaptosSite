@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<portlets>
+
+   <portlet
+       addview="rhaptos.dashboard_content_portlet"
+       title="Rhaptos Content"
+       description="A portlet that provides the user with a list of links to create, edit and search for content.">
+       <for interface="plone.app.portlets.interfaces.IColumn" />
+       <for interface="plone.app.portlets.interfaces.IDashboard" />
+   </portlet>
+
+   <portlet
+       addview="rhaptos.dashboard_lenses_portlet"
+       title="Rhaptos Lenses"
+       description="A portlet that provides the user with a list of links for creating and searching lenses.">
+       <for interface="plone.app.portlets.interfaces.IColumn" />
+       <for interface="plone.app.portlets.interfaces.IDashboard" />
+   </portlet>
+
+</portlets>

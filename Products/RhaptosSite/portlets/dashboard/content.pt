@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      tal:omit-tag="">
+<dl class="portlet portletWorkflowReview"
+    i18n:domain="plone">
+
+  <dt class="portletHeader">
+    <span class="portletTopLeft"></span>
+    <a href="#"
+       class="tile"
+       i18n:translate=""
+       tal:content="view/title" />
+    <span class="portletTopRight"></span>
+  </dt>
+
+  <dd class="portletItem odd"
+      tal:define="portal_url context/portal_url;">
+    <metal:macro metal:define-macro="newmodule">
+      <p class="createlink">
+	<a href="cc_license?type_name=Module"
+           tal:attributes="href string:${portal_url}/cc_license?type_name=Module">
+          Create a new module</a>
+	<a href="cc_license?type_name=Module"
+           tal:attributes="href string:${portal_url}/cc_license?type_name=Module">
+          <img src="/module_icon.gif" alt=""
+               tal:attributes="src string:${portal_url}/module_icon.gif">
+	</a>
+      </p>
+    </metal:macro>
+    <metal:macro metal:define-macro="newcollection">
+      <p class="createlink">
+	<a href="cc_license?type_name=Collection"
+           tal:attributes="href string:${portal_url}/cc_license?type_name=Collection">
+          Create a new collection</a>
+	<a href="cc_license?type_name=Collection"
+           tal:attributes="href string:${portal_url}/cc_license?type_name=Collection">
+          <img src="/repository_icon.gif" alt=""
+               tal:attributes="src string:${portal_url}/repository_icon.gif">
+	</a>
+      </p>
+    </metal:macro>
+    <p>
+      <a href="/content" i18n:translate="text_search_to_edit"
+	 tal:attributes="href string:${portal_url}/content">Search to edit published content</a>
+      <a href="/content" i18n:translate="text_search_to_edit"
+	 tal:attributes="href string:${portal_url}/content">
+	<img src="/images/magnify-glass-cnx.png" alt="search icon"
+             tal:attributes="src string:${portal_url}/images/magnify-glass-cnx.png"
+             i18n:attributes="alt; src" />
+      </a>
+    </p>
+
+    <div tal:define="raw_fieldList python:here.all_editable_content(limit=6, sort='modified');
+                     fieldListDict python:raw_fieldList[:5]"
+	 tal:condition="raw_fieldList"
+	 id="lastmodified">
+      <h5>Last modified:</h5>
+      <ul class="latest">
+	<tal:div tal:repeat="fieldList fieldListDict">
+          <li tal:define="isModule python:fieldList['content_portal_type'] == 'Module'"
+              tal:attributes="class python:isModule and 'module' or 'collection'">
+            <a tal:attributes="href python:fieldList['content_url']"
+               tal:content="python:fieldList['content_title']">title</a>
+            in
+            <tal:span tal:condition="python:fieldList['work_portal_type'] != 'Workspace'">
+              Workgroup:
+            </tal:span>
+            <tal:span tal:content="python:fieldList['work_title']">parent title</tal:span>
+          </li>
+	</tal:div>
+	<li class="more" tal:condition="python:len(raw_fieldList) > 5">
+          <a href="listcontent?type:list=Collection&amp;type:list=Module&amp;sort=modified&amp;sort_order=descending">
+            More &#187;
+          </a>
+	</li>
+      </ul>
+    </div>
+  </dd>
+</dl>
+</html>
