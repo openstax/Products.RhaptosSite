@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      tal:omit-tag="">
+<dl class="portlet portletWorkflowReview"
+    i18n:domain="plone">
+
+  <dt class="portletHeader">
+    <span class="portletTopLeft"></span>
+    <a href="#"
+       class="tile"
+       i18n:translate=""
+       tal:content="view/title" />
+    <span class="portletTopRight"></span>
+  </dt>
+
+  <dd class="portletItem odd"
+      tal:define="portal_url context/portal_url;">
+    <ul>
+      <li tal:define="help nocall:portal/help/authoring/createmodule | nothing"
+	  tal:condition="nocall:help">
+        <a href="/help/authoring/createmodule"
+	   i18n:translate="text_module_minutes"
+           tal:attributes="href help/absolute_url">
+          How to create a module in minutes
+        </a>
+      </li>
+      <li tal:define="help nocall:portal/help/authoring/createcollection | nothing"
+	  tal:condition="nocall:help">
+        <a href="/help/authoring/createcollection"
+	   i18n:translate="text_create_coll"
+           tal:attributes="href help/absolute_url">
+          How to create a collection with existing modules</a>
+      </li>
+      <li tal:define="help nocall:portal/help/authoring/authorguide | nothing"
+	  tal:condition="nocall:help">
+        <a href="/help/authoring/authorguide"
+	   i18n:translate="text_author_guide"
+           tal:attributes="href help/absolute_url">
+          New author guide
+        </a>
+      </li>
+      <li tal:define="tutorial nocall:portal/content/col10151/latest|nothing;">
+        <a tal:condition="not:tutorial"
+	   href="http://cnx.org/content/col10151/latest/"
+	   i18n:translate="text_tut_ref"
+	   target="_blank">
+          Connexions Tutorial and Reference
+        </a>
+        <a tal:condition="tutorial"
+	   href="http://cnx.org/content/col10151/latest/"
+           tal:attributes="href string:$portal_url/content/col10151/latest/;"
+           i18n:translate="text_tut_ref">
+          Connexions Tutorial and Reference
+        </a>
+      </li>
+    </ul>
+    <ul>
+      <li tal:define="help nocall:portal/help/accounts/myfavorites | nothing"
+	  tal:condition="nocall:help">
+	<a href="/help/accounts/myfavorites"
+	   i18n:translate="text_use_favorites"
+           tal:attributes="href help/absolute_url">
+          How to use "My Favorites"</a> 
+      </li>
+      <li tal:define="help nocall:portal/help/accounts/trackprogress | nothing"
+	  tal:condition="nocall:help">
+	<a href="/help/accounts/trackprogress"
+	   i18n:translate="text_track_reading"
+           tal:attributes="href help/absolute_url">
+          How to track your reading with "My Favorites"</a>
+      </li>
+      <li tal:define="help nocall:portal/help/authoring/createlens | nothing"
+	  tal:condition="nocall:help">
+	<a href="/help/authoring/createlens"
+	   i18n:translate="text_create_lens"
+           tal:attributes="href help/absolute_url">
+          How to create a lens of content</a>
+      </li>
+    </ul>
+  </dd>
+</dl>
+</html>

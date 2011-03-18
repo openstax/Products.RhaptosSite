@@ -21,4 +21,12 @@
         addview=".lenses.AddForm"
         />
 
+    <plone:portlet
+        name="rhaptos.dashboard_guide_portlet"
+        interface=".guide.IGuidePortlet"
+        assignment=".guide.Assignment"
+        renderer=".guide.Renderer"
+        addview=".guide.AddForm"
+        />
+
 </configure>
