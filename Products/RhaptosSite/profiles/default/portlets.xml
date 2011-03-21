@@ -17,4 +17,12 @@
        <for interface="plone.app.portlets.interfaces.IDashboard" />
    </portlet>
 
+   <portlet
+       addview="rhaptos.dashboard_guide_portlet"
+       title="Rhaptos Guide"
+       description="A portlet that supplies the user with links to guides and tutorials.">
+       <for interface="plone.app.portlets.interfaces.IColumn" />
+       <for interface="plone.app.portlets.interfaces.IDashboard" />
+   </portlet>
+
 </portlets>
