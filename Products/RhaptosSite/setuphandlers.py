@@ -58,7 +58,8 @@ def set_up_security(site):
     security = ISecuritySchema(site)
     #: Enable self registration (member join process).
     security.enable_self_reg = True
-
+    #: Enable user folders (aka member folder at /Members)
+    security.enable_user_folders = True
 
 def _get_portlet_manager_for_group_by_column(group, column):
     """Get a portlet manager for a specified group."""
