@@ -33,7 +33,7 @@
    <permission>View</permission>
   </action>
   <action title="MyRhaptos" action_id="myrhaptos" category="portal_tabs"
-     url_expr="string:$portal_url/mydashboard" visible="True">
+     url_expr="string:$portal_url/@@dashboard" visible="True">
    <permission>View</permission>
   </action>
   
