@@ -61,6 +61,7 @@ def set_up_security(site):
     #: Enable user folders (aka member folder at /Members)
     security.enable_user_folders = True
 
+
 def _get_portlet_manager_for_group_by_column(group, column):
     """Get a portlet manager for a specified group."""
     column_portlet_manager = getUtility(IPortletManager, name=column)
@@ -85,6 +86,7 @@ def assign_dashboard_portlets(assignments):
     """Assign a set of default portlets to a group(s) dashboard."""
     for group, column, assignment_cls, assignment_args in assignments:
         manager = _get_portlet_manager_for_group_by_column(group, column)
+        #: Instantiate the porlet
         portlet = assignment_cls(*assignment_args)
         _assign_portlet_to_manager(portlet, manager)
 
@@ -118,26 +120,6 @@ def install(context):
         portal.invokeFactory('Folder', id="mydashboard", title="MyCNX")
         mydashboard = getattr(portal, 'mydashboard', None)
     mydashboard.layout = "author_home"
-
-    cachetool = getToolByName(portal,'portal_cache_settings', None)
-    # GenericSetup has a cache policy, but we've backported and it doesn't quite work with our versions
-    # when we upgrade, this should probably be replaced with a 'cachesettings.xml' (though it'll be)
-    # a little less flexible (no getActivePolicy), and we'll still need to do ordering probably
-    if cachetool:
-        mydashboardruleid = 'mydashboard-rule'
-        policy = cachetool[cachetool.getActivePolicyId()]
-        rulesfolder = policy.rules
-        mydashboardrule = getattr(rulesfolder, mydashboardruleid, None)
-        if not mydashboardrule:
-            rulesfolder.invokeFactory('ContentCacheRule', id=mydashboardruleid, title='mydashboard no-cache')
-            mydashboardrule = getattr(rulesfolder, mydashboardruleid)
-        mydashboardrule.setDescription("The '/mydashboard' object shows dynamic data and should not be cached.")
-        mydashboardrule.setContentTypes(['Folder'])
-        mydashboardrule.setDefaultView(True)
-        mydashboardrule.setPredicateExpression("python:object.getId()=='mydashboard'")
-        mydashboardrule.setHeaderSetIdAnon('no-cache')
-        mydashboardrule.setHeaderSetIdAuth('no-cache')
-        rulesfolder.moveObject(mydashboardruleid, 0)
 
     left_slots = ['context/workspaces_slot/macros/portlet',]
     try:
