@@ -1,13 +1,42 @@
 # -*- coding: utf-8 -*-
 """GenericSetup setup handlers for RhaptosSite."""
 from zExceptions import BadRequest
+from zope.component import getUtility
+from zope.container.interfaces import INameChooser
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import Expression
 from Products.Archetypes.Extensions.utils import install_subskin
+from plone.portlets.constants import GROUP_CATEGORY
+from plone.portlets.interfaces import IPortletManager
+from plone.app.portlets.storage import GroupDashboardPortletAssignmentMapping
 from plone.app.controlpanel.security import ISecuritySchema
 
 from Products.RhaptosSite import product_globals as GLOBALS
 from Products.RhaptosSite.setup.RhaptosSetup import functions
+
+from Products.RhaptosSite.portlets.dashboard.content import \
+    Assignment as ContentPortlet
+from Products.RhaptosSite.portlets.dashboard.lenses import \
+    Assignment as LensePortlet
+from Products.RhaptosSite.portlets.dashboard.guide import \
+    Assignment as GuidePortlet
+
+
+DASHBOARD_GROUP = 'AuthenticatedUsers'
+DASHBOARD_PORTLET_ASSIGNMENTS = [
+    (DASHBOARD_GROUP,
+     'plone.dashboard1',
+     ContentPortlet,
+     [],),
+    (DASHBOARD_GROUP,
+     'plone.dashboard2',
+     LensePortlet,
+     [],),
+    (DASHBOARD_GROUP,
+     'plone.dashboard3',
+     GuidePortlet,
+     [],),
+    ]
 
 
 def memberfoldertitle(folder):
@@ -31,6 +60,34 @@ def set_up_security(site):
     security.enable_self_reg = True
 
 
+def _get_portlet_manager_for_group_by_column(group, column):
+    """Get a portlet manager for a specified group."""
+    column_portlet_manager = getUtility(IPortletManager, name=column)
+    category_manager = column_portlet_manager[GROUP_CATEGORY]
+    group_manager = category_manager.get(group, None)
+    if group_manager is None:
+        group_manager = category_manager[group] = GroupDashboardPortletAssignmentMapping(
+            manager=column,
+            category=GROUP_CATEGORY,
+            name=group)
+    return group_manager
+
+
+def _assign_portlet_to_manager(portlet, manager):
+    """Assign a portlet to a manager."""
+    name_chooser = INameChooser(manager)
+    name = name_chooser.chooseName(None, portlet)
+    manager[name] = portlet
+
+
+def assign_dashboard_portlets(assignments):
+    """Assign a set of default portlets to a group(s) dashboard."""
+    for group, column, assignment_cls, assignment_args in assignments:
+        manager = _get_portlet_manager_for_group_by_column(group, column)
+        portlet = assignment_cls(*assignment_args)
+        _assign_portlet_to_manager(portlet, manager)
+
+
 def install(context):
     """Set up RhaptosSite: register with the necessary tools, etc.
     """
@@ -50,6 +107,7 @@ def install(context):
     groups_tool = getToolByName(portal, 'portal_groups')
 
     set_up_security(portal)
+    assign_dashboard_portlets(DASHBOARD_PORTLET_ASSIGNMENTS)
 
     ## create 'mydashboard' folder, mostly just to get it in the path
     # its default vew is 'author_home'
