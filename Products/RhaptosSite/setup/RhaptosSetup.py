@@ -164,7 +164,8 @@ def customizeSlots(self, portal):
             )
 
     portal.Members._updateProperty('right_slots', right_slots)
-    wsfolder = portal.workgroups
+    wgtool = getToolByName(portal, 'portal_workgroups')
+    wsfolder = wgtool.getWorkgroupsFolder()
     for folder in (portal.Members, wsfolder):
         for slot_attr, slot_value in slots.items():
             if folder.hasProperty(slot_attr):
@@ -187,44 +188,6 @@ def customizeWorkflow(self, portal):
     wf_tool.setChainForPortalTypes(['Large Plone Folder'],'')
     wf_tool.setChainForPortalTypes(['Collection','SubCollection', 'ContentPointer', 'PublishedContentPointer'],'')
 
-
-def customizePermissions(self, portal):
-    portal._addRole('Author')
-    portal._addRole('Maintainer')
-    portal._addRole('Licensor')        
-
-    # FIXME: we'd prefer not to give Anonymous users 'Add'
-    # permission here, but currently new member folders get
-    # created upon joining, at which point the user is still
-    # anonymous.  There ought to be a better way...
-    portal.Members.manage_permission('Add portal content', ('Anonymous', 'Member',), acquire=1)
-    portal.Members.manage_permission('Add Annotation Servers', ('Manager', 'Owner',), acquire=1)
-    portal.Members.manage_permission('Delete objects', ('Maintainer', 'Owner',), acquire=1)
-    portal.Members.manage_permission('Change Images and Files', ('Maintainer', 'Owner',), acquire=1)
-    portal.Members.manage_permission('List folder contents', ('Manager', 'Owner',), acquire=0)
-    portal.Members.manage_permission('Use external editor', ('Maintainer', 'Owner',), acquire=1)        
-    portal.Members.manage_permission('View', ('Manager', 'Owner',), acquire=0)
-
-    groups = portal.workgroups
-    groups.manage_permission('Add Annotation Servers', ('Manager', 'Owner',), acquire=1)
-    groups.manage_permission('Add portal content', ('Member',), acquire=1)
-    groups.manage_permission('Delete objects', ('Maintainer', 'Owner',), acquire=1)
-    groups.manage_permission('Change Images and Files', ('Maintainer', 'Owner',), acquire=1)
-    groups.manage_permission('List folder contents', ('Manager', 'Owner',), acquire=0)
-    groups.manage_permission('Use external editor', ('Maintainer', 'Owner',), acquire=1)
-    groups.manage_permission('View', ('Manager', 'Owner',), acquire=0)
-
-    portal.content.manage_permission('Add portal content', ('Member',), acquire=1)
-
-    portal.manage_permission('Add Groups', ('Member',), acquire=1)
-    #portal.manage_permission('Add Annotation Servers', ('Owner',), acquire=1)
-    portal.manage_permission('Manage Groups', ('Owner',), acquire=1)
-    portal.manage_permission('Manage WebDAV Locks', ('Owner',), acquire=1)
-    portal.manage_permission('View Groups', ('Member',), acquire=1)
-    portal.manage_permission('Edit Rhaptos Object', ('Maintainer',), acquire=1)
-
-    # FIXME: we really don't want to do this, but must so that nextID gets updated
-    groups.manage_permission('Manage properties', ('Member',), acquire=1)        
 
 def customizeNavTree(self, portal):
     navtree = getToolByName(portal, 'portal_properties').navtree_properties
@@ -394,7 +357,6 @@ functions = [
     ('Customize Actions', customizeActions),
     # XXX: ('Customize Portlets', customizeSlots),
     ('Customize Workflow', customizeWorkflow),
-    ('Customize Permissions', customizePermissions),
     ('Customize NavTree', customizeNavTree),
     ('Customize Portal', customizePortal),
 ##    ('Customize Portal Catalog', customizePortalCatalog),
