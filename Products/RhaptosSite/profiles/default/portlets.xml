@@ -25,4 +25,12 @@
        <for interface="plone.app.portlets.interfaces.IDashboard" />
    </portlet>
 
+   <portlet
+       addview="rhaptos.workspace_portlet"
+       title="Rhaptos Workspace"
+       description="A portlet that supplies the user with a way to navigate their workspace.">
+       <for interface="plone.app.portlets.interfaces.IColumn" />
+       <for interface="plone.app.portlets.interfaces.IDashboard" />
+   </portlet>
+
 </portlets>

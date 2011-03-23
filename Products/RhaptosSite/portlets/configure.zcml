@@ -1,6 +1,15 @@
 <configure
-    xmlns="http://namespaces.zope.org/zope">
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone">
 
     <include package=".dashboard" />
+
+    <plone:portlet
+        name="rhaptos.workspace_portlet"
+        interface=".workspace.IWorkspacePortlet"
+        assignment=".workspace.Assignment"
+        renderer=".workspace.Renderer"
+        addview=".workspace.AddForm"
+        />
 
 </configure>

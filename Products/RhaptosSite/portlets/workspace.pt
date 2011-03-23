@@ -1,0 +1,233 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      tal:omit-tag="">
+<dl class="portlet portletWorkflowReview"
+    i18n:domain="plone">
+
+  <!-- No Title
+  <dt class="portletHeader">
+    <span class="portletTopLeft"></span>
+    <a href="#"
+       class="tile"
+       i18n:translate=""
+       tal:content="view/title" />
+    <span class="portletTopRight"></span>
+  </dt>
+  -->
+
+  <dd class="portletItem odd"
+      tal:define="portal_url context/portal_url;">
+    <div metal:define-macro="portlet"
+         tal:omit-tag=""
+         tal:define="ppath context/getPhysicalPath | nothing;
+                     isAuth not:here/portal_membership/isAnonymousUser;
+                     inLenses python:ppath and 'lenses' in ppath;"
+         tal:condition="python:isAuth and (not inLenses or context.inLensEdit())">
+
+      <ul id="portlet-navigation-tree"
+          tal:define="home context/portal_membership/getHomeFolder;
+                      homeurl home/absolute_url | nothing;
+                      lens_url view/lens_home/absolute_url | nothing;
+                      lensfolder_url python:lens_url or '%s/lenses/lens_folder_view?getCategory=Favorites&amp;mine=1' % portal_url;
+                      twistdict context/twistydetect;
+		      highlight view/highlight;
+                      highlightsection python:highlight[0] or '';
+                      highlightelt python:highlight[1];
+                      twistable python:True;">
+	<li tal:define="highlighthome python:highlightsection == 'home'"
+            tal:attributes="class python:highlighthome and 'currentNavItem' or None">
+          <a href="/@@dashboard" tal:attributes="href string:$portal_url/@@dashboard;">
+            <span i18n:translate="box_text_mycnx" tal:omit-tag="">MyRhaptos Home</span>
+          </a>
+	</li>
+	<li tal:define="twist twistdict/cnx_by_type | nothing;
+			collapsed python:twistable and twist=='none'">
+          <a class="navtoggler" href="#"
+             tal:condition="twistable"
+             onclick="twist_toggle('cnx_by_type'); return false;"
+             title="Click to toggle types browser open and closed"
+             i18n:attributes="title">
+            <span class="arrows">
+              <img id="cnx_by_type_collapse" alt=""
+                   tal:attributes="src string:$portal_url/stylesheets/plone/arrow-up.png;
+                                   style python:(twist and not collapsed) and 'display: inline;;' or 'display: none;;';" />
+              <img id="cnx_by_type_expand" alt=""
+                   tal:attributes="src string:$portal_url/stylesheets/plone/arrow-down.png;
+                                   style python:(twist and collapsed) and 'display: inline;;' or 'display: none;;';" />
+            </span>
+            <span i18n:translate="box_text_by_type" class="textNavItem">By Type</span>
+          </a>
+          <span tal:condition="not:twistable" class="textNavItem"
+		i18n:translate="box_text_by_type">By Type</span>
+	  
+          <ul id="cnx_by_type_contents"
+              tal:attributes="style python:collapsed and 'display: none;;' or None;">
+            <metal:macro
+               metal:define-macro="bytype"
+               tal:define="showOnlyCurrent showOnlyCurrent | python:True;
+                           insection python:highlightsection == 'bytype';
+                           modulehighlight python:insection and 'module' in highlightelt;
+                           collectionhighlight python:insection and 'collection' in highlightelt">
+              <li tal:condition="python:showOnlyCurrent or modulehighlight"
+		  tal:attributes="class python:modulehighlight and 'currentNavItem' or None">
+		<a href="$portal_url/listcontent?type:list=Module"
+		   tal:attributes="href string:$portal_url/listcontent?type:list=Module"
+		   i18n:translate="box_text_modules">Modules</a>
+              </li>
+              <li tal:condition="python:showOnlyCurrent or collectionhighlight"
+		  tal:attributes="class python:collectionhighlight and 'currentNavItem' or None">
+		<a href="$portal_url/listcontent?type:list=Collection"
+		   tal:attributes="href string:$portal_url/listcontent?type:list=Collection"
+		   i18n:translate="box_text_collections">Collections</a>
+              </li>
+              <li tal:define="lenshighlight python:insection and 'lens' in highlightelt"
+		  tal:condition="python:showOnlyCurrent or lenshighlight"
+		  tal:attributes="class python:lenshighlight and 'currentNavItem' or None">
+            <a href="all_lenses" i18n:translate="box_text_lenses"
+               tal:attributes="href lensfolder_url">Lenses</a>
+              </li>
+            </metal:macro>
+          </ul>
+          <ul id="cnx_by_type_hidden_contents" style="display:none"
+              tal:attributes="style python:not collapsed and 'display: none;;' or None;"
+              tal:define="showOnlyCurrent nothing">
+            <metal:replace metal:use-macro="template/macros/bytype">
+            <li class="currentNavItem">
+              <a href="#">#</a>
+            </li>
+          </metal:replace>
+          </ul>
+	</li>
+	<li tal:define="insection python:highlightsection.startswith('bylocation');
+			twist twistdict/cnx_by_location | nothing;
+			collapsed python:twistable and twist=='none'">
+        <a class="navtoggler" href="#"
+           tal:condition="twistable"
+           onclick="twist_toggle('cnx_by_location'); return false;"
+           title="Click to toggle location browser open and closed"
+           i18n:attributes="title">
+          <span class="arrows">
+            <img id="cnx_by_location_collapse" alt=""
+                 tal:attributes="src string:$portal_url/stylesheets/plone/arrow-up.png;
+                                 style python:(twist and not collapsed) and 'display: inline;;' or 'display: none;;';" />
+            <img id="cnx_by_location_expand" alt=""
+                 tal:attributes="src string:$portal_url/stylesheets/plone/arrow-down.png;
+                                 style python:(twist and collapsed) and 'display: inline;;' or 'display: none;;';" />
+          </span>
+          <span i18n:translate="box_text_by_location" class="textNavItem">By Location</span>
+        </a>
+        <span tal:condition="not:twistable"
+              class="textNavItem"
+              i18n:translate="box_text_by_location">By Location</span>
+
+        <ul id="cnx_by_location_contents"
+            tal:attributes="style python:collapsed and 'display: none;;' or None;">
+          <metal:macro
+             metal:define-macro="bylocation"
+             tal:define="showOnlyCurrent showOnlyCurrent | python:True;
+                         onaction python:highlightsection == 'bylocationaction'">
+            <li tal:define="workspacehighlight python:highlightsection == 'bylocationpersonal'"
+		tal:condition="python:showOnlyCurrent or workspacehighlight"
+		tal:attributes="class python:workspacehighlight and 'currentNavItem' or None">
+              <a href=""
+		 tal:condition="nocall:home" tal:attributes="href homeurl">
+		<span i18n:translate="box_text_personal_workspace" tal:omit-tag="">Personal Workspace</span>
+              </a>
+            </li>
+            <li class="subheader"
+		tal:condition="python:showOnlyCurrent">
+            <span class="textNavItem" i18n:translate="box_text_shared_wgs">
+              Shared Workgroups:
+            </span>
+            </li>
+            <tal:groups define="groups python:context.getWorkspaces({'id':None, 'title':None, 'link':None})">
+              <li tal:condition="python: not groups and showOnlyCurrent" class="textNavItem">
+		<em i18n:translate="box_text_no_workgroups">None</em>
+              </li>
+              <tal:block tal:condition="groups" tal:repeat="group groups">
+		<li tal:define="groupname group/id;
+				grouphighlight python: highlightsection == 'bylocationgroup' and groupname in ppath"
+                    tal:condition="python:showOnlyCurrent or grouphighlight"
+                    tal:attributes="class python:grouphighlight and 'currentNavItem' or None">
+                  <a href="prefs_group_details"
+                     tal:define="link group/link | nothing;"
+                     tal:attributes="href python:link and '%s/%s' % (portal_url,link) or None">
+                    <span tal:replace="group/title">group name</span>
+                  </a>
+		</li>
+            </tal:block>
+              <li tal:define="actionhighlight python:onaction and highlightelt=='create_workgroup'"
+		  tal:condition="python:showOnlyCurrent or actionhighlight"
+		  tal:attributes="class python:actionhighlight and 'currentNavItem' or None">
+		<a href="/create_workgroup" i18n:translate="box_label_create_a_workgroup"
+		   tal:attributes="href string:$portal_url/create_workgroup"><strong>Create a Workgroup</strong></a>
+              </li>
+              <li tal:define="actionhighlight python:onaction and highlightelt=='manageworkgroups'"
+		  tal:condition="python:len(groups) > 1 and showOnlyCurrent or actionhighlight"
+		  tal:attributes="class python:actionhighlight and 'currentNavItem' or None">
+		<a href="/manageworkgroups" i18n:translate="box_label_manage_workgroups"
+		   tal:attributes="href string:/manageworkgroups"><strong>Manage Workgroups</strong></a>
+              </li>
+            </tal:groups>
+          </metal:macro>
+        </ul>
+        <ul id="cnx_by_location_hidden_contents" style="display:none"
+            tal:attributes="style python:not collapsed and 'display: none;;' or None;"
+            tal:define="showOnlyCurrent nothing">
+          <metal:replace metal:use-macro="template/macros/bylocation">
+            <li class="currentNavItem">
+              <a href="#">#</a>
+            </li>
+          </metal:replace>
+        </ul>
+	</li>
+	<li class="currentNavItem extracted"
+            tal:condition="python:highlightsection=='editobj'">
+         <a href="module_edit" i18n:translate="box_text_navbox_title"
+            tal:attributes="href rhaptosobj/absolute_url">
+           <tal:type replace="rhaptosobj/portal_type" i18n:name="type">Module</tal:type>:
+           <tal:title replace="rhaptosobj/Title" i18n:name="title">Understanding the Circle of Fifths</tal:title>
+         </a>
+       </li>
+	
+	<li tal:condition="context/@@siyavula-account|nothing"
+            tal:define="lensorganizers context/@@lensorganizers|nothing" >
+          <span i18n:translate="box_text_lens_organizer" class="textNavItem">My Lens Organizers</span>
+          <ul>
+            <tal:block tal:condition="lensorganizers" tal:repeat="l lensorganizers">
+              <li tal:define="lname l/Title | nothing;
+                              lpath l/getPath;
+                              lpath python:lpath.split('/');
+                              current python:list(ppath[:len(lpath)]) == lpath
+                              and not template.getId() == 'create_lens'"
+                  tal:attributes="class python:current and 'currentNavItem' or None">
+		<a tal:define="url l/getURL"
+                   href="#" tal:attributes="href string:${url}/lensorganizer_view">
+                  <span tal:define="displayName lname | nothing"
+			tal:replace="python:displayName or '###'">My Great Lens</span>
+                  <span tal:define="review_state l/review_state;
+                                    private python:review_state == 'private';
+                                    icononly python:True"
+			tal:omit-tag="">
+                    <metal:state use-macro="context/wf_state_macros/macros/wfstate">public</metal:state>
+                  </span>
+		</a>
+              </li>
+            </tal:block>
+            <li tal:define="type context/Type;
+                            temp python:context.portal_factory.isTemporary(context);
+                            highlight python:temp and type=='Content Selection Lens'"
+		tal:attributes="class python:highlight and 'currentNavItem' or None">
+              <a href="/lenses/create_lens_organizer" i18n:translate="box_label_create_a_lensorganizer"><strong>Create a Lens Organizer</strong></a>
+            </li>
+       </ul>
+	</li>
+	
+    </ul>
+      
+    </div>
+  </dd>
+</dl>
+</html>
+
