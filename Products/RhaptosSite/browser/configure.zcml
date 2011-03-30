@@ -27,4 +27,11 @@
         template="templates/rhaptos-addsite.pt"
         />
 
+    <browser:page
+        for="*"
+        name="site-license"
+        class=".site_license.SiteLicenseView"
+        permission="zope2.View"
+        />
+
 </configure>

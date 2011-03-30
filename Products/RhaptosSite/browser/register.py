@@ -38,7 +38,7 @@ class IRhaptosRegistrationSchema(Interface):
     site_license_agreement = schema.Bool(
         title=_(u'site_license_agreement',
                 # FIXME: Hard-coded value to a site license that doesn't exist.
-                default=u"I have read the <a href=\"/sitelicense\">"
+                default=u"I have read the <a href=\"@@site-license\">"
                         "Connexions Site License</a> and I "
                         "agree to be bound by its terms"),
         required=True,
