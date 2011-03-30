@@ -13,6 +13,7 @@ using GenericSetup. [pumazi]
 """
 from zope.interface import Interface
 from zope import schema
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.formlib import form
 from zope.formlib.interfaces import WidgetInputError
 from plone.app.users.browser import register
@@ -84,4 +85,4 @@ class RegistrationForm(register.RegistrationForm):
 class AddUserForm(register.BaseRegistrationForm):
     """Rhaptos Override of plone.app.users.browser.register.AddUserForm
     to enable additional user information."""
-
+    template = ViewPageTemplateFile('templates/rhaptos-newuser_form.pt')
