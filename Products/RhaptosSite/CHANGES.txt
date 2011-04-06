@@ -1,3 +1,6 @@
+RhaptosSite-1.39
+  - twitbook buttons remove ratings
+
 RhaptosSite-1.38
   - Sprint-2011 bugfixes
 

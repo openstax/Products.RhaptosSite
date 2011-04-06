@@ -156,7 +156,9 @@
                   allows you to:</p>
                 <ul>
                   <li><b>Author content</b></li>
-                  <li><b>Rate modules</b> and <a href="/help/viewing/ratings"
+                  <li tal:condition="nothing">
+                      <!-- Ratings have been disabled, but the code left in, in case there are other Rhaptos instances using them. -->
+                      <b>Rate modules</b> and <a href="/help/viewing/ratings"
                           tal:define="help nocall:portal/help/viewing/ratings | nothing"
                           tal:omit-tag="not:help"
                           tal:attributes="href help/absolute_url | nothing">let others know what you think</a></li>
