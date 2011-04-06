@@ -142,6 +142,7 @@ Old customizations no longer included:
             tal:condition="items">
 
         <input type="hidden" name="form.submitted" value="1" />
+        <input tal:replace="structure context/@@authenticator/authenticator" />
         <input type="hidden" name="orig_template"
                tal:condition="request/orig_template|nothing"
                tal:attributes="value request/orig_template"/>

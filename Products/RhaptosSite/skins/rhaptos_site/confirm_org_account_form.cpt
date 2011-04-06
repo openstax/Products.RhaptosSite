@@ -66,6 +66,7 @@ minor field style changes in conversion.
         ##### HIDDEN VARIABLES FOR THE FORM_TOOL -- CUT AND PASTE THESE INTO YOUR FORM ####
         </span>
         <input type="hidden" name="form.submitted" value="1" />
+        <input tal:replace="structure context/@@authenticator/authenticator" />
 
 	<input type="hidden" name="shortname" tal:attributes="value request/shortname" />
 	<input type="hidden" name="fullname" tal:attributes="value request/fullname" />

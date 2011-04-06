@@ -119,6 +119,7 @@
                tal:condition="request/type_name | nothing"
                tal:attributes="value request/type_name" />
         <input type="hidden" name="form.submitted" value="1" />       
+        <input tal:replace="structure context/@@authenticator/authenticator" />
       </form>
 
        </tal:main>

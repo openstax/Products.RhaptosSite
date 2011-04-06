@@ -90,6 +90,7 @@ member searching, and a missing function (getUserId)
                      i18n:attributes="value label_add_new_user;"
         />
           <input type="hidden" name="form.submitted" value="1" />
+          <input tal:replace="structure context/@@authenticator/authenticator" />
         </form>
 
         <form action=""
@@ -102,6 +103,7 @@ member searching, and a missing function (getUserId)
                           portal_users python:findAll and mtool.listMembers() or portal_users_searched;
                           batch python:Batch(portal_users, b_size, int(b_start), orphan=1)">
           <input type="hidden" name="form.submitted" value="1" />
+          <input tal:replace="structure context/@@authenticator/authenticator" />
 
           <table class="listing" summary="User Listing">
                 <tr>

@@ -143,6 +143,7 @@ This is based off of the Plone2.0.5 template which has been dropped
         </fieldset>
 
         <input type="hidden" name="form.submitted" value="1" />
+        <input tal:replace="structure context/@@authenticator/authenticator" />
 
       </form>
 

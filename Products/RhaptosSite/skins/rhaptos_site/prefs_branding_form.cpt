@@ -48,6 +48,7 @@
                  value="Search"
                  i18n:attributes="value value_search"/>
           <input type="hidden" name="form.submitted" value="1" />
+          <input tal:replace="structure context/@@authenticator/authenticator" />
         </form>
         <span>OR</span>
         <form action="."
@@ -60,6 +61,7 @@
                  value="Show all organizational accounts"
                  i18n:attributes="value value_showallorg"/>
           <input type="hidden" name="form.submitted" value="1" />
+          <input tal:replace="structure context/@@authenticator/authenticator" />
         </form>
       </p>
 
@@ -181,6 +183,7 @@
                  value="Save Changes"
                  i18n:attributes="value value_save"/>
           <input type="hidden" name="form.submitted" value="1" />
+          <input tal:replace="structure context/@@authenticator/authenticator" />
         </tal:input>
       </form>
     </div>

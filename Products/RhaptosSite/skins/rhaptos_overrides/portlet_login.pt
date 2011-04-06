@@ -53,6 +53,7 @@ Old customizations:
               tal:attributes="action string:${portal_url}/login_form">
 
             <input type="hidden" name="form.submitted" value="1" />
+            <input tal:replace="structure context/@@authenticator/authenticator" />
             <input type="hidden" name="came_from" value=""
                    tal:attributes="value context/@@plone/getCurrentUrl" />
             <input type="hidden" name="js_enabled" id="js_enabled" value="0" />
