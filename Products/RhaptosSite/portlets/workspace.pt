@@ -185,6 +185,7 @@
 	<li class="currentNavItem extracted"
             tal:condition="python:highlightsection=='editobj'">
          <a href="module_edit" i18n:translate="box_text_navbox_title"
+            tal:define="rhaptosobj context/nearestRhaptosObject"
             tal:attributes="href rhaptosobj/absolute_url">
            <tal:type replace="rhaptosobj/portal_type" i18n:name="type">Module</tal:type>:
            <tal:title replace="rhaptosobj/Title" i18n:name="title">Understanding the Circle of Fifths</tal:title>
