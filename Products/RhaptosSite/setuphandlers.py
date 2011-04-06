@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 """GenericSetup setup handlers for RhaptosSite."""
 from zExceptions import BadRequest
+from Acquisition import aq_base
 from zope.component import getUtility
 from zope.container.interfaces import INameChooser
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.Expression import Expression
+from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.Archetypes.Extensions.utils import install_subskin
 from plone.portlets.constants import GROUP_CATEGORY
 from plone.portlets.interfaces import IPortletManager
@@ -91,6 +93,27 @@ def assign_dashboard_portlets(assignments):
         _assign_portlet_to_manager(portlet, manager)
 
 
+def _get_workflow_state(obj):
+    """Return the content object's workflow state."""
+    portal_workflow = getToolByName(obj, 'portal_workflow')
+    try:
+        state = portal_workflow.getInfoFor(obj, 'review_state')
+    except WorkflowException, err:
+        ##logger.error("%s\nCould not transition: %s" % (err, obj))
+        state = None
+    return state
+
+
+def publish_tree(root_obj):
+    """Publish (workflow transition) an entire directory tree."""
+    portal_workflow = getToolByName(root_obj, 'portal_workflow')
+    for id, obj in root_obj.contentItems():
+        #: This assumes everthing is in the simple workflow
+        workflow_state = _get_workflow_state(obj)
+        if workflow_state is not None and workflow_state != 'published':
+            portal_workflow.doActionFor(obj, 'publish')
+
+
 def install(context):
     """Set up RhaptosSite: register with the necessary tools, etc.
     """
@@ -111,6 +134,9 @@ def install(context):
 
     set_up_security(portal)
     assign_dashboard_portlets(DASHBOARD_PORTLET_ASSIGNMENTS)
+
+    # FIXME: We shouldn't do doing the workflow transition here.
+    publish_tree(portal)
 
     ## create 'mydashboard' folder, mostly just to get it in the path
     # its default vew is 'author_home'
