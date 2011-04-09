@@ -312,7 +312,7 @@ body.fullscreen #portal-searchbox{
   background-color: #EEEEEE;
 }
 
-#cnx_branding_banner{
+.cnx_branding_banner{
   padding: 0.2em 2em;
 }
 
