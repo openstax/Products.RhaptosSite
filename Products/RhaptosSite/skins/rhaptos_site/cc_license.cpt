@@ -110,7 +110,7 @@
         </div>
 	<input type="submit" 
           class="context" 
-          name="form.button.next" 
+          name="form.button.nextpage" 
           value="Next >>" 
           i18n:attributes="value value_next_with_arrows" />
         <input type="hidden" name="license" value="by"
