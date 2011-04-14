@@ -1,3 +1,6 @@
+RhaptosSite-1.40
+  - caching
+
 RhaptosSite-1.39
   - twitbook buttons remove ratings
 
