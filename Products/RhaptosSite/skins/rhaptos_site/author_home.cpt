@@ -148,8 +148,7 @@
                 </li>
               </ul>
               <ul 
-              tal:define="lensorganizers context/@@lensorganizers|nothing;
-                          isSiyavulaMember context/@@siyavula-account|nothing;
+              tal:define="isSiyavulaMember context/@@siyavula-account|nothing;
                           member python:here.portal_membership.getAuthenticatedMember().getId();
                           isTestMember python:member.lower().startswith('siyavulatest')" 
               tal:condition="python:isSiyavulaMember or isTestMember">

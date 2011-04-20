@@ -1,3 +1,22 @@
+RhaptosSite-1.40
+  - caching
+
+RhaptosSite-1.39
+  - twitbook buttons remove ratings
+
+RhaptosSite-1.38
+  - Sprint-2011 bugfixes
+
+RhaptosSite-1.37
+  - Bugfix 2010: navigation arrows
+
+RhaptosSite-1.36.1
+  - conditionalize openlenses
+
+RhaptosSite-1.36
+  - prefs_user_overview to work w/ CatalogMemberDataTool
+  - hide logactions portlet for not-yet-completely-created content
+
 RhaptosSite-1.35
   - sword import support
 

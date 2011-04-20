@@ -173,10 +173,10 @@
 		    i18n:name="number_of_modules">[Number of Modules]</span><span 
 		  i18n:name="singular_modules"><tal:span 
 		    tal:condition="python:num_mod==1" 
-		      i18n:translate="text_profile_single_module">&#32;Module</tal:span></span><span 
+		      i18n:translate="text_profile_single_module">&#32;module</tal:span></span><span 
 		  i18n:name="multiple_modules"><tal:span 
 		    tal:condition="python:num_mod&gt;1"
-		      i18n:translate="text_profile_multiple_modules">&#32;Modules</tal:span></span><span 
+		      i18n:translate="text_profile_multiple_modules">&#32;modules</tal:span></span><span 
 		  i18n:name="and_seperator"><tal:and  
 		    tal:condition="python:num_mod and num_c"
 		      i18n:translate="text_profile_and_seperator">&#32;and</tal:and></span><span 
@@ -184,10 +184,10 @@
 		    i18n:name="number_of_courses">[Number of Courses]</span><span 
 		  i18n:name="singular_course"><tal:span 
 		    tal:condition="python:num_c==1"
-		      i18n:translate="text_profile_single_course">&#32;Course</tal:span></span><span 
+		      i18n:translate="text_profile_single_course">&#32;collection</tal:span></span><span 
 		  i18n:name="multiple_courses"><tal:span 
 		    tal:condition="python:num_c&gt;1"
-		      i18n:translate="text_profile_multiple_courses">&#32;Courses</tal:span></span></a>
+		      i18n:translate="text_profile_multiple_courses">&#32;collections</tal:span></span></a>
                 <a tal:attributes="href string:${content_url}&view_mode=statistics&sorton=popularity"
                   i18n:translate="label_profile_statistics_link" tal:condition="context/has_stats">
                   (view statistics)
