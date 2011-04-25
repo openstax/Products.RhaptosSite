@@ -72,6 +72,7 @@ setup(name='Products.RhaptosSite',
           'Products.ZAnnot',
           'Products.Lineup',
           'Products.RhaptosSword',
+          'Products.RhaptosCatFixes',
 
           # Unit tests dependencies
           'Products.RhaptosTest',
