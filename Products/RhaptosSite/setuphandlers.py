@@ -142,4 +142,17 @@ def install(context):
                     desc = f.Description()
                     f.setDescription(oldtitle + ": " + desc)
             logger.info("< done")
+
+    # remove unnecessary portal_catalog indexes
+    cat = getToolByName(portal,'portal_catalog')
+    existing_indexes = cat.indexes()
+    keep_indexes = ['Creator', 'portal_type', 'allowedRolesAndUsers', 'orig_id', 'review_state', 
+                    'path', 'getObjPositionInParent', 'sortable_title', 'modified', 'created', 
+                    'Date', 'effectiveRange']
+
+    for i in keep_indexes:
+        existing_indexes.remove(i)
+    logger.info("Removing excess portal_catalog indexes")
+    cat.manage_delIndex(existing_indexes)
+
     logger.info("Successfully installed %s." % 'RhaptosSite')
