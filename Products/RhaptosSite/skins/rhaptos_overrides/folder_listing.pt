@@ -19,12 +19,20 @@ Rhaptos notes:
 
 <body>
 
-    <div metal:fill-slot="main">
+    <div metal:fill-slot="main" 
+              tal:define="object_title here/pretty_title_or_id;
+                          isAnon context/@@plone_portal_state/anonymous;
+                          normalizeString nocall:context/@@plone/normalizeString">
     <metal:main-macro define-macro="main">
 
+<!-- Corriger
+Same document_actions problem I found in the other templates
+<-->
+<!--
         <div metal:use-macro="here/document_actions/macros/document_actions">
             Document actions (print, sendto etc)
         </div>
+-->
 
         <h1 tal:content="object_title" class="documentFirstHeading">
             Title or id
@@ -32,7 +40,7 @@ Rhaptos notes:
 
         <a href=""
            class="link-parent"
-           tal:define="parent_url python:here.navigationParent(here, template_id)"
+           tal:define="parent_url python:here.navigationParent(here, template.getId())"
            tal:condition="nothing | parent_url"
            tal:attributes="href parent_url"
            i18n:translate="go_to_parent_url">
