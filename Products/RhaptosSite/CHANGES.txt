@@ -1,3 +1,7 @@
+RhaptosSite-1.41
+  - Catalog fixes - pull in RhaptosCatFixes via dependency
+                  - drop excess portal_catalog indexes
+
 RhaptosSite-1.40
   - caching
 
