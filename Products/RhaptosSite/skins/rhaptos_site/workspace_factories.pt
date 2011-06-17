@@ -52,8 +52,10 @@
         </p>
 
         <div tal:define="allowedSortedContentTypes python: here.getAllowedTypes();
-                     tOrder python:['Module','Collection','UnifiedFile'];
-                     dummy python:allowedSortedContentTypes.sort(lambda x,y: cmp(y.getId() in tOrder and tOrder.index(x.getId())+1, x.getId() in tOrder and tOrder.index(y.getId())+1));">
+                     tOrder python:['Module','Collection','UnifiedFile','MemberLink'];
+                     tOrder python:{'Module':1,'Collection':2,'UnifiedFile':3, 'MemberLink':4,'Image':5};
+                     dummy python:allowedSortedContentTypes.sort(lambda x,y: cmp(y.getId() in tOrder and tOrder[x.getId()], x.getId() in tOrder and tOrder[y.getId()]) );">
+
           <metal:plone-original metal:use-macro="here/folder_factories/macros/addlist"/>
         </div>
      </tal:block>

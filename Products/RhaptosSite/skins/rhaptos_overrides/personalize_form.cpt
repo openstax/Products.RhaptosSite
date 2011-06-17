@@ -36,19 +36,29 @@ Rhaptos notes:
 
      <div id="content" 
           class="documentEditable">
+                <h1><span i18n:translate="heading_member_profile">Member Profile</span>
+                <span class="rhaptossmall">(<a href=""
+                   tal:attributes="href string: ${portal_url}/Members/${member}"
+                   i18n:translate="label_view">My Links</a>)</span>
+                </h1>
 
             <h5 class="hiddenStructure">Views</h5>
         
             <ul class="contentViews">
-              <li>
-                <a href=""
-                   tal:attributes="href string: ${portal_url}/member_profile/${member}"
-                   i18n:translate="label_view">View</a>
-              </li>
               <li class="selected">
                 <a href=""
                    tal:attributes="href string:${portal_url}/personalize_form"
-                   i18n:translate="label_edit">Edit</a>
+                   i18n:translate="label_edit">Personal Information</a>
+              </li>
+              <li>
+                <a href=""
+                   tal:attributes="href string: ${portal_url}/Members/${member}"
+                   i18n:translate="label_view">My Links</a>
+              </li>
+              <li>
+                <a href=""
+                   tal:attributes="href string: ${portal_url}/Members/${member}"
+                   i18n:translate="label_view">Featured Content</a>
               </li>
             </ul>
 
@@ -64,7 +74,6 @@ Rhaptos notes:
                     Portal status message
                 </div>
 
-                <h1 i18n:translate="heading_member_profile">Member Profile</h1>
 
                 <a href=""
                    class="link-parent"

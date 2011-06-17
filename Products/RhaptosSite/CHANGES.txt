@@ -1,3 +1,6 @@
+RhaptosSite-1.41
+- author profiles
+
 RhaptosSite-1.40
   - caching
 

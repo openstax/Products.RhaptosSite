@@ -84,7 +84,7 @@ Yet to do:
 
     <div metal:fill-slot="main"
          tal:define="full_view python:False;
-                     tOrder python:['Module','Collection','UnifiedFile', 'File', 'Image'];
+                     tOrder python:['Module','MemberLink','Collection','UnifiedFile', 'File', 'Image'];
     tOrder_comment string:File and Image above can be removed once we're using only UniFiles;
                      contentFilter request/contentFilter|python:{'portal_type':tOrder};
                      filler python:contentFilter.setdefault('sort_on','sortable_title');
