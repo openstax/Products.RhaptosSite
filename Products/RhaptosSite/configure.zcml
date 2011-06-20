@@ -1,0 +1,25 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five">
+
+<include package="zope.app.annotation" />
+<include package=".browser" />
+
+
+   <browser:page
+      for="*"
+      name="works"
+      template="works.pt"
+      class=".works.Works"
+      permission="zope2.View" />
+
+  
+    <five:implements
+      class="Products.CMFPlone.PloneFolder.PloneFolder" 
+      interface="zope.app.annotation.IAttributeAnnotatable"
+      />
+
+
+
+</configure>
