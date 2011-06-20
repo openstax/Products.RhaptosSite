@@ -21,12 +21,12 @@
                    tal:attributes="href string:${portal_url}/personalize_form"
                    i18n:translate="label_edit">Personal Information</a>
               </li>
-              <li class="selected">
+              <li>
                 <a href=""
                    tal:attributes="href string: ${portal_url}/Members/${member}/@@my_links"
                    i18n:translate="label_view">My Links</a>
               </li>
-              <li>
+              <li class="selected">
                 <a href=""
                    tal:attributes="href string: ${portal_url}/Members/${member}/@@my_features"
                    i18n:translate="label_view">Featured Content</a>
