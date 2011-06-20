@@ -33,6 +33,12 @@
               </li>
             </ul>
 
+"My Links" allows Connexions members to add a section of links of the member's own choosing to a featured area of their profile.
+
+<div class="context"><a href=""
+                   tal:attributes="href string: ${portal_url}/Members/${member}/createObject?type_name=MemberLink"
+>+ Create a new link</a></div>
+
 
   </div>
 

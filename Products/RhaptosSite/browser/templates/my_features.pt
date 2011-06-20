@@ -33,6 +33,12 @@
               </li>
             </ul>
 
+Feature up to two of the collections or modules you have authored in a specially highlighted area above the full content listing on your author profile.
+
+
+<div class="context"><a href=""
+                   tal:attributes="href string: ${portal_url}/Members/${member}/createObject?type_name=FeaturedContent"
+>+ Add a featured collection or module</a></div>
 
   </div>
 
