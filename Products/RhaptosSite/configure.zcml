@@ -7,13 +7,6 @@
 <include package=".browser" />
 
 
-   <browser:page
-      for="*"
-      name="works"
-      template="works.pt"
-      class=".works.Works"
-      permission="zope2.View" />
-
   
     <five:implements
       class="Products.CMFPlone.PloneFolder.PloneFolder" 
