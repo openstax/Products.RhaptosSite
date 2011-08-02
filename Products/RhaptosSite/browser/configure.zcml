@@ -2,14 +2,6 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
 >
-<!--
-   <browser:page
-      name="my_links"
-      for="OFS.interfaces.IFolder"
-      template="templates/my_links.pt"
-      permission="zope2.View"
-      />
--->
    <browser:page
       name="my_features"
       for="OFS.interfaces.IFolder"
