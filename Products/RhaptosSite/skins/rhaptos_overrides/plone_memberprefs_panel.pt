@@ -41,6 +41,12 @@ Rhaptos note: Changed heading and wording: 'account' instead of 'preferences'
                         </a>
                     </li>
                 </tal:configlet>
+                <li><a 
+                           tal:attributes="href string:$portal_url/my_widget">
+                            <tal:name i18n:translate="add_content_feed">Add Content Feed to an External Site
+                            </tal:name>
+                    </a>
+                </li>
             </ul>
 
             <p tal:condition="not:configlets"
