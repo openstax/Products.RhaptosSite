@@ -8,6 +8,20 @@
       template="templates/my_features.pt"
       permission="zope2.View"
       />
+   <browser:page
+      name="profile_content"
+      for="*"
+      class=".profile_content.ProfileContent"
+      allowed_attributes="getAuthCollectionsForMember getAuthModulesForMember getMaintainedModulesForMember getTranslationsForMember"
+      permission="zope2.View"
+      />
+   <browser:page
+      name="profile_content_page"
+      for="*"
+      class=".profile_content.ProfileContent"
+      template="templates/profile_content.pt"
+      permission="zope2.View"
+      />
 
 </configure>
 

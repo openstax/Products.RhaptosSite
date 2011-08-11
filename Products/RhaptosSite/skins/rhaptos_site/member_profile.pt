@@ -17,7 +17,8 @@
   </style>
 </head>
 
-<body>
+<body tal:define="sl python:True;
+">
 
 <tal:comment replace="nothing">
     Plone2.5 Note:  This template is now loosely based off of the
@@ -33,7 +34,8 @@
 
 <metal:main fill-slot="content">
     <tal:main-macro metal:define-macro="main"
-                    tal:define="authorid python:(len(request.traverse_subpath) > 0 and request.traverse_subpath[0]) or request.get('author', None);
+                    tal:define="
+      authorid python:(len(request.traverse_subpath) > 0 and request.traverse_subpath[0]) or request.get('author', None);
       member python:here.desecured.getMemberById(authorid);
       preferences_url string:/personalize_form;
       profile_url string:/personalize_profile;">
@@ -80,16 +82,6 @@
 	    i18n:translate="heading_member_profile">Member Profile: 
 	    <span tal:replace="fullname" i18n:name="user_full_name">[name]</span></h1>
 
-      <tal:portrait define="portrait python:mtool.getPersonalPortrait(member.getId());
-        scale python:here.calcImageScale(image=portrait);
-        p_height python:portrait.height/scale; 
-        p_width python:portrait.width/scale;"
-	  condition="python:portrait and (not(is_org) or portrait.title != 'Default user')">
-	  
-	  <img tal:replace="structure python:portrait.tag(height=p_height,width=p_width,css_class='portraitPhoto')"
-	    />
-
-      </tal:portrait>
       
         <p tal:define="uid member/getId">
           <b i18n:translate="text_userid_header">Username:</b> <span tal:content="uid">alice</span>
@@ -114,15 +106,6 @@
 	    tal:content="url">[homepage]</a><br />
 	</p>
 
-	<p tal:define="affiliation python:member.getProperty('affiliation').strip();
-	  affiliation_url python:member.getProperty('affiliation_url');" 
-	  tal:condition="affiliation">
-	  <b i18n:translate="text_affiliation_header">Affiliation:</b> 
-	      <a tal:attributes="href affiliation_url"
-		tal:content="affiliation"
-		tal:omit-tag="not:affiliation_url">[affiliation]</a>
-	  <br />
-	</p>
       
 
 	<p tal:define="planguage python:member.getProperty('preferred_language')"
@@ -304,6 +287,11 @@
     </tal:main-macro>
 
 </metal:main>
+<metal:leftportlets fill-slot="portlets_one_slot">
+About ....
+      <metal:author_about_box metal:use-macro="here/profile_portlet/macros/author_about_box" />
+
+</metal:leftportlets>
 
 </body>
 </html>

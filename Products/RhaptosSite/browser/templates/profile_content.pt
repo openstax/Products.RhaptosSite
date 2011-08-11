@@ -1,0 +1,12 @@
+now I exist
+<tal:collections tal:content="python:[collection.getURL() for collection in view.getAuthCollectionsForMember('user1')]">
+</tal:collections>
+
+<br />
+courses:
+<tal:courses tal:content="python:view.getAuthCoursesForMember('user1')">
+</tal:courses>
+<br />
+modules:
+<tal:modules tal:content="python:view.getAuthModulesForMember('user1')">
+</tal:modules>

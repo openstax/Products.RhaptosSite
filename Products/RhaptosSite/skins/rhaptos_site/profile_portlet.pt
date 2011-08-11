@@ -1,0 +1,52 @@
+<div metal:define-macro="author_about_box">
+    <metal:block tal:define="
+       memberid python:(len(request.traverse_subpath) > 0 and request.traverse_subpath[0]) or request.get('author', None);
+        member python:here.desecured.getMemberById(memberid);
+        member_since python:member.getProperty('approved_time').year;
+        authorprofile context/@@profile_content;
+        auth_collections python:authorprofile.getAuthCollectionsForMember(memberid);
+      	auth_mods python:authorprofile.getAuthModulesForMember(memberid);
+      	maintain_mods python:authorprofile.getMaintainedModulesForMember(memberid);
+        maintainmod_count python:len(maintain_mods);
+     	translations python:authorprofile.getTranslationsForMember(memberid);
+        translation_count python:len(translations);
+        ">
+
+      <tal:portrait 
+      tal:define="
+        portrait python:mtool.getPersonalPortrait(member.getId());
+        account_type python:member.getProperty('account_type');
+        is_org python:account_type != 'person';
+        scale python:here.calcImageScale(image=portrait);
+        p_height python:portrait.height/scale; 
+        p_width python:portrait.width/scale;"
+	  condition="python:portrait and (not(is_org) or portrait.title != 'Default user')">
+	  <img tal:replace="structure python:portrait.tag(height=p_height,width=p_width,css_class='portraitPhoto')"
+	    />
+
+      </tal:portrait>
+         <ul>
+                <tal:affiliation
+	         tal:define="affiliation python:member.getProperty('affiliation').strip();
+	                     affiliation_url python:member.getProperty('affiliation_url');" 
+	              tal:condition="affiliation">
+		<li><strong>Affiliation:</strong>
+	         <a tal:attributes="href affiliation_url"
+		tal:content="affiliation"
+		tal:omit-tag="not:affiliation_url">[affiliation]</a>
+                 </li>
+                </tal:affiliation>
+		<li><strong>Member since:</strong><tal:since tal:content="member_since"/></li>		
+		<li><strong>Author of:<tal:item tal:content="python:len(auth_mods)"/></strong></li>
+		<li><strong>Maintainer of:</strong><tal:maintainer tal:content="maintainmod_count" /></li>
+		<li><strong>Translator of:</strong><tal:translations tal:content="translation_count" /></li>
+	</ul>
+         </metal:block>
+         </div>
+	<div metal:define-macro="author_about_portlet">
+		<ul id="portlet-navigation-tree">
+		    <li><a>About <span tal:content="member_name" tal:omit-tag=""/></a></li>
+		    <li><a> tal:content="member_name" tal:omit-tag=""/> Content</a></li>
+		</ul>
+                      <div metal:use-macro="author_about_box"/>
+	</div>
