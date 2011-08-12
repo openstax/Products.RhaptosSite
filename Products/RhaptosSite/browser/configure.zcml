@@ -12,7 +12,7 @@
       name="profile_content"
       for="*"
       class=".profile_content.ProfileContent"
-      allowed_attributes="getAuthCollectionsForMember getAuthModulesForMember getMaintainedModulesForMember getTranslationsForMember"
+      allowed_attributes="getAuthCollectionsForMember getAuthLinksForMember getAuthModulesForMember getMaintainedModulesForMember getTranslationsForMember"
       permission="zope2.View"
       />
    <browser:page

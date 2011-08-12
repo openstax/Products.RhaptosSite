@@ -1,0 +1,22 @@
+<div metal:define-macro="author_links">
+    <metal:block tal:define="
+       memberid python:(len(request.traverse_subpath) > 0 and request.traverse_subpath[0]) or request.get('author', None);
+        member python:here.desecured.getMemberById(memberid);
+        member_since python:member.getProperty('approved_time').year;
+        authorprofile context/@@profile_content;
+        auth_links python:authorprofile.getAuthLinksForMember(memberid);
+        ">
+
+      <p></p>
+         <ul tal:repeat="link auth_links">
+		<li tal:content="link/getRemoteUrl"><strong>Maintainer of:</strong><tal:maintainer tal:content="string:$maintainmod_count modules" /></li>
+	</ul>
+         </metal:block>
+         </div>
+	<div metal:define-macro="portlet_links">
+<h2>My Links</h2>
+		<ul id="portlet-navigation-tree">
+		    <li><a> tal:content="member_name" tal:omit-tag=""/> Content</a></li>
+		</ul>
+                      <div metal:use-macro="author_links"/>
+	</div>

@@ -13,11 +13,12 @@
     <metal:block fill-slot="top_slot"
                  tal:define="dummy python:request.set('disable_border',1)" />
   <style metal:fill-slot="css_slot">
-    .portraitPhoto{float: right; margin: 0 0 .5em 1em;}
+    .xportraitPhoto{float: right; margin: 0 0 .5em 1em;}
   </style>
 </head>
 
 <body tal:define="sl python:True;
+                  sr python:True;
 ">
 
 <tal:comment replace="nothing">
@@ -79,55 +80,21 @@
                              is_org python:account_type != 'person';">
       
       <h1 style="margin-bottom: .5em;"
-	    i18n:translate="heading_member_profile">Member Profile: 
+	    i18n:translate="heading_member_about">About 
 	    <span tal:replace="fullname" i18n:name="user_full_name">[name]</span></h1>
+      <h3 i18n:translate="heading_personal_information">Personal Information</h3>
 
-      
-        <p tal:define="uid member/getId">
-          <b i18n:translate="text_userid_header">Username:</b> <span tal:content="uid">alice</span>
-        </p>
-
-	<p tal:define="shortname python:member.getProperty('shortname')" 
-	  tal:condition="shortname">
-	  <b i18n:translate="text_contact_header">Short organization name:</b> <span tal:content="shortname">alice</span> 
-	</p>
-	<p tal:define="email python:member.getProperty('email')" 
-	  tal:condition="email">
-	  <b i18n:translate="text_contact_header">Contact:</b> <a 
-	    tal:attributes="href string:mailto:${email}"
-	    tal:content="email">[email]</a>
-	  <br/>
-	</p>
-      
-	<p tal:define="url python:member.getProperty('homepage')" 
-	  tal:condition="url">
-	  <b i18n:translate="text_homepage_header" tal:condition="not:is_org">Home page:</b><b i18n:translate="text_webpage_header" tal:condition="is_org">Web page:</b> <a
-	    tal:attributes="href url"
-	    tal:content="url">[homepage]</a><br />
-	</p>
-
-      
-
-	<p tal:define="planguage python:member.getProperty('preferred_language')"
-	  tal:condition="planguage">
-	  <b i18n:translate="text_pref_language_header">Preferred Language:</b>
-	  <span tal:content="planguage">[language]</span>
-	</p>
-
-	<p tal:define="altlanguage python:member.getProperty('alternative_languages')"
-	  tal:condition="altlanguage">
-	  <b i18n:translate="text_alt_languages_header">Alternative Languages:</b>
-	  <tal:altlanguages tal:repeat="s altlanguage">
-	    <span tal:content="s">[language]</span><tal:comma tal:condition="not:repeat/s/end">,</tal:comma>
-	  </tal:altlanguages>
-	</p>
-
-	<p tal:condition="python:member.getProperty('location')">
-	  <b i18n:translate="text_location_header">Location:</b> 
-	      <span tal:define="location python:member.getProperty('location')"
-		tal:content="location">[location]</span>
-	</p>
-      
+      <dl style="margin: 2em 0;"
+	tal:define="biography python:member.getProperty('biography')"
+	tal:condition="biography">      
+	<dt i18n:translate="text_biography_header" tal:condition="not:is_org">Biography:</dt>
+	<dt i18n:translate="text_biography_header" tal:condition="is_org">About this organization:</dt>
+	<dd>
+	  <p tal:repeat="para biography">
+	    <span tal:content="para">[bio]</span>
+	  </p>
+	</dd>
+      </dl>
 	    <p tal:define="interests python:member.getProperty('interests')"
 	      tal:condition="interests">
 	      <b i18n:translate="text_interests_header">Interests:</b> 
@@ -136,7 +103,74 @@
 		  tal:content="s">[subject]</a><tal:comma tal:condition="not:repeat/s/end">,</tal:comma>
 	      </tal:interest>
 	    </p>
+                 <tal:affiliation
+	         tal:define="affiliation python:member.getProperty('affiliation').strip();
+	                     affiliation_url python:member.getProperty('affiliation_url');" 
+	              tal:condition="affiliation">
+		<p><strong>Affiliation:</strong>
+	         <a tal:attributes="href affiliation_url"
+		tal:content="affiliation"
+		tal:omit-tag="not:affiliation_url">[affiliation]</a>
+                </p>
+                 </tal:affiliation>
+	<p tal:define="rec_content python:member.getProperty('recommended_content')"
+	  tal:condition="rec_content">
+	  <b i18n:translate="text_rec_content_header">Recommended Content:</b> 
+	  <tal:content tal:repeat="s rec_content">
+	    <tal:error on-error="s">
+	      <a tal:define="object python:here.content.getRhaptosObject(s).latest" 
+		tal:attributes="href object/url"
+		tal:content="object/title">[content item]</a></tal:error><tal:comma tal:condition="not:repeat/s/end">,</tal:comma>
+	  </tal:content>
+	</p>
 
+	<p tal:define="planguage python:member.getProperty('preferred_language')"
+	  tal:condition="planguage">
+	  <b i18n:translate="text_pref_language_header">Preferred Language:</b>
+	  <span tal:content="planguage">[language]</span>
+	</p>
+	<p tal:define="altlanguage python:member.getProperty('alternative_languages')"
+	  tal:condition="altlanguage">
+	  <b i18n:translate="text_alt_languages_header">Alternative Languages:</b>
+	  <tal:altlanguages tal:repeat="s altlanguage">
+	    <span tal:content="s">[language]</span><tal:comma tal:condition="not:repeat/s/end">,</tal:comma>
+	  </tal:altlanguages>
+	</p>
+	<p tal:condition="python:member.getProperty('location')">
+	  <b i18n:translate="text_location_header">Location:</b> 
+	      <span tal:define="location python:member.getProperty('location')"
+		tal:content="location">[location]</span>
+	</p>
+      
+
+	<p tal:define="shortname python:member.getProperty('shortname')" 
+	  tal:condition="shortname">
+	  <b i18n:translate="text_contact_header">Short organization name:</b> <span tal:content="shortname">alice</span> 
+	</p>
+    
+	<p><tal:email tal:define="email python:member.getProperty('email')" 
+	  tal:condition="email">
+	  <b i18n:translate="text_contact_header">Contact:</b> <a 
+	    tal:attributes="href string:mailto:${email}"
+	    ><tal:email tal:omit-tag="" 
+                 i18n:translate="text_email_user" tal:content="string:E-mail ${fullname}"/></a>.
+         </tal:email>
+	<tal:url tal:define="url python:member.getProperty('homepage')" 
+	  tal:condition="url">
+	  <b i18n:translate="text_homepage_header" tal:condition="not:is_org">Home page:</b>
+         <b i18n:translate="text_webpage_header" tal:condition="is_org">Web page:</b> <a
+	    tal:attributes="href url"
+	    tal:content="url">[homepage]</a><br />
+	</tal:url>
+
+	</p>
+      
+
+      
+
+
+
+      
 	    <tal:block define="r python:here.getAuthorContent(member.getId(), 'Title');
 	      content r/content;
 	      m_content r/m_content;
@@ -148,6 +182,8 @@
 	      content_url string:/content/expanded_browse_authors?letter=${first_letter}&author=${member/id};
 	      glob_maint python:bool(member.has_role('Maintainer'))"
 	      condition="python:content or m_content or glob_maint">
+
+            <h3 i18n:translate="header_author_content" tal:content="string:${fullname}'s Content">Author's Content</h3>
 	      <p tal:condition="content">
 		<b i18n:translate="text_author_of_header">Author of:</b> 
 		<a tal:attributes="href content_url"
@@ -253,28 +289,7 @@
           </a>
         </p>
       
-	<p tal:define="rec_content python:member.getProperty('recommended_content')"
-	  tal:condition="rec_content">
-	  <b i18n:translate="text_rec_content_header">Recommended Content:</b> 
-	  <tal:content tal:repeat="s rec_content">
-	    <tal:error on-error="s">
-	      <a tal:define="object python:here.content.getRhaptosObject(s).latest" 
-		tal:attributes="href object/url"
-		tal:content="object/title">[content item]</a></tal:error><tal:comma tal:condition="not:repeat/s/end">,</tal:comma>
-	  </tal:content>
-	</p>
  
-      <dl style="margin: 2em 0;"
-	tal:define="biography python:member.getProperty('biography')"
-	tal:condition="biography">      
-	<dt i18n:translate="text_biography_header" tal:condition="not:is_org">Biography:</dt>
-	<dt i18n:translate="text_biography_header" tal:condition="is_org">About this organization:</dt>
-	<dd>
-	  <p tal:repeat="para biography">
-	    <span tal:content="para">[bio]</span>
-	  </p>
-	</dd>
-      </dl>
 
 	</tal:block>
 	
@@ -292,6 +307,9 @@ About ....
       <metal:author_about_box metal:use-macro="here/profile_portlet/macros/author_about_box" />
 
 </metal:leftportlets>
+<metal:rightportlets fill-slot="portlets_two_slot">
+      <metal:author_links metal:use-macro="here/portlet_links/macros/author_links" />
+</metal:rightportlets>
 
 </body>
 </html>

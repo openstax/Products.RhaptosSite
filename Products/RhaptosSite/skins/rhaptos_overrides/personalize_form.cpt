@@ -37,7 +37,7 @@ Rhaptos notes:
      <div id="content" 
           class="documentEditable">
                 <h1><span i18n:translate="heading_member_profile">Member Profile</span>
-                <span class="rhaptossmall">(view profile)</span>
+                <span class="rhaptossmall">(<a href="" tal:attributes="href string:$portal_url/member_profile/$member;">view profile</a>)</span>
                 </h1>
 
             <h5 class="hiddenStructure">Views</h5>

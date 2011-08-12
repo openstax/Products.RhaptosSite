@@ -25,6 +25,7 @@
 	    />
 
       </tal:portrait>
+      <p></p>
          <ul>
                 <tal:affiliation
 	         tal:define="affiliation python:member.getProperty('affiliation').strip();
@@ -38,7 +39,7 @@
                 </tal:affiliation>
 		<li><strong>Member since:</strong><tal:since tal:content="member_since"/></li>		
 		<li><strong>Author of:<tal:item tal:content="python:len(auth_mods)"/></strong></li>
-		<li><strong>Maintainer of:</strong><tal:maintainer tal:content="maintainmod_count" /></li>
+		<li><strong>Maintainer of:</strong><tal:maintainer tal:content="string:$maintainmod_count modules" /></li>
 		<li><strong>Translator of:</strong><tal:translations tal:content="translation_count" /></li>
 	</ul>
          </metal:block>
