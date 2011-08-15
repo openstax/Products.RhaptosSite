@@ -3,12 +3,6 @@
     xmlns:browser="http://namespaces.zope.org/browser"
 >
    <browser:page
-      name="my_features"
-      for="OFS.interfaces.IFolder"
-      template="templates/my_features.pt"
-      permission="zope2.View"
-      />
-   <browser:page
       name="profile_content"
       for="*"
       class=".profile_content.ProfileContent"

@@ -55,7 +55,7 @@ Rhaptos notes:
               </li>
               <li>
                 <a href=""
-                   tal:attributes="href string: ${portal_url}/Members/${member}"
+                   tal:attributes="href string: ${portal_url}/Members/${member}/@@my_features"
                    i18n:translate="label_view">Featured Content</a>
               </li>
             </ul>
