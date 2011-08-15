@@ -9,4 +9,4 @@
 ##
 # customize this script to filter addable portal types based on
 # context, the current user or other criteria
-return ('Favorite','MemberLink',)
+return ('Favorite','MemberLink','MemberFeaturedContent')
