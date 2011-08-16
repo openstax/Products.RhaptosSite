@@ -1,0 +1,8 @@
+<tal:all
+   tal:define="dummy python:request.RESPONSE.setHeader('Content-Type', 'text/html;;charset=utf-8');
+               dummy python:request.RESPONSE.setHeader('Pragma', 'no-cache');
+               dummy python:request.RESPONSE.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+               dummy python:request.RESPONSE.setHeader('Expires', 'Mon, 26, Jul 1997 05:00:00 GMT');">
+     <metal:globals use-macro="context/global_defines/macros/defines" />
+     <metal:replace use-macro="context/profile_portlet/macros/author_about_box"/>
+</tal:all>
