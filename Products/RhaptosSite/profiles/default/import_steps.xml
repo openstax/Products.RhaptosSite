@@ -19,4 +19,15 @@
   CMFFormController doesn't provide its own registry import, so we do it here.
   Hopefully not forever.
  </import-step>
+  <import-step id="create-pendingcatalog" version="20110816-01"
+      handler="Products.RhaptosSite.exportimport.catalog.createCatalog"
+      title="Create Pending Content Catalog">
+    Create the Pending Content catalog
+  </import-step>
+  <import-step id="config-pendingcatalog" version="20110816-01"
+      handler="Products.RhaptosSite.exportimport.catalog.importCatalog"
+      title="Configure Pending Content Catalog">
+    <dependency step="create-pendingcatalog" />
+    Configure the Pending Content catalog
+  </import-step>
 </import-steps>

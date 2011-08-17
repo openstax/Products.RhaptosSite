@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<rss  version="2.0" xmlns:tal="http://xml.zope.org/namespaces/tal" >
+<channel tal:define="Batch python:modules['Products.CMFPlone'].Batch;
+                        start request/start | python:1;
+                        b_start python:int(start)-1;
+                        b_size request/number | python:1000;
+                        portal_type request/portal_type | python:'';
+                        results python:here.getPending(portal_type=portal_type); 
+                        length python:len(results); 
+                        batch python:Batch(results, int(b_size), int(b_start), orphan=5);
+                        global found length;
+			utool nocall:here/portal_url;
+			portal utool/getPortalObject;
+			ptitle portal/Title;
+                        licensesource string:http://i.creativecommons.org/l/%(perms)s/%(version)s/80x15.png">
+      
+      <title tal:content="string:${portal/Title}: Content Pending Publication">Connexions: Content Pending Publication</title>
+      <link tal:content="string:${here/absolute_url}/">[The search url here]</link>
+      <description tal:content="portal/Description">[Open Search portal description]</description>
+      <openSearch:totalResults xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/" xmlns:tal="http://xml.zope.org/namespaces/tal" tal:content="length">0</openSearch:totalResults>
+      <openSearch:startIndex xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/" xmlns:tal="http://xml.zope.org/namespaces/tal" tal:content="batch/start">1</openSearch:startIndex>
+      <openSearch:itemsPerPage xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/" xmlns:tal="http://xml.zope.org/namespaces/tal" tal:content="b_size">10</openSearch:itemsPerPage>
+      <image >
+          <url tal:content="string:${here/portal_url}/opensearch.png" />
+          <title>Content Pending Publication</title>
+          <link tal:content="string:${here/absolute_url}/pending.rss?${request/QUERY_STRING}">The search url here</link>
+      </image>
+      <copyright tal:content="here/opensearch-copyright">[Copyright for the content] </copyright>
+      <generator>Rhaptos Collaborative Content System http://software.cnx.rice.edu/</generator>
+
+        <tal:block tal:condition="found">
+            <item tal:repeat="o batch">
+              <title tal:content="string:${o/portal_type}: ${o/Title}">Title</title>
+              <link tal:content="string:${o/url}/${o/portal_type/lower}_publish">link</link>
+              <description>
+                Submitted by: 
+&lt;a href="<tal:url tal:replace="string:${here/portal_url}/prefs_users_overview?searchstring=${o/actor}"/>"&gt;<tal:string tal:replace="o/actor" />&lt;/a&gt;&lt;br/&gt;
+                Submit log: <tal:message tal:replace="o/message" />&lt;br/&gt;&lt;br/&gt;
+                &lt;b&gt;&lt;i&gt;<tal:authors tal:replace="python:', '.join(path('o/authors'))" />&lt;/i&gt;&lt;/b&gt;&lt;br/&gt;
+              <tal:abstract tal:condition="o/abstract" tal:define="abs o/abstract" tal:replace="python:here.truncate(abs,200)" />&lt;br/&gt;
+              <tal:licenseimages tal:define="split python:o.license.split('/');
+                                             perms python:split[4];
+                                             version python:split[5]">
+              &lt;img style="border: 0px"
+                  src="<tal:url tal:replace="python:licensesource % {'perms':perms, 'version':version}" />"/&gt;
+              </tal:licenseimages>
+                &lt;a href="<tal:url tal:replace="o/license"/>"&gt;Some Rights Reserved&lt;/a&gt;
+
+                </description>
+                <pubDate tal:content="o/timestamp/rfc822" />
+                </item>
+        </tal:block>
+</channel>
+</rss>

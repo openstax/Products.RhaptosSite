@@ -1,0 +1,5 @@
+[default]
+title=Content Pending Publication
+
+[security]
+View=0:Manager

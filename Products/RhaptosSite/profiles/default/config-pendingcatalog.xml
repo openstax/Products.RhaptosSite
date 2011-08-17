@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<object name="pending_catalog" meta_type="ZCatalog">
+ <property name="title">Pending Content Catalog</property>
+ <object name="lexicon" meta_type="ZCTextIndex Lexicon">
+  <element name="HTML aware splitter" group="Word Splitter"/>
+  <element name="Case Normalizer" group="Case Normalizer"/>
+  <element name="Remove listed and single char words" group="Stop Words"/>
+ </object>
+ <index name="Title" meta_type="TextIndex" deprecated="True"/>
+ <index name="actor" meta_type="FieldIndex">
+  <indexed_attr value="actor"/>
+ </index>
+ <index name="allowedRolesAndUsers" meta_type="KeywordIndex">
+  <indexed_attr value="allowedRolesAndUsers"/>
+ </index>
+ <index name="modified" meta_type="FieldIndex">
+  <indexed_attr value="modified"/>
+ </index>
+ <index name="path" meta_type="PathIndex"/>
+ <index name="portal_type" meta_type="FieldIndex">
+  <indexed_attr value="portal_type"/>
+ </index>
+ <index name="state" meta_type="FieldIndex">
+  <indexed_attr value="state"/>
+ </index>
+ <index name="timestamp" meta_type="DateIndex">
+  <property name="index_naive_time_as_local">True</property>
+ </index>
+ <column value="Title"/>
+ <column value="UID"/>
+ <column value="action"/>
+ <column value="actor"/>
+ <column value="allowedRolesAndUsers"/>
+ <column value="authors"/>
+ <column value="id"/>
+ <column value="license"/>
+ <column value="message"/>
+ <column value="meta_type"/>
+ <column value="portal_type"/>
+ <column value="state"/>
+ <column value="timestamp"/>
+</object>

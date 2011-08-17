@@ -38,12 +38,12 @@
       preferences_url string:/personalize_form;
       profile_url string:/personalize_profile;">
 
-	<span tal:condition="python:not (member and member.getProperty('status') == 'Approved')"
+	<span tal:condition="python:not (member and member.status == 'Approved')"
           tal:replace="python:request.RESPONSE.notFoundError()" />
 
     <div id="content"
          class="documentEditable"
-         tal:define="isOwner python:user.getId()==member.getId()"
+         tal:define="isOwner python:user.id == member.id"
          tal:attributes="class python: test(isOwner, 'documentEditable', '')">
 
         <h5 class="hiddenStructure"
@@ -70,17 +70,17 @@
 
         <div class="documentContent" id="region-content">
 
-      <tal:block tal:condition="python:member and member.getProperty('status') == 'Approved'">
+      <tal:block tal:condition="python:member and member.status == 'Approved'">
 
-      <tal:block tal:define="fullname python:member.getProperty('fullname');
-                             account_type python:member.getProperty('account_type');
+      <tal:block tal:define="fullname member/fullname;
+                             account_type member/account_type | string:person;
                              is_org python:account_type != 'person';">
       
       <h1 style="margin-bottom: .5em;"
 	    i18n:translate="heading_member_profile">Member Profile: 
 	    <span tal:replace="fullname" i18n:name="user_full_name">[name]</span></h1>
 
-      <tal:portrait define="portrait python:mtool.getPersonalPortrait(member.getId());
+      <tal:portrait define="portrait python:mtool.getPersonalPortrait(member.id);
         scale python:here.calcImageScale(image=portrait);
         p_height python:portrait.height/scale; 
         p_width python:portrait.width/scale;"
@@ -91,15 +91,15 @@
 
       </tal:portrait>
       
-        <p tal:define="uid member/getId">
+        <p tal:define="uid member/id">
           <b i18n:translate="text_userid_header">Username:</b> <span tal:content="uid">alice</span>
         </p>
 
-	<p tal:define="shortname python:member.getProperty('shortname')" 
+	<p tal:define="shortname member/shortname|nothing" 
 	  tal:condition="shortname">
 	  <b i18n:translate="text_contact_header">Short organization name:</b> <span tal:content="shortname">alice</span> 
 	</p>
-	<p tal:define="email python:member.getProperty('email')" 
+	<p tal:define="email member/email" 
 	  tal:condition="email">
 	  <b i18n:translate="text_contact_header">Contact:</b> <a 
 	    tal:attributes="href string:mailto:${email}"
@@ -107,15 +107,15 @@
 	  <br/>
 	</p>
       
-	<p tal:define="url python:member.getProperty('homepage')" 
+	<p tal:define="url member/homepage" 
 	  tal:condition="url">
 	  <b i18n:translate="text_homepage_header" tal:condition="not:is_org">Home page:</b><b i18n:translate="text_webpage_header" tal:condition="is_org">Web page:</b> <a
 	    tal:attributes="href url"
 	    tal:content="url">[homepage]</a><br />
 	</p>
 
-	<p tal:define="affiliation python:member.getProperty('affiliation').strip();
-	  affiliation_url python:member.getProperty('affiliation_url');" 
+	<p tal:define="affiliation member/affiliation|nothing;
+	  affiliation_url member/affiliation_url| nothing" 
 	  tal:condition="affiliation">
 	  <b i18n:translate="text_affiliation_header">Affiliation:</b> 
 	      <a tal:attributes="href affiliation_url"
@@ -125,13 +125,13 @@
 	</p>
       
 
-	<p tal:define="planguage python:member.getProperty('preferred_language')"
+	<p tal:define="planguage member/preferred_language| nothing"
 	  tal:condition="planguage">
 	  <b i18n:translate="text_pref_language_header">Preferred Language:</b>
 	  <span tal:content="planguage">[language]</span>
 	</p>
 
-	<p tal:define="altlanguage python:member.getProperty('alternative_languages')"
+	<p tal:define="altlanguage member/alternative_languages| nothing"
 	  tal:condition="altlanguage">
 	  <b i18n:translate="text_alt_languages_header">Alternative Languages:</b>
 	  <tal:altlanguages tal:repeat="s altlanguage">
@@ -139,13 +139,13 @@
 	  </tal:altlanguages>
 	</p>
 
-	<p tal:condition="python:member.getProperty('location')">
+	<p tal:condition="member/location| nothing">
 	  <b i18n:translate="text_location_header">Location:</b> 
-	      <span tal:define="location python:member.getProperty('location')"
+	      <span tal:define="location member/location"
 		tal:content="location">[location]</span>
 	</p>
       
-	    <p tal:define="interests python:member.getProperty('interests')"
+	    <p tal:define="interests member/interests|nothing"
 	      tal:condition="interests">
 	      <b i18n:translate="text_interests_header">Interests:</b> 
 	      <tal:interest tal:repeat="s interests">
@@ -154,16 +154,16 @@
 	      </tal:interest>
 	    </p>
 
-	    <tal:block define="r python:here.getAuthorContent(member.getId(), 'Title');
+	    <tal:block define="r python:here.getAuthorContent(member.id, 'Title');
 	      content r/content;
 	      m_content r/m_content;
 	      num_mod python:len([o for o in content if o.portal_type=='Module']);
 	      num_c   python:len(content)-num_mod;
 	      num_m_mod python:len([o for o in m_content if o.portal_type=='Module']);
 	      num_m_c   python:len(m_content)-num_m_mod;
-              first_letter python:member.surname and member.surname[0] or member.shortname and member.shortname[0];
+          first_letter python:member.surname and member.surname[0] or hasattr(member,'shortname') and member.shortname[0];
 	      content_url string:/content/expanded_browse_authors?letter=${first_letter}&author=${member/id};
-	      glob_maint python:bool(member.has_role('Maintainer'))"
+	      glob_maint python:bool(hasattr(member,'has_role') and member.has_role('Maintainer'))"
 	      condition="python:content or m_content or glob_maint">
 	      <p tal:condition="content">
 		<b i18n:translate="text_author_of_header">Author of:</b> 
@@ -227,7 +227,7 @@
 
 
 	<tal:coauthors
-	  tal:define="r python:portal.content.getContentByAuthor(member.getId());
+	  tal:define="r python:portal.content.getContentByAuthor(member.id);
 	  collabs python:{}">
 	  <tal:content tal:repeat="c r">
 	    <tal:authors
@@ -244,7 +244,7 @@
 	    <b i18n:translate="text_coauthors_header">Coauthors:</b>
 	    <tal:collaborators tal:repeat="a collabs">
 	      <a tal:define="m python:here.desecured.getMemberById(a);"
-		tal:content="python:m and m.getProperty('fullname') or '(Unknown)'"
+		tal:content="python:m and m.fullname or '(Unknown)'"
 		class="author" 
 		tal:on-error="a"
 		tal:attributes="href
@@ -255,7 +255,7 @@
 	</tal:coauthors>
 	      
         <p tal:condition="lenses"
-	   tal:define="lenses python:len(here.lens_tool.getListsBy(memberid=member.getId(), all=True));">
+	   tal:define="lenses python:len(here.lens_tool.getListsBy(memberid=member.id, all=True));">
           <b i18n:translate="text_maker_if_header">Maker of:</b> 
           <a tal:attributes="href string:${portal_url}/lenses/${member/id}"
             i18n:translate="label_profile_author_lenses">
@@ -270,7 +270,7 @@
           </a>
         </p>
       
-	<p tal:define="rec_content python:member.getProperty('recommended_content')"
+	<p tal:define="rec_content member/recommended_content|nothing"
 	  tal:condition="rec_content">
 	  <b i18n:translate="text_rec_content_header">Recommended Content:</b> 
 	  <tal:content tal:repeat="s rec_content">
@@ -282,7 +282,7 @@
 	</p>
  
       <dl style="margin: 2em 0;"
-	tal:define="biography python:member.getProperty('biography')"
+	tal:define="biography member/biography|nothing"
 	tal:condition="biography">      
 	<dt i18n:translate="text_biography_header" tal:condition="not:is_org">Biography:</dt>
 	<dt i18n:translate="text_biography_header" tal:condition="is_org">About this organization:</dt>

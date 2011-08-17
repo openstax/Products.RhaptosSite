@@ -1,0 +1,13 @@
+[default]
+title=User Management
+
+[security]
+View = 0:Authenticated
+
+[validators]
+validators = 
+
+[actions]
+action.success          = traverse_to:string:set_publishable
+
+

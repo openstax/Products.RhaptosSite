@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<export-steps>
+  <export-step id="config-pendingcatalog" title="Export Pending Content catalog"
+      handler="Products.RhaptosSite.exportimport.catalog.exportCatalog">
+    Export Pending Content catalog configuration
+  </export-step>
+</export-steps>
+

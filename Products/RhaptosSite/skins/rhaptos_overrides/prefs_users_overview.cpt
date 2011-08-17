@@ -8,7 +8,8 @@
 
 <tal:comment tal:replace="nothing">
 Rhaptos note: Overriding from CMFPlone/skins/plone_prefs to handle catalog
-member searching, and a missing function (getUserId)
+member searching, and a missing function (getUserId), as well as deleting
+member_area
 </tal:comment>
 
 
@@ -144,6 +145,7 @@ member searching, and a missing function (getUserId)
                 i18n:translate="listingheader_roles">Roles</th>
             <th rowspan="2" i18n:translate="listingheader_reset_password">Reset Password</th>
             <th rowspan="2" i18n:translate="listingheader_remove_user">Remove user</th>
+            <th rowspan="2" i18n:translate="listingheader_remove_user">and  member folder?</th>
           </tr>
           <tr>
             <th tal:repeat="portal_role portal_roles" tal:content="portal_role" i18n:translate="">Role</th>
@@ -207,6 +209,14 @@ member searching, and a missing function (getUserId)
               <input type="checkbox"
                              class="noborder notify"
                              name="delete:list"
+                             value=""
+                             tal:attributes="value userid;
+                                             disabled python:this_user.canDelete() and default or 'disabled'" />
+            </td>
+            <td class="listingCheckbox">
+              <input type="checkbox"
+                             class="noborder notify"
+                             name="delete_member_area:list"
                              value=""
                              tal:attributes="value userid;
                                              disabled python:this_user.canDelete() and default or 'disabled'" />

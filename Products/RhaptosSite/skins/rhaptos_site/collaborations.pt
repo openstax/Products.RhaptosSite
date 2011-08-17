@@ -126,7 +126,7 @@ Rhaptos note: no difference in conversion. no plone counterpart.
                   
           </td>
           <td style="white-space:nowrap"><tal:badauthor tal:define="user python:here.desecured.getMemberById(req.requester)" 
-		    tal:on-error="string:(${user/id})"><a tal:content="python:user.getProperty('fullname')"
+		    tal:on-error="string:(${user/id})"><a tal:content="user/fullname"
 		      tal:attributes="href string:/member_profile/${user/id}">Requester</a></tal:badauthor></td>
 	  <td tal:content="python:obj.bobobase_modification_time().aCommon()"></td>
           <td class="status"><a tal:attributes="href
@@ -216,7 +216,7 @@ Rhaptos note: no difference in conversion. no plone counterpart.
               obj.roles[role] == 'del'" >&#150;</span></strong>
             </td>
             <td style="white-space:nowrap"><tal:badauthor tal:define="user python:here.desecured.getMemberById(req.user)" 
-		    tal:on-error="string:(${user/id})"><a tal:content="python:user.getProperty('fullname')"
+		    tal:on-error="string:(${user/id})"><a tal:content="user/fullname"
 		      tal:attributes="href string:/member_profile/${user/id}">User</a></tal:badauthor></td>
             <td class="status" tal:content="req/status/capitalize"
                     i18n:translate="">Status</td>
@@ -276,7 +276,7 @@ Rhaptos note: no difference in conversion. no plone counterpart.
             </td>
             <td style="white-space:nowrap"><tal:badauthor tal:define="user python:here.desecured.getMemberById(req.user)"
 		      tal:on-error="string:(${user/id})"><a
-			tal:content="python:user.getProperty('fullname')"
+			tal:content="user/fullname"
 			tal:attributes="href string:/member_profile/${user/id}">User</a></tal:badauthor></td>
             <td class="status"
 		      tal:content="req/status/capitalize"

@@ -1,3 +1,10 @@
+RhaptosSite-1.42
+  - manage new Publishable role
+  - implement new author first publish review
+  - handle authors without a member account
+  - handle member deletion (uncatalog)
+  - fix potential breakage if allowing additional types in workspaces/groups
+
 RhaptosSite-1.41
   - Catalog fixes - pull in RhaptosCatFixes via dependency
                   - drop excess portal_catalog indexes

@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+    lang="en"
+    metal:use-macro="here/prefs_main_template/macros/master"
+    i18n:domain="plone">
+
+<metal:block metal:fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border',1)" />
+
+<tal:comment tal:replace="nothing">
+Rhaptos note: Overriding from CMFPlone/skins/plone_prefs to handle catalog
+member searching, and a missing function (getUserId), as well as deleting
+member_area
+</tal:comment>
+
+
+<body>
+
+<div metal:fill-slot="prefs_configlet_content"
+    tal:define="users context/find_publishable;
+                numusers python:len(users)">
+
+      <div id="content" class="documentEditable"
+           tal:condition="python:checkPermission('Manage users', here)">
+
+            <h5 class="hiddenStructure">Views</h5>
+
+            <ul class="contentViews">
+              &nbsp;
+            </ul>
+
+            <div class="contentActions">
+              &nbsp;
+            </div>
+
+            <div class="documentContent" id="region-content">
+                <a name="documentContent"></a>
+
+      <div metal:use-macro="here/global_statusmessage/macros/portal_message">
+        Portal status message
+      </div>
+
+      <div class="configlet">
+        <h1 i18n:translate="heading_users_overview">Set Publishable</h1>
+
+        <a href=""
+           class="link-parent"
+           tal:attributes="href string: $portal_url/plone_control_panel"
+           i18n:translate="label_up_to_plone_setup">
+          Up to Site Setup
+        </a>
+
+        <tal:block tal:condition="numusers">
+        <p>
+          Applying Publishable Role to all <tal:span tal:replace="numusers">100</tal:span> users with published content.
+        </p>
+
+        <form action=""
+              name="users_add_publishable"
+              method="post"
+              tal:attributes="action template_id">
+
+          <input class="standalone add"
+                     tabindex=""
+                     type="submit"
+                     name="form.button.Apply"
+                     value="Apply Publishable"
+                     i18n:attributes="value label_add_publishable;"
+                     tal:attributes="tabindex tabindex/next;"
+        />
+          <input type="hidden" name="form.submitted" value="1" />
+        </form>
+    </tal:block>
+
+        <tal:block tal:condition="not:numusers">
+        <p>
+          There are no users with published content who do not already have the Publishable role.
+        </p>
+    </tal:block>
+
+      </div>
+    </div>
+      </div>
+
+      <div id="content" class="documentEditable"
+           tal:condition="python:not checkPermission('Manage users', here)">
+        <tal:block replace="here/raiseUnauthorized" />
+      </div>
+    </div>
+
+  </body>
+</html>
+
