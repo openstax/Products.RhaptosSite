@@ -6,9 +6,10 @@
       name="profile_content"
       for="*"
       class=".profile_content.ProfileContent"
-      allowed_attributes="getAuthCollectionsForMember getAuthLinksForMember getAuthModulesForMember getMaintainedModulesForMember getTranslationsForMember"
+      allowed_attributes="getAuthCollectionsForMember getAuthLinksForMember getAuthModulesForMember getMaintainedCollectionsForMember getMaintainedModulesForMember getTranslationsForMember content_authored_statement content_maintained_statement content_translated_statement"
       permission="zope2.View"
       />
+
    <browser:page
       name="profile_content_page"
       for="*"

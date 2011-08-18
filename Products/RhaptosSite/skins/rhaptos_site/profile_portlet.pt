@@ -3,12 +3,14 @@
        memberid python:(len(request.traverse_subpath) > 0 and request.traverse_subpath[0]) or request.get('author', None);
         member python:here.desecured.getMemberById(memberid);
         member_since python:member.getProperty('approved_time').year;
-        authorprofile context/@@profile_content;
-        auth_collections python:authorprofile.getAuthCollectionsForMember(memberid);
-      	auth_mods python:authorprofile.getAuthModulesForMember(memberid);
-      	maintain_mods python:authorprofile.getMaintainedModulesForMember(memberid);
+        author_profile context/@@profile_content;
+        auth_collections python:author_profile.getAuthCollectionsForMember(memberid);
+      	auth_mods python:author_profile.getAuthModulesForMember(memberid);
+      	maintain_mods python:author_profile.getMaintainedModulesForMember(memberid);
         maintainmod_count python:len(maintain_mods);
-     	translations python:authorprofile.getTranslationsForMember(memberid);
+      	maintain_colls python:author_profile.getMaintainedCollectionsForMember(memberid);
+        maintaincolls_count python:len(maintain_colls);
+     	translations python:author_profile.getTranslationsForMember(memberid);
         translation_count python:len(translations);
         ">
 
@@ -37,10 +39,10 @@
 		tal:omit-tag="not:affiliation_url">[affiliation]</a>
                  </li>
                 </tal:affiliation>
-		<li><strong>Member since:</strong><tal:since tal:content="member_since"/></li>		
-		<li><strong>Author of:<tal:item tal:content="python:len(auth_mods)"/></strong></li>
-		<li><strong>Maintainer of:</strong><tal:maintainer tal:content="string:$maintainmod_count modules" /></li>
-		<li><strong>Translator of:</strong><tal:translations tal:content="translation_count" /></li>
+		<li><strong>Member since:</strong><tal:since tal:replace="member_since"/></li>		
+		<li><strong>Author of:</strong><tal:item tal:replace="python:author_profile.content_authored_statement(memberid)" />
+		<li><strong>Maintainer of:</strong><tal:maintainer tal:replace="python:author_profile.content_maintained_statement(memberid)" /></li>
+		<li><strong>Translator of:</strong><tal:translator tal:replace="python:author_profile.content_translated_statement(memberid)" /></li>
 	</ul>
          </metal:block>
          </div>
