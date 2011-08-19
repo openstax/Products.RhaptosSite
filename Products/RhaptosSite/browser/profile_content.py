@@ -36,6 +36,14 @@ class ProfileContent(BrowserView):
         query['sort_order'] = 'reverse'
         return self.portal_catalog(query)
 
+    def getFeaturedContentForMember(self,memberid):
+        query = {}
+        query['portal_type'] = ['MemberFeaturedContent',]
+        query['Creators'] = memberid
+        query['sort_on'] = 'modified'
+        query['sort_order'] = 'reverse'
+        return self.portal_catalog(query)
+
     def getAuthModulesForMember(self,memberid):
         query = {}
         query['portal_type'] = ['Module',]
@@ -61,6 +69,13 @@ class ProfileContent(BrowserView):
         return self.content_catalog(query)
 
     def getTranslationsForMember(self,memberid):
+        query = {}
+        query['portal_type'] = ['Module',]
+        query['sort_on'] = 'modified'
+        query['sort_order'] = 'reverse'
+        return self.content_catalog(query)
+
+    def getTranslationsCollectionsForMember(self,memberid):
         query = {}
         query['portal_type'] = ['Module',]
         query['sort_on'] = 'modified'
@@ -137,7 +152,9 @@ class ProfileContent(BrowserView):
 
     def content_translated_statement(self,memberid):
         translated_mods = self.getTranslationsForMember(memberid)
+        translated_colls = self.getTranslationsCollectionsForMember(memberid)
         mod_count = len(translated_mods)
+        coll_count = len(translated_colls)
 
         if mod_count > 1:  
             return translate(_('X Modules',
@@ -149,3 +166,32 @@ class ProfileContent(BrowserView):
                                 default = u'${mod_count} Module',
                                 mapping = {u'mod_count': mod_count,
                                            }))
+
+        if mod_count < 1 and coll_count < 1:
+            return translate(_('No items yet',
+                                default = u'No items yet',
+                                ))
+
+        if mod_count > 1 and coll_count > 1: 
+            return translate(_('X Modules and Y Collections',
+                                default = u'${mod_count} Modules and ${coll_count} Collections',
+                                mapping = {u'mod_count': mod_count,
+                                           u'coll_count': coll_count}))
+
+        if mod_count == 1 and coll_count > 1: 
+            return translate(_('X Module and Y Collections',
+                                default = u'${mod_count} Module and ${coll_count} Collections',
+                                mapping = {u'mod_count': mod_count,
+                                           u'coll_count': coll_count}))
+
+        if mod_count == 1 and coll_count == 1: 
+            return translate(_('X Module and Y Collection',
+                                default = u'${mod_count} Module and ${coll_count} Collection',
+                                mapping = {u'mod_count': mod_count,
+                                           u'coll_count': coll_count}))
+
+        if mod_count > 1 and coll_count == 1: 
+            return translate(_('X Modules and Y Collection',
+                                default = u'${mod_count} Modules and ${coll_count} Collection',
+                                mapping = {u'mod_count': mod_count,
+                                           u'coll_count': coll_count}))

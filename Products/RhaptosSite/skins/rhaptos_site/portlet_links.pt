@@ -3,13 +3,21 @@
        memberid python:(len(request.traverse_subpath) > 0 and request.traverse_subpath[0]) or request.get('author', None);
         member python:here.desecured.getMemberById(memberid);
         member_since python:member.getProperty('approved_time').year;
-        authorprofile context/@@profile_content;
-        auth_links python:authorprofile.getAuthLinksForMember(memberid);
+        author_profile context/@@profile_content;
+        auth_links python:author_profile.getAuthLinksForMember(memberid);
+        featured_content python:author_profile.getFeaturedContentForMember(memberid);
         ">
-
       <p></p>
-         <ul tal:repeat="link auth_links">
-		<li tal:content="link/getRemoteUrl"><strong>Maintainer of:</strong><tal:maintainer tal:content="string:$maintainmod_count modules" /></li>
+         <ul>
+                <tal:links tal:repeat="link auth_links">
+		<li><a href="" tal:attributes="href link/getRemoteUrl"><strong tal:content="link/Title">Title of Link</strong>
+                        <br />
+                        <tal:image tal:replace="structure python:link.getObject()['image_thumb']" />
+</a></li>
+                 </tal:links>
+                 <tal:featured tal:repeat="link featured_content">
+		<li><a href="" tal:attributes="href python:link.getObject()['contentlink']"><strong tal:content="link/Title">Title of Link</strong></a></li>
+                 </tal:featured>
 	</ul>
          </metal:block>
          </div>

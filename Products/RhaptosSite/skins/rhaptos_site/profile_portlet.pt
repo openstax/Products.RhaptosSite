@@ -39,10 +39,10 @@
 		tal:omit-tag="not:affiliation_url">[affiliation]</a>
                  </li>
                 </tal:affiliation>
-		<li><strong>Member since:</strong><tal:since tal:replace="member_since"/></li>		
-		<li><strong>Author of:</strong><tal:item tal:replace="python:author_profile.content_authored_statement(memberid)" />
-		<li><strong>Maintainer of:</strong><tal:maintainer tal:replace="python:author_profile.content_maintained_statement(memberid)" /></li>
-		<li><strong>Translator of:</strong><tal:translator tal:replace="python:author_profile.content_translated_statement(memberid)" /></li>
+		<li><strong>Member since:</strong> <tal:since tal:replace="member_since"/></li>		
+		<li><strong>Author of:</strong> <tal:item tal:replace="python:author_profile.content_authored_statement(memberid)" />
+		<li><strong>Maintainer of:</strong> <tal:maintainer tal:replace="python:author_profile.content_maintained_statement(memberid)" /></li>
+		<li><strong>Translator of:</strong> <tal:translator tal:replace="python:author_profile.content_translated_statement(memberid)" /></li>
 	</ul>
          </metal:block>
          </div>
