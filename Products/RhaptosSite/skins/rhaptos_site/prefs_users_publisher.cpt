@@ -16,7 +16,7 @@ member_area
 <body>
 
 <div metal:fill-slot="prefs_configlet_content"
-    tal:define="users context/find_publishable;
+    tal:define="users context/find_publisher;
                 numusers python:len(users)">
 
       <div id="content" class="documentEditable"
@@ -40,7 +40,7 @@ member_area
       </div>
 
       <div class="configlet">
-        <h1 i18n:translate="heading_users_overview">Set Publishable</h1>
+        <h1 i18n:translate="heading_users_overview">Set Publisher</h1>
 
         <a href=""
            class="link-parent"
@@ -51,11 +51,12 @@ member_area
 
         <tal:block tal:condition="numusers">
         <p>
-          Applying Publishable Role to all <tal:span tal:replace="numusers">100</tal:span> users with published content.
+          Applying Publisher Role to all <tal:span tal:replace="numusers">100</tal:span> users with published content.
         </p>
+        <p>User Ids: <span tal:content="python:', '.join(users)" /> </p>
 
         <form action=""
-              name="users_add_publishable"
+              name="users_add_publisher"
               method="post"
               tal:attributes="action template_id">
 
@@ -63,17 +64,18 @@ member_area
                      tabindex=""
                      type="submit"
                      name="form.button.Apply"
-                     value="Apply Publishable"
-                     i18n:attributes="value label_add_publishable;"
+                     value="Apply Publisher"
+                     i18n:attributes="value label_add_publisher;"
                      tal:attributes="tabindex tabindex/next;"
         />
+          <input tal:repeat="u users" tal:attributes="value u" type="hidden" name="users:list" value="userids" />
           <input type="hidden" name="form.submitted" value="1" />
         </form>
     </tal:block>
 
         <tal:block tal:condition="not:numusers">
         <p>
-          There are no users with published content who do not already have the Publishable role.
+          There are no users with published content who do not already have the Publisher role.
         </p>
     </tal:block>
 

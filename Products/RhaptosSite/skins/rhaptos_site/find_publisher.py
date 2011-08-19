@@ -5,7 +5,7 @@
 ##bind script=script
 ##bind subpath=traverse_subpath
 ##parameters=
-##title=Set Publishable
+##title=Set Publisher
 ##
 
 mtool = context.portal_membership

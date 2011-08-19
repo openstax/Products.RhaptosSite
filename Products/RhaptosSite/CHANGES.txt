@@ -1,5 +1,8 @@
+RhaptosSite-1.42.1
+  - refactor management for Publisher role
+
 RhaptosSite-1.42
-  - manage new Publishable role
+  - manage new Publisher role
   - implement new author first publish review
   - handle authors without a member account
   - handle member deletion (uncatalog)
