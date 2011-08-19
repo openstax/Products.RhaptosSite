@@ -10,7 +10,8 @@
 
 from Products.CMFPlone import PloneMessageFactory as _
 
-users = context.REQUEST['users']
+if not users:
+    users = context.REQUEST['users']
 acl_users = context.acl_users
 mtool = context.portal_membership
 getMemberById = mtool.getMemberById
