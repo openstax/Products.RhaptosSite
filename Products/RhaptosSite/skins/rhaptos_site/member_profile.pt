@@ -308,7 +308,7 @@ About ....
 
 </metal:leftportlets>
 <metal:rightportlets fill-slot="portlets_two_slot">
-      <metal:author_links metal:use-macro="here/portlet_links/macros/author_links" />
+      <metal:author_links metal:use-macro="here/portlet_links/macros/portlet_links" />
 </metal:rightportlets>
 
 </body>

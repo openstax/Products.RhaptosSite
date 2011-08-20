@@ -411,5 +411,9 @@ td.orderingCell{
   border: 1px solid #E70;
   font-size: .9em;
 }
+.rhaptossmall a {
+    color: #336699 !important;
+    font-size: 70%;
+}
 
 /* </dtml-with> */

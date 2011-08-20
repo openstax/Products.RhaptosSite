@@ -7,24 +7,28 @@
         auth_links python:author_profile.getAuthLinksForMember(memberid);
         featured_content python:author_profile.getFeaturedContentForMember(memberid);
         ">
-      <p></p>
-         <ul>
-                <tal:links tal:repeat="link auth_links">
-		<li><a href="" tal:attributes="href link/getRemoteUrl"><strong tal:content="link/Title">Title of Link</strong>
-                        <br />
-                        <tal:image tal:replace="structure python:link.getObject()['image_thumb']" />
-</a></li>
-                 </tal:links>
-                 <tal:featured tal:repeat="link featured_content">
-		<li><a href="" tal:attributes="href python:link.getObject()['contentlink']"><strong tal:content="link/Title">Title of Link</strong></a></li>
-                 </tal:featured>
-	</ul>
-         </metal:block>
-         </div>
-	<div metal:define-macro="portlet_links">
-<h2>My Links</h2>
-		<ul id="portlet-navigation-tree">
-		    <li><a> tal:content="member_name" tal:omit-tag=""/> Content</a></li>
-		</ul>
-                      <div metal:use-macro="author_links"/>
-	</div>
+       <p></p>
+           <tal:links tal:repeat="link auth_links">
+	   <dd class="portletItem"><a href="" tal:attributes="href link/getRemoteUrl"><strong tal:content="link/Title">Title of Link</strong>
+             <br />
+             <tal:image tal:replace="structure python:link.getObject()['image_thumb']" />
+             </a></dd>
+            </tal:links>
+            <tal:featured tal:repeat="link featured_content">
+	      <dd class="portletItem"><a href="" tal:attributes="href python:link.getObject()['contentlink']"><strong tal:content="link/Title">Title of Link</strong></a></dd>
+            </tal:featured>
+      </metal:block>
+</div>
+
+<div metal:define-macro="portlet_links">
+  <dl id="portlet-mylinks" class="portlet">
+   <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <span i18n:translate="box_my_links">My Links</span>
+        <span class="portletTopRight"></span>
+   </dt>
+   <dd>
+         <div metal:use-macro="context/portlet_links/macros/author_links"/>
+   </dd>
+  </dl>
+</div>
