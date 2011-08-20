@@ -55,10 +55,10 @@
 		   memberid python:(len(request.traverse_subpath) > 0 and request.traverse_subpath[0]) or request.get('author', None);
 		    member python:here.desecured.getMemberById(memberid);
 		    member_name python:member.getUserName();">
-	      <li class="currentNavItem">
-		    <a name="about">About <tal:item tal:replace="member_name" /> </a>
+	      <li tal:attributes="class python:template.id == 'member_profile' and 'currentNavItem'">
+		    <a tal:attributes="href string:${portal_url}/member_profile/${member_name}">About <tal:item tal:replace="member_name" /></a>
 	      </li>
-	      <li>
+	      <li tal:attributes="class python:template.id == 'member_content' and 'currentNavItem'">
 		    <a tal:attributes="href string:${portal_url}/member_content/${member_name}"><tal:item tal:replace="member_name" />'s Content </a>
 	      </li>
        
