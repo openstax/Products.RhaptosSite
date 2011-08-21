@@ -1,4 +1,4 @@
-<div metal:define-macro="author_about_box">
+<div metal:define-macro="author_about_box" tal:omit-tag="" class="author-about-box">
 <metal:block tal:define="
    memberid python:(len(request.traverse_subpath) > 0 and request.traverse_subpath[0]) or request.get('author', None);
     member python:here.desecured.getMemberById(memberid);
@@ -14,6 +14,8 @@
  	translations python:author_profile.getTranslationsForMember(memberid);
     translation_count python:len(translations);
     ">
+     <dl class="portlet" id="portlet-profile">
+     <dd class="portletItem">
 
       <tal:portrait 
       tal:define="
@@ -24,33 +26,36 @@
         p_height python:portrait.height/scale; 
         p_width python:portrait.width/scale;"
 	  condition="python:portrait and (not(is_org) or portrait.title != 'Default user')">
+          <div class="profile-portrait-box">
 	  <img tal:replace="structure python:portrait.tag(height=p_height,width=p_width,css_class='portraitPhoto')"
 	    />
+          </div>
 
       </tal:portrait>
-      <p></p>
-         <ul>
+     </dd>
+              <dd class="portletItem">
                 <tal:affiliation
 	         tal:define="affiliation python:member.getProperty('affiliation').strip();
 	                     affiliation_url python:member.getProperty('affiliation_url');" 
 	              tal:condition="affiliation">
-		<li><strong>Affiliation:</strong>
+		<p><strong>Affiliation:</strong>
 	         <a tal:attributes="href affiliation_url"
 		tal:content="affiliation"
 		tal:omit-tag="not:affiliation_url">[affiliation]</a>
-                 </li>
+                 </p>
                 </tal:affiliation>
-		<li><strong>Member since:</strong> <tal:since tal:replace="member_since"/></li>		
-		<li><strong>Author of:</strong> <tal:item tal:replace="python:author_profile.content_authored_statement(memberid)" />
-		<li><strong>Maintainer of:</strong> 
-                     <tal:maintainer tal:replace="python:author_profile.content_maintained_statement(memberid)" /></li>
-		<li><strong>Translator of:</strong> 
-                     <tal:translator tal:replace="python:author_profile.content_translated_statement(memberid)" /></li>
-	</ul>
+		<p><strong>Member since:</strong> <tal:since tal:replace="member_since"/></p>		
+		<p><strong>Author of:</strong> <tal:item tal:replace="python:author_profile.content_authored_statement(memberid)" />
+		<p><strong>Maintainer of:</strong> 
+                     <tal:maintainer tal:replace="python:author_profile.content_maintained_statement(memberid)" /></p>
+		<p><strong>Translator of:</strong> 
+                     <tal:translator tal:replace="python:author_profile.content_translated_statement(memberid)" /></p>
+              </dd>
+           </dl>
 </metal:block>
     </div>
 
-	<div metal:define-macro="author_about_portlet">
+	<div metal:define-macro="author_about_portlet" tal:omit-tag="">
           <ul id="portlet-navigation-tree" tal:define="
 		   memberid python:(len(request.traverse_subpath) > 0 and request.traverse_subpath[0]) or request.get('author', None);
 		    member python:here.desecured.getMemberById(memberid);
