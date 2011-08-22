@@ -11,11 +11,13 @@
            <tal:links tal:repeat="link auth_links">
 	   <dd class="portletItem"><a href="" tal:attributes="href link/getRemoteUrl"><strong tal:content="link/Title">Title of Link</strong>
              <br />
-             <tal:image tal:replace="structure python:link.getObject()['image_thumb']" />
+             <tal:image tal:condition="python:hasattr(link.getObject(),'image_thumb')" tal:replace="structure python:link.getObject()['image_thumb']" />
              </a></dd>
             </tal:links>
             <tal:featured tal:repeat="link featured_content">
-	      <dd class="portletItem"><a href="" tal:attributes="href python:link.getObject()['contentlink']"><strong tal:content="link/Title">Title of Link</strong></a></dd>
+	      <dd class="portletItem"><a href="" tal:attributes="href python:link.getObject()['contentlink']"><strong tal:content="link/Title">Title of Link</strong><br />
+             <tal:image tal:condition="python:hasattr(link.getObject(),'image_thumb')" tal:replace="structure python:link.getObject()['image_thumb']" />
+</a></dd>
             </tal:featured>
       </metal:block>
 </div>
