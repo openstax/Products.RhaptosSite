@@ -6,7 +6,7 @@
       name="profile_content"
       for="*"
       class=".profile_content.ProfileContent"
-      allowed_attributes="getAuthCollectionsForMember getAuthLinksForMember getAuthModulesForMember getMaintainedCollectionsForMember getMaintainedModulesForMember getTranslationsForMember getTranslationsCollectionsForMember content_authored_statement content_maintained_statement content_translated_statement getFeaturedContentForMember"
+      allowed_attributes="getAuthCollectionsForMember getAuthLinksForMember getAuthModulesForMember getMaintainedCollectionsForMember getMaintainedModulesForMember getTranslationsForMember getTranslationsCollectionsForMember content_url content_authored_statement content_maintained_statement content_translated_statement has_maintained_content has_translated_content getFeaturedContentForMember"
       permission="zope2.View"
       />
 

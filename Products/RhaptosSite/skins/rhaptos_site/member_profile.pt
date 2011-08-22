@@ -38,6 +38,11 @@
                     tal:define="
       authorid python:(len(request.traverse_subpath) > 0 and request.traverse_subpath[0]) or request.get('author', None);
       member python:here.desecured.getMemberById(authorid);
+      author_profile context/@@profile_content;
+      content_url python:author_profile.content_url(authorid);
+      content_authored python:author_profile.content_authored_statement(authorid);
+      content_maintained python:author_profile.content_maintained_statement(authorid);
+      content_translated python:author_profile.content_translated_statement(authorid);
       preferences_url string:/personalize_form;
       profile_url string:/personalize_profile;">
 
@@ -173,13 +178,8 @@
       
 	    <tal:block define="r python:here.getAuthorContent(member.getId(), 'Title');
 	      content r/content;
-	      m_content r/m_content;
-	      num_mod python:len([o for o in content if o.portal_type=='Module']);
-	      num_c   python:len(content)-num_mod;
-	      num_m_mod python:len([o for o in m_content if o.portal_type=='Module']);
-	      num_m_c   python:len(m_content)-num_m_mod;
-              first_letter python:member.surname and member.surname[0] or member.shortname and member.shortname[0];
-	      content_url string:/content/expanded_browse_authors?letter=${first_letter}&author=${member/id};
+	      m_content python:author_profile.has_maintained_content(authorid);
+	      t_content python:author_profile.has_translated_content(authorid);
 	      glob_maint python:bool(member.has_role('Maintainer'))"
 	      condition="python:content or m_content or glob_maint">
 
@@ -187,26 +187,7 @@
 	      <p tal:condition="content">
 		<b i18n:translate="text_author_of_header">Author of:</b> 
 		<a tal:attributes="href content_url"
-		  i18n:translate="label_profile_author_content">
-		  <span tal:replace="structure python:'&#32;'+str(num_mod)" tal:condition="num_mod"
-		    i18n:name="number_of_modules">[Number of Modules]</span><span 
-		  i18n:name="singular_modules"><tal:span 
-		    tal:condition="python:num_mod==1" 
-		      i18n:translate="text_profile_single_module">&#32;module</tal:span></span><span 
-		  i18n:name="multiple_modules"><tal:span 
-		    tal:condition="python:num_mod&gt;1"
-		      i18n:translate="text_profile_multiple_modules">&#32;modules</tal:span></span><span 
-		  i18n:name="and_seperator"><tal:and  
-		    tal:condition="python:num_mod and num_c"
-		      i18n:translate="text_profile_and_seperator">&#32;and</tal:and></span><span 
-		  tal:replace="structure python:'&#32;'+str(num_c)" tal:condition="num_c"
-		    i18n:name="number_of_courses">[Number of Courses]</span><span 
-		  i18n:name="singular_course"><tal:span 
-		    tal:condition="python:num_c==1"
-		      i18n:translate="text_profile_single_course">&#32;collection</tal:span></span><span 
-		  i18n:name="multiple_courses"><tal:span 
-		    tal:condition="python:num_c&gt;1"
-		      i18n:translate="text_profile_multiple_courses">&#32;collections</tal:span></span></a>
+		      tal:content="content_authored">x modules and y collections</a>
                 <a tal:attributes="href string:${content_url}&view_mode=statistics&sorton=popularity"
                   i18n:translate="label_profile_statistics_link" tal:condition="context/has_stats">
                   (view statistics)
@@ -216,26 +197,21 @@
             <p tal:condition="m_content">
               <b i18n:translate="text_maintainer_of_header">Maintainer of:</b> 
               <a tal:attributes="href string:${content_url}&subset=m_content"
-                i18n:translate="label_profile_author_content">
-		  <span tal:replace="structure python:'&#32;'+str(num_m_mod)" tal:condition="num_m_mod"
-		    i18n:name="number_of_modules">[Number of Modules]</span><span 
-		  i18n:name="singular_modules"><tal:span 
-		    tal:condition="python:num_m_mod==1"
-		      i18n:translate="text_profile_single_module">&#32;Module</tal:span></span><span 
-		  i18n:name="multiple_modules"><tal:span 
-		    tal:condition="python:num_m_mod&gt;1"
-		      i18n:translate="text_profile_multiple_modules">&#32;Modules</tal:span></span><span 
-		  i18n:name="and_seperator"><tal:and  
-		    tal:condition="python:num_m_mod and num_m_c"
-		      i18n:translate="text_profile_and_seperator">&#32;and</tal:and></span><span 
-		  tal:replace="structure python:'&#32;'+str(num_m_c)" tal:condition="num_m_c"
-		    i18n:name="number_of_courses">[Number of Courses]</span><span 
-		  i18n:name="singular_course"><tal:span 
-		    tal:condition="python:num_m_c==1"
-		      i18n:translate="text_profile_single_course">&#32;Course</tal:span></span><span 
-		  i18n:name="multiple_courses"><tal:span 
-		    tal:condition="python:num_m_c&gt;1"
-		      i18n:translate="text_profile_multiple_courses">&#32;Courses</tal:span></span></a>
+                tal:content="content_maintained">
+                   X Modules and Y Collections
+                   </a>
+                <a tal:attributes="href string:${content_url}&subset=m_content&view_mode=statistics&sorton=popularity"
+                  i18n:translate="label_profile_statistics_link">
+                  (view statistics)
+                </a>
+	      </p>
+
+            <p tal:condition="t_content">
+              <b i18n:translate="text_translator_of_header">Translator of:</b> 
+              <a tal:attributes="href string:${content_url}&subset=m_content"
+                tal:content="content_translated">
+                   X Modules and Y Collections
+                   </a>
                 <a tal:attributes="href string:${content_url}&subset=m_content&view_mode=statistics&sorton=popularity"
                   i18n:translate="label_profile_statistics_link">
                   (view statistics)

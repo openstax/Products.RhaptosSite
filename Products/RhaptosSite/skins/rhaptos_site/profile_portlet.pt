@@ -5,9 +5,12 @@
     member_name python:member.getUserName();
     member_since python:member.getProperty('approved_time').year;
     author_profile context/@@profile_content;
+    content_url python:author_profile.content_url(memberid);
     auth_collections python:author_profile.getAuthCollectionsForMember(memberid);
-  	auth_mods python:author_profile.getAuthModulesForMember(memberid);
-  	maintain_mods python:author_profile.getMaintainedModulesForMember(memberid);
+    auth_mods python:author_profile.getAuthModulesForMember(memberid);
+    maintain_mods python:author_profile.getMaintainedModulesForMember(memberid);
+    m_content python:author_profile.has_maintained_content(memberid);
+    t_content python:author_profile.has_translated_content(memberid);
     maintainmod_count python:len(maintain_mods);
   	maintain_colls python:author_profile.getMaintainedCollectionsForMember(memberid);
     maintaincolls_count python:len(maintain_colls);
@@ -45,10 +48,13 @@
                  </p>
                 </tal:affiliation>
 		<p><strong>Member since:</strong> <tal:since tal:replace="member_since"/></p>		
-		<p><strong>Author of:</strong> <tal:item tal:replace="python:author_profile.content_authored_statement(memberid)" />
-		<p><strong>Maintainer of:</strong> 
-                     <tal:maintainer tal:replace="python:author_profile.content_maintained_statement(memberid)" /></p>
-		<p><strong>Translator of:</strong> 
+		<p><strong>Author of:</strong> 
+                  <a tal:attributes="href content_url"><tal:item tal:replace="python:author_profile.content_authored_statement(memberid)" /></a>
+                </p>
+		<p tal:condition="m_content"><strong>Maintainer of:</strong> 
+                  <a tal:attributes="href string:${content_url}&subset=m_content"><tal:item tal:replace="python:author_profile.content_maintained_statement(memberid)" /></a>
+                </p>
+		<p tal:condition="t_content"><strong>Translator of:</strong> 
                      <tal:translator tal:replace="python:author_profile.content_translated_statement(memberid)" /></p>
               </dd>
            </dl>

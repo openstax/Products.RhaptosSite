@@ -20,6 +20,11 @@ class ProfileContent(BrowserView):
         context = aq_inner(self.context)
         return getToolByName(context,'portal_catalog')
 
+    @property
+    def portal_membership(self):
+        context = aq_inner(self.context)
+        return getToolByName(context,'portal_membership')
+
     def getAuthCollectionsForMember(self,memberid):
         query = {}
         query['portal_type'] = ['Collection',]
@@ -60,6 +65,11 @@ class ProfileContent(BrowserView):
         query['sort_order'] = 'reverse'
         return self.content_catalog(query)
 
+    def has_maintained_content(self,memberid):
+        m_mods = len(self.getMaintainedModulesForMember(memberid)) > 0
+        m_colls = len(self.getMaintainedCollectionsForMember(memberid)) > 0
+        return m_mods or m_colls
+
     def getMaintainedCollectionsForMember(self,memberid):
         query = {}
         query['portal_type'] = ['Collection',]
@@ -72,6 +82,7 @@ class ProfileContent(BrowserView):
         query = {}
         query['portal_type'] = ['Module',]
         query['sort_on'] = 'modified'
+        query['translators'] = memberid
         query['sort_order'] = 'reverse'
         return self.content_catalog(query)
 
@@ -79,8 +90,22 @@ class ProfileContent(BrowserView):
         query = {}
         query['portal_type'] = ['Module',]
         query['sort_on'] = 'modified'
+        query['translators'] = memberid
         query['sort_order'] = 'reverse'
         return self.content_catalog(query)
+
+    def has_translated_content(self,memberid):
+        t_mods = len(self.getTranslationsForMember(memberid)) > 0
+        t_colls = len(self.getTranslationsCollectionsForMember(memberid)) > 0
+        return t_mods or t_colls
+
+    def content_url(self,memberid):
+        data = {}
+        data['memberid'] = member = self.portal_membership.getMemberById(memberid)
+        data['first_letter'] = member.surname and member.surname[0] or member.shortname and member.shortname[0]
+	content_url = """/content/expanded_browse_authors?letter=%(first_letter)s&author=%(memberid)s"""
+        return content_url % data
+
 
     def content_authored_statement(self,memberid):
         auth_colls = self.getAuthCollectionsForMember(memberid)
