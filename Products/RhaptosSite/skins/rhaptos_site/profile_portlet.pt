@@ -14,7 +14,7 @@
  	translations python:author_profile.getTranslationsForMember(memberid);
     translation_count python:len(translations);
     ">
-     <dl class="portlet" id="portlet-profile">
+     <dl class="portlet portlet-profile">
      <dd class="portletItem">
 
       <tal:portrait 
