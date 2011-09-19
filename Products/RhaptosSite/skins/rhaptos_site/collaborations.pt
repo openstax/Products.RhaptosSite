@@ -59,7 +59,7 @@ Rhaptos note: no difference in conversion. no plone counterpart.
     <h1 i18n:translate="heading_collaboration_requests">Role Requests</h1>
 
 	<div tal:condition="python:isAnon" i18n:translate="text_log_in_for_collab_requests">
-	  <p>You must 
+	  <p tal:define="dummy python:request.RESPONSE.setStatus(401)">You must 
 	  <span i18n:name="log_in">
 	    <a href="/login_form" i18n:translate="label_log_in">Log in</a>
 	  </span> to view your collaboration requests.
