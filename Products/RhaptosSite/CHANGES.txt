@@ -1,3 +1,6 @@
+RhaptosSite-1.42.2
+  - set correct Not Authorized (401) code for collaborations template.
+
 RhaptosSite-1.42.1
   - refactor management for Publisher role
 
