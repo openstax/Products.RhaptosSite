@@ -33,7 +33,12 @@ login_time = member.getProperty('login_time', '2000/01/01')
 initial_login = int(str(login_time) == '2000/01/01')
 state.set(initial_login=initial_login)
 
-member.setProperties({'status':'Approved'})
+
+status = member.getProperty('status', '')
+context.plone_log("status = " + status)
+if not(status == "Approved"):
+    member.setProperties({'status':'Approved'})
+
 
 must_change_password = member.getProperty('must_change_password', 0)
 state.set(must_change_password=must_change_password)
