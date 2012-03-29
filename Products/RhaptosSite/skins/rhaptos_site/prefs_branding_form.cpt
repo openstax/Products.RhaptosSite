@@ -89,6 +89,7 @@
                 <th>Account</th>
                 <th>Type</th>
                 <th>Branding Bar</th>
+                <th>Permanent</th>
                 <th>Endorsement Lens Maker</th>
                 <th>Affiliation Lens Maker</th>
               </tr>
@@ -112,7 +113,8 @@
                                   isOrganization python:type == 'Organization';
                                   isIndividual   python:type == 'Individual';
                                   roles          python:acl_user.getRoles() or ();
-                                  canUserBrand   python:'Branding' in roles;">
+                                  canUserBrand   python:'Branding' in roles;
+                                  canPermaBrand  python:'PermaBranding' in roles;">
                     <td>
                       <a href=""
                          tal:attributes="href string:/member_profile/${acl_user/id}"
@@ -127,6 +129,15 @@
                       <input type="hidden"
                              name="checked_initial:list" value=""
                              tal:attributes="value   python:canUserBrand and member_id or None"/>
+                    </td>
+                    <td class="checkbox">
+                      <input class="noborder" type="checkbox" checked=""
+                             name="perma_now:list" value=""
+                             tal:attributes="checked python:canPermaBrand and 'checked' or '';
+                                             value   member_id"/>
+                      <input type="hidden"
+                             name="perma_initial:list" value=""
+                             tal:attributes="value   python:canPermaBrand and member_id or None"/>
                     </td>
                     <td class="checkbox">
                       <input tal:condition="isOrganization"
@@ -152,7 +163,8 @@
                                   acl_user      python:mtool.getMemberById(member_id);
                                   fullname      python:acl_user.fullname or '';
                                   roles         python:acl_user.getRoles() or ();
-                                  canUserBrand  python:'Branding' in roles;">
+                                  canUserBrand   python:'Branding' in roles;
+                                  canPermaBrand  python:'PermaBranding' in roles;">
                     <td>
                       <a href=""
                          tal:attributes="href string:/member_profile/${acl_user/id}"
@@ -167,6 +179,15 @@
                       <input type="hidden"
                              name="checked_initial:list" value=""
                              tal:attributes="value   python:canUserBrand and member_id or None"/>
+                    </td>
+                    <td class="checkbox">
+                      <input class="noborder" type="checkbox" checked=""
+                             name="perma_now:list" value=""
+                             tal:attributes="checked python:canPermaBrand and 'checked' or '';
+                                             value   member_id"/>
+                      <input type="hidden"
+                             name="perma_initial:list" value=""
+                             tal:attributes="value   python:canPermaBrand and member_id or None"/>
                     </td>
                     <td class="checkbox">
                       <input class="noborder" type="checkbox" checked="checked" disabled="disabled"/>
