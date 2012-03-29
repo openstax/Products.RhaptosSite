@@ -1,3 +1,6 @@
+RhaptosSite-1.43
+  - permalens always on branding - permissions work
+
 RhaptosSite-1.42.2
   - set correct Not Authorized (401) code for collaborations template.
 
