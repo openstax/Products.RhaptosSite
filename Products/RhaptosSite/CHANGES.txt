@@ -1,3 +1,6 @@
+RhaptosSite-1.44
+  - psycopg2 upgrade
+
 RhaptosSite-1.43
   - permalens always on branding - permissions work
 
