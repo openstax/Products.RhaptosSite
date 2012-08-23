@@ -39,7 +39,7 @@ setup(name='Products.RhaptosSite',
           'Products.Ploneboard==1.1-rhaptosdev-r30378',
           'Products.References==0.10-rhaptosdev-r30378',
           'Products.SimpleAttachment==3.0.1-rhaptosdev-r30378',
-          'Products.ZPsycopgDA',
+          'Products.ZPsycopgDA==2.0-rhaptos',
           'Products.ExternalFile==0.1-rhaptosdev-r30470',
           'Products.ExternalStorage',
 
