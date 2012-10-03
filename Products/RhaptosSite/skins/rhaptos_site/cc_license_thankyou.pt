@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<tal:block tal:define="default_tab string:publish">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/license_macro/macros/master"
+      i18n:domain="rhaptos">
+  <body>
+
+    <div metal:fill-slot="main">
+        <p>Thank you</p>
+    </div>
+
+  </body>
+</html>
+
+</tal:block>

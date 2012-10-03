@@ -3,9 +3,10 @@ title=New content: License agreement
 
 [security]
 View=0:Authenticated
+
 [validators]
 validators=validate_license
 
 [actions]
-action.success=traverse_to:string:cc_license_accept
-action.failure=traverse_to:string:cc_license
+action.success=traverse_to:string:cc_license_api_accept
+action.failure=traverse_to:string:cc_license_api
