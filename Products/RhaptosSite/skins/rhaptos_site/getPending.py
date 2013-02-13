@@ -12,7 +12,7 @@ res = context.pending_catalog(portal_type=portal_type,sort_on='timestamp', sort_
 pending=[]
 for r in res:
     try:
-        p = r.getObject())
+        p = r.getObject()
         if p.state == 'pending':
             pending.append(p)
     except AttributeError:
