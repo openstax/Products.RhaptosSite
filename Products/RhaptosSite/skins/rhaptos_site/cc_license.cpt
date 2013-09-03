@@ -51,6 +51,7 @@
           <a i18n:translate="" style="font-style:
             italic" tal:attributes="href license_url"
             tal:content="license_name">Attribution</a>
+        </span>
 	fulfills this requirement, while still allowing authors to
 	receive credit for their efforts.  Please take the time to
 	read the license and check the 
