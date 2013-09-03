@@ -51,11 +51,6 @@
           <a i18n:translate="" style="font-style:
             italic" tal:attributes="href license_url"
             tal:content="license_name">Attribution</a>
-        </span> license from 
-        <span i18n:name="cc_link">
-          <a i18n:translate="label_creative_commons"
-            href="http://creativecommons.org">Creative Commons</a>
-        </span>
 	fulfills this requirement, while still allowing authors to
 	receive credit for their efforts.  Please take the time to
 	read the license and check the 
@@ -71,12 +66,11 @@
         <span i18n:name="portal_name">
           <span tal:replace="portal/title">[portal]</span>
         </span> to distribute this content under the
-	terms of the Creative Commons 
-        <span i18n:name="license_name">
+	terms of the <span i18n:name="license_name">
           <span i18n:translate="" 
             tal:content="license_name">Attribution</span>
         </span> 
-        License available at 
+        available at 
         <a style="font-style: italic"
           tal:attributes="href license_url"
           tal:content="license_url"
