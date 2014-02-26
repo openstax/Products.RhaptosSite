@@ -1,3 +1,6 @@
+RhaptosSite-1.45.1
+  - version bump of default CC license 
+
 RhaptosSite-1.45
   - added support for content specific licenses
 

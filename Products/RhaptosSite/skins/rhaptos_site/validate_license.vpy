@@ -10,7 +10,7 @@
 ##
 
 # FIXME: This should really be in a tool somewhere
-VALID_LICENSES = ['http://creativecommons.org/licenses/by/2.0/', 'http://creativecommons.org/licenses/by/3.0/']
+VALID_LICENSES = ['http://creativecommons.org/licenses/by/3.0/', 'http://creativecommons.org/licenses/by/4.0/']
 lerr = context.translate("message_please_correct_errors", domain="rhaptos", default="Please correct the indicated errors.")
 
 if license not in VALID_LICENSES:
