@@ -93,7 +93,7 @@ Plone 2.5 notes:
           tal:attributes="href string:$portal_url/content/search" />
     <link rel="search"
           href=""
-          title="Connexions"
+          title="OpenStax CNX"
           type="application/opensearchdescription+xml"
           tal:attributes="href string:$portal_url/opensearchdescription;
                           title portal/Title" />
