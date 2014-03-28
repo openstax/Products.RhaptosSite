@@ -1,3 +1,6 @@
+RhaptosSite-1.45.2
+  - Rename Connexions to OSCNX
+
 RhaptosSite-1.45.1
   - version bump of default CC license 
 
