@@ -91,7 +91,7 @@
 	  (<b>including allowing modification of this work and requiring
 	  attribution</b>) and </li>
 	  <li i18n:translate="text_license_proper_attribution"> 
-          agree that proper attribution of my work is any attribution that includes the authors' names, the title of the work, and the Connexions URL to the work.  </li>
+          agree that proper attribution of my work is any attribution that includes the authors' names, the title of the work, and the OpenStax CNX URL to the work.  </li>
       </ol>
 
       <form action="." method="post" tal:attributes="action template/getId"
