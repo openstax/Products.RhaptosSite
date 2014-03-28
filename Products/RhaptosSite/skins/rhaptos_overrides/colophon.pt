@@ -27,7 +27,7 @@ Only difference is the addition of the Powered by Rhaptos logo.
 
       <a href="http://rhaptos.org"
          class="colophonIcon colophonIconRhaptos"
-         title="This Plone site is running the Rhaptos suite of products, developed by Connexions (cnx.org). Click for more information."
+         title="This Plone site is running the Rhaptos suite of products, developed by OpenStax CNX (openstaxcnx.org). Click for more information."
          i18n:attributes="title title_built_with_plone;"
          i18n:translate="label_powered_by_rhaptos">
         Powered by Rhaptos (rhaptos.org)
