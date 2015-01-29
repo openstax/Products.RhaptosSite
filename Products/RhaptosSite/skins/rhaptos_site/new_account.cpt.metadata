@@ -1,0 +1,10 @@
+[default]
+title=Request an account
+border=None
+
+[validators]
+validators = validate_emailaddr,new_account_validate,validate_homepage
+
+[actions]
+action.success = traverse_to:string:register
+action.failure = traverse_to:string:new_account
