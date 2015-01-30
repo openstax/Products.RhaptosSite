@@ -1,3 +1,6 @@
+RhaptosSite-1.46
+  - Move join form
+
 RhaptosSite-1.45.3
   - Rename Connexions to OSCNX
 
