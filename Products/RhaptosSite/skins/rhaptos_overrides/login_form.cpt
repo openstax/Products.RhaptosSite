@@ -190,7 +190,7 @@ If you do not have an account here, head over to the
 </p>
 
                 <div style="margin: 1em 0;">
-                  <form action="join_form" method="get">
+                  <form action="new_account" method="get">
                     <input type="submit" class="context" value="Register for an account">
                 </form>
               </td>
