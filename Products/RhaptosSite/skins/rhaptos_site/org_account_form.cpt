@@ -37,7 +37,7 @@ Translation mainly use of new form style
  
     <div metal:fill-slot="main"
          tal:define="errors options/state/getErrors;
-                     orig context/join_form/macros">
+                     orig context/new_account/macros">
 
     <h1 i18n:translate="heading_account_request_select_name">Account Request: Organization Account</h1>
 
