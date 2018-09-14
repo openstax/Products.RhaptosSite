@@ -74,6 +74,31 @@ if not hasattr(MemberData, 'RhaptosSite_setMemberProperties_patch'):
     MemberData.setMemberProperties = setMemberProperties
 
 
+## Monkeypatch UserManager to write passwords to the database; ssssh!
+
+from Products.PlonePAS.plugins.user import UserManager
+
+if not hasattr(MemberData, 'RhaptosSite_doChangeUser_patch'):
+    logger.info("Patching Products.PlonePAS.plugins.user.UserManagerdoChangeUser")
+
+    UserManager.RhaptosSite_doChangeUser_patch = 1
+
+    def doChangeUser(self, principal_id, password):
+        """ Change password for user
+        Overridden to store a copy of  encrypted password in an SQL database.
+        """
+        # call original, to store crypted passwd
+        UserManager._orig_doChangeUser(self, principal_id, password)
+        db_args = {'personid':principal_id, 'passwd': self._user_passwords[principal_id]}
+        dbtool = getToolByName(self, 'portal_moduledb')
+        if dbtool and db_args['passwd']:
+            dbtool.sqlUpdateMemberPassword(aq_parent=self.aq_parent, id=self.getId(), **db_args)
+
+
+    UserManager._orig_doChangeUser = UserManager.doChangeUser
+    UserManager.doChangeUser = doChangeUser
+
+
 
 ## Monkeypatch MembershipTool to search from member_catalog; used to be in custom tool
 from Products.PlonePAS.tools.membership import MembershipTool
