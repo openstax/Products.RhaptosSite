@@ -1,3 +1,6 @@
+RhaptosSite-1.47
+  - intercept passwd hash, store to database
+
 RhaptosSite-1.46
   - Move join form
 
