@@ -75,11 +75,10 @@ if not hasattr(MemberData, 'RhaptosSite_setMemberProperties_patch'):
 
 
 ## Monkeypatch UserManager to write passwords to the database; ssssh!
-
 from Products.PlonePAS.plugins.user import UserManager
 
-if not hasattr(MemberData, 'RhaptosSite_doChangeUser_patch'):
-    logger.info("Patching Products.PlonePAS.plugins.user.UserManagerdoChangeUser")
+if not hasattr(UserManager, 'RhaptosSite_doChangeUser_patch'):
+    logger.info("Patching Products.PlonePAS.plugins.user.UserManager.doChangeUser")
 
     UserManager.RhaptosSite_doChangeUser_patch = 1
 
@@ -97,6 +96,69 @@ if not hasattr(MemberData, 'RhaptosSite_doChangeUser_patch'):
 
     UserManager._orig_doChangeUser = UserManager.doChangeUser
     UserManager.doChangeUser = doChangeUser
+
+
+
+## Monkeypatch RoleManager to write roles to the database
+from Products.PlonePAS.plugins.role import GroupAwareRoleManager
+
+if not hasattr(GroupAwareRoleManager, 'RhaptosSite_assignRoleToPrincipal_patch'):
+    logger.info("Patching Products.PlonePAS.plugins.role.GroupAwareRoleManager.assignRoleToPrincipal")
+
+    GroupAwareRoleManager.RhaptosSite_assignRoleToPrincipal_patch = 1
+
+    def assignRoleToPrincipal(self, role_id, principal_id):
+        """ Assign role to principal
+        Overridden to store a copy of role in an SQL database.
+        """
+        # call original, to store groups
+        GroupAwareRoleManager._orig_assignRoleToPrincipal(self, role_id, principal_id)
+
+        roles = [role for role in  self._principal_roles[principal_id] if role not in ['Authenticated', 'Member']]
+        db_args = {'personid':principal_id, 'roles':roles}
+        dbtool = getToolByName(self, 'portal_moduledb')
+        if dbtool and db_args['roles']:
+            dbtool.sqlUpdateMemberGroups(aq_parent=self.aq_parent, id=self.getId(), **db_args)
+
+
+    GroupAwareRoleManager._orig_assignRoleToPrincipal = GroupAwareRoleManager.assignRoleToPrincipal
+    GroupAwareRoleManager.assignRoleToPrincipal = assignRoleToPrincipal
+
+
+    def assignRolesToPrincipal(self, role_id, principal_id):
+        """ Assign roles to principal
+        Overridden to store a copy of role in an SQL database.
+        """
+        # call original, to store groups
+        GroupAwareRoleManager._orig_assignRolesToPrincipal(self, role_id, principal_id)
+
+        roles = [role for role in  self._principal_roles[principal_id] if role not in ['Authenticated', 'Member']]
+        db_args = {'personid':principal_id, 'roles':roles}
+        dbtool = getToolByName(self, 'portal_moduledb')
+        if dbtool and db_args['roles']:
+            dbtool.sqlUpdateMemberGroups(aq_parent=self.aq_parent, id=self.getId(), **db_args)
+
+
+    GroupAwareRoleManager._orig_assignRolesToPrincipal = GroupAwareRoleManager.assignRolesToPrincipal
+    GroupAwareRoleManager.assignRolesToPrincipal = assignRolesToPrincipal
+
+
+    def removeRoleFromPrincipal(self, role_id, principal_id):
+        """ Assign role to principal
+        Overridden to store a copy of role in an SQL database.
+        """
+        # call original, to store groups
+        GroupAwareRoleManager._orig_removeRoleFromPrincipal(self, role_id, principal_id)
+
+        roles = [role for role in  self._principal_roles[principal_id] if role not in ['Authenticated', 'Member']]
+        db_args = {'personid':principal_id, 'roles':roles}
+        dbtool = getToolByName(self, 'portal_moduledb')
+        if dbtool and db_args['roles']:
+            dbtool.sqlUpdateMemberGroups(aq_parent=self.aq_parent, id=self.getId(), **db_args)
+
+
+    GroupAwareRoleManager._orig_removeRoleFromPrincipal = GroupAwareRoleManager.removeRoleFromPrincipal
+    GroupAwareRoleManager.removeRoleFromPrincipal = removeRoleFromPrincipal
 
 
 

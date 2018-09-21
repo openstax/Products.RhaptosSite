@@ -1,3 +1,6 @@
+RhaptosSite-1.48
+  - intercept roles, store to database
+
 RhaptosSite-1.47
   - intercept passwd hash, store to database
 
