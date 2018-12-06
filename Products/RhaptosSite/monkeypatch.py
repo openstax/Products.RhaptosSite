@@ -44,7 +44,7 @@ if not hasattr(MemberData, 'RhaptosSite_setMemberProperties_patch'):
         """
         # Only pass relevant fields to the database
         db_args = dict([(f, v) for (f, v) in mapping.items() if f in DB_FIELDS and self.getProperty(f) != v])
-        dbtool = getToolByName(self, 'portal_moduledb')
+        dbtool = getToolByName(self, 'portal_moduledb', None)
         if dbtool and db_args:
             # We have to pass in aq_parent to be our own parent,
             # otheriwse the ZSQL method will acquire blank arguments
@@ -89,7 +89,7 @@ if not hasattr(UserManager, 'RhaptosSite_doChangeUser_patch'):
         # call original, to store crypted passwd
         UserManager._orig_doChangeUser(self, principal_id, password)
         db_args = {'personid':principal_id, 'passwd': self._user_passwords[principal_id]}
-        dbtool = getToolByName(self, 'portal_moduledb')
+        dbtool = getToolByName(self, 'portal_moduledb', None)
         if dbtool and db_args['passwd']:
             dbtool.sqlUpdateMemberPassword(aq_parent=self.aq_parent, id=self.getId(), **db_args)
 
@@ -116,7 +116,7 @@ if not hasattr(GroupAwareRoleManager, 'RhaptosSite_assignRoleToPrincipal_patch')
 
         roles = [role for role in  self._principal_roles[principal_id] if role not in ['Authenticated', 'Member']]
         db_args = {'personid':principal_id, 'roles':roles}
-        dbtool = getToolByName(self, 'portal_moduledb')
+        dbtool = getToolByName(self, 'portal_moduledb', None)
         if dbtool and db_args['roles']:
             dbtool.sqlUpdateMemberGroups(aq_parent=self.aq_parent, id=self.getId(), **db_args)
 
@@ -134,7 +134,7 @@ if not hasattr(GroupAwareRoleManager, 'RhaptosSite_assignRoleToPrincipal_patch')
 
         roles = [role for role in  self._principal_roles[principal_id] if role not in ['Authenticated', 'Member']]
         db_args = {'personid':principal_id, 'roles':roles}
-        dbtool = getToolByName(self, 'portal_moduledb')
+        dbtool = getToolByName(self, 'portal_moduledb', None)
         if dbtool and db_args['roles']:
             dbtool.sqlUpdateMemberGroups(aq_parent=self.aq_parent, id=self.getId(), **db_args)
 
@@ -152,7 +152,7 @@ if not hasattr(GroupAwareRoleManager, 'RhaptosSite_assignRoleToPrincipal_patch')
 
         roles = [role for role in  self._principal_roles[principal_id] if role not in ['Authenticated', 'Member']]
         db_args = {'personid':principal_id, 'roles':roles}
-        dbtool = getToolByName(self, 'portal_moduledb')
+        dbtool = getToolByName(self, 'portal_moduledb', None)
         if dbtool and db_args['roles']:
             dbtool.sqlUpdateMemberGroups(aq_parent=self.aq_parent, id=self.getId(), **db_args)
 
