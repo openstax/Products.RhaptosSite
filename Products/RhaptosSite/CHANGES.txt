@@ -1,3 +1,6 @@
+RhaptosSite-1.49
+  - fix monkeypatch methods to work at first install
+
 RhaptosSite-1.48
   - intercept roles, store to database
 
